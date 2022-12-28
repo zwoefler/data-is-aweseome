@@ -1,0 +1,3 @@
+git+https://github.com/cinemagoer/cinemagoer
+jupyter
+pandas
