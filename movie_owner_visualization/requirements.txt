@@ -1,3 +1,4 @@
 jupyter
 pandas
+matplotlib
 git+https://github.com/cinemagoer/cinemagoer
