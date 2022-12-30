@@ -8,10 +8,16 @@ def generateProductionMovieList(movie_list):
     production_movie_list = []
 
     for movie in movie_list:
-        movie_object={
-            "title": movie["title"],
-            "production_companies": movie["production companies"]
-        }
+        try:
+            movie_object={
+                "title": movie["title"],
+                "production_companies": movie["production companies"]
+            }
+        except:
+            movie_object = {
+                "title": movie["title"],
+                "production_companies": []
+            }
         production_movie_list.append(movie_object)
 
     return production_movie_list
@@ -39,13 +45,15 @@ def countProductionCompanies(production_companies, df):
         studio_dict = {
             "total": 0
         }
-        studio_count = 0
-        for studio in production_companies[company]:
-            df_studio = searchForCompany(df, studio)
-            count = len(df_studio)
-            studio_dict[studio] = count
-            studio_dict["total"] += count
-        production_dict[company] = studio_dict
+        try:
+            for studio in production_companies[company]:
+                df_studio = searchForCompany(df, studio)
+                count = len(df_studio)
+                studio_dict[studio] = count
+                studio_dict["total"] += count
+            production_dict[company] = studio_dict
+        except:
+            production_dict[company] = studio_dict
 
     return production_dict
 
