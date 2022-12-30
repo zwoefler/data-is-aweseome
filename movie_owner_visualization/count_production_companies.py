@@ -1,8 +1,7 @@
 import json
 import pandas as pd
 import os
-
-
+import sys
 
 
 def generateProductionMovieList(movie_list):
@@ -84,7 +83,7 @@ production_companies = {
     "paramount": ["Paramount"],
 }
 
-json_file = "top250_movies.json"
+json_file = sys.argv[1]
 base_name = os.path.splitext(json_file)[0]
 
 movie_list = importMovieJSON(json_file)
