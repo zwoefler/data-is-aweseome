@@ -10,8 +10,6 @@ Cross reference for example movies and series like:
 See that many series and movies are owned by the big streaming companies
 but are produced by companies like SONY.
 
-## What needs to be done
-- SQL-Database to store the Cinema Data
-- SCript to download data from online
-- Script to read data from SQL database
+## ToDO
+- Add script to download 2022 best movies + Run analysis on them
 
