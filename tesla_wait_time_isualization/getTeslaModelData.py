@@ -3,8 +3,10 @@ import bs4
 from bs4 import BeautifulSoup
 import re
 import json
+import os
 from subprocess import check_output
 from datetime import datetime
+
 
 def timestampToHuman(date):
     return datetime.utcfromtimestamp(date / 1000).strftime('%d%m%Y_%H%M%S')
@@ -34,6 +36,10 @@ def getDownloadDate(jsonData):
     return timestampToHuman(getTimeStampFromData(jsonData))
 
 
+def deleteTempJavascriptFile(tempFile):
+    os.remove(tempFile)
+
+
 def getTeslaModelJSON(soup_page):
     script = soup_page.find('script', text=re.compile(r'dataJson'))
     matches = re.finditer(r'const\s*\w*\s*=\s*\{.+?\};', script.text, re.DOTALL)
@@ -43,6 +49,7 @@ def getTeslaModelJSON(soup_page):
     with open('temp.js', 'w') as f:
         f.write(js_export_json_string)
     modelData = json.loads(check_output(['node','temp.js']).decode())
+    deleteTempJavascriptFile("temp.js")
 
     exportData = getExportData(modelData)
     exportID = buildIDForJSONFile(exportData["model"], exportData["locale"], exportData["downloadDate"])
@@ -116,23 +123,6 @@ def getConfigurableTrims(modelJSON):
     all_trims = getAllTrims(modelJSON)
     configurable_trims = {k: v for k, v in all_trims.items() if "configurator" in v}
     return configurable_trims
-
-
-def explainConfigurableTrims(configurable_trims):
-    """Takes the trims dictionary and returns a dictionary with the shortcut and the corresponding name"""
-    new_dict = {}
-    for key, value in configurable_trims.items():
-        new_dict[key] = value["variant"]["name"]
-
-    return new_dict
-
-
-def explainTrim(trim):
-    """Takes the shortcut of one trim and returns the name/description of the trim"""
-    try:
-        return configurable_trims[trim]["variant"]["name"]
-    except:
-        print("There is no trim available with the shortcut " + trim)
 
 
 def getDate(modelJSON):
