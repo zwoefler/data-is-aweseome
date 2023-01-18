@@ -127,7 +127,8 @@ def getDeliveryEstForTrim(trim, modelJSON):
 
 
 def getAllTrims(modelJSON):
-    trims = modelJSON[0]["DSServices"]["Lexicon.my"]["sku"]["trims"]
+    lexicon = getLexicon(modelJSON)
+    trims = lexicon["sku"]["trims"]
     return trims
 
 def getConfigurableTrims(modelJSON):
@@ -303,7 +304,8 @@ def specChangingOptions(specs):
 
 
 def optionsCodeWithExplanation(modelJSON):
-    options = modelJSON[0]["DSServices"]["Lexicon.my"]["options"]
+    lexicon = getLexicon(modelJSON)
+    options = lexicon["options"]
     new_dict = {}
     for key, value in options.items():
         new_dict[key] = value["name"]
@@ -387,12 +389,18 @@ def getModelData(modelJSON):
     return modelData
 
 
-data_dir = "data/"
-url = "https://www.tesla.com/modely/design#overview"
-model_page = downloadTeslaModelPage(url)
-filename = getTeslaModelJSON(model_page)
-modelJSON = json.loads(importModelJSON(data_dir + filename))
 
-availableLocales = modelJSON[1]["App"]["availableLocales"]
-modelData = getModelData(modelJSON)
-exportJSONToFile(data_dir + filename[4:], modelData)
+models = ["models", "model3", "modelx", "modely"]
+data_dir = "data/"
+# url = "https://www.tesla.com/modely/design#overview"
+
+for model in models[:2]:
+    url = f"https://www.tesla.com/{model}/design#overview"
+
+    model_page = downloadTeslaModelPage(url)
+    filename = getTeslaModelJSON(model_page)
+    modelJSON = json.loads(importModelJSON(data_dir + filename))
+
+    availableLocales = modelJSON[1]["App"]["availableLocales"]
+    modelData = getModelData(modelJSON)
+    exportJSONToFile(data_dir + filename[4:], modelData)
