@@ -2,27 +2,24 @@ import urllib.request
 import bs4
 from bs4 import BeautifulSoup
 import re
-import json
 import os
+import json
 from subprocess import check_output
+import pandas as pd
 from datetime import datetime
-
 
 def timestampToHuman(date):
     return datetime.utcfromtimestamp(date / 1000).strftime('%d%m%Y_%H%M%S')
 
-
 def getTimeStampFromData(modelJSON):
     date = modelJSON[0]["DSServices"]["date"]
     return date
-
 
 def downloadTeslaModelPage(url):
     response = urllib.request.urlopen(url)
     html = response.read().decode()
     soup = bs4.BeautifulSoup(html)
     return soup
-
 
 def buildIDForJSONFile(model, locale, downloadDate):
     return f"{model}_{locale}_{downloadDate}"
@@ -34,6 +31,30 @@ def getLocale(modelJSON):
 
 def getDownloadDate(jsonData):
     return timestampToHuman(getTimeStampFromData(jsonData))
+
+
+def getDate(modelJSON):
+    """Returns the time of data download as Milliseconds EPOCH"""
+    return modelJSON[0]["DSServices"]["date"]
+
+
+def getModel(modelJSON):
+    """Returns the Model Name as shortcut like my for ModelY or m3 for Model3"""
+    return modelJSON[0]["DSServices"]["KeyManager"]["keys"]["Lexicon"][0]["query"]["model"]
+
+
+def getLexicon(modelJSON):
+    """Returns the Lxicon for given modelJSON"""
+    lexiconKey = modelJSON[0]["DSServices"]["KeyManager"]["keys"]["Lexicon"][0]["key"]
+    return modelJSON[0]["DSServices"][lexiconKey]
+
+
+def getExportData(jsonData):
+    return {
+        "model": getModel(jsonData),
+        "locale": getLocale(jsonData),
+        "downloadDate": getDownloadDate(jsonData)
+    }
 
 
 def deleteTempJavascriptFile(tempFile):
@@ -67,14 +88,6 @@ def exportJSONToFile(filename, data):
 def importModelJSON(json_file):
     with open(json_file, 'r') as f:
         return f.read()
-
-
-def getExportData(jsonData):
-    return {
-        "model": getModel(jsonData),
-        "locale": getLocale(jsonData),
-        "downloadDate": getDownloadDate(jsonData)
-    }
 
 
 def dateStringToMonth(datestring, date_format='%m/%d/%Y %H:%M:%S'):
@@ -117,7 +130,6 @@ def getAllTrims(modelJSON):
     trims = modelJSON[0]["DSServices"]["Lexicon.my"]["sku"]["trims"]
     return trims
 
-
 def getConfigurableTrims(modelJSON):
     """Scrapes the JSON scraped from the Tesla webpage and returns a dictionary of all configurable trims with corresponding options"""
     all_trims = getAllTrims(modelJSON)
@@ -125,20 +137,20 @@ def getConfigurableTrims(modelJSON):
     return configurable_trims
 
 
-def getDate(modelJSON):
-    """Returns the time of data download as Milliseconds EPOCH"""
-    return modelJSON[0]["DSServices"]["date"]
+def explainConfigurableTrims(configurable_trims):
+    """Takes the trims dictionary and returns a dictionary with the shortcut and the corresponding name"""
+    new_dict = {}
+    for key, value in configurable_trims.items():
+        new_dict[key] = value["variant"]["name"]
 
+    return new_dict
 
-def getModel(modelJSON):
-    """Returns the Model Name as shortcut like my for ModelY or m3 for Model3"""
-    return modelJSON[0]["DSServices"]["KeyManager"]["keys"]["Lexicon"][0]["query"]["model"]
-
-
-def getLexicon(modelJSON):
-    """Returns the Lxicon for given modelJSON"""
-    lexiconKey = modelJSON[0]["DSServices"]["KeyManager"]["keys"]["Lexicon"][0]["key"]
-    return modelJSON[0]["DSServices"][lexiconKey]
+def explainTrim(trim):
+    """Takes the shortcut of one trim and returns the name/description of the trim"""
+    try:
+        return configurable_trims[trim]["variant"]["name"]
+    except:
+        print("There is no trim available with the shortcut " + trim)
 
 
 def priceForOption(option, modelJSON):
@@ -212,6 +224,17 @@ def deliveryEstimateForModel(eddDataForModel):
     return deliveryEst
 
 
+def allTrimsInfo(modelJSON):
+    trims = {}
+    configurable_trims = getConfigurableTrims(modelJSON)
+    trimsList = list(configurable_trims.keys())
+    for trim in trimsList:
+        trimName, trimData = getTrimInfo(trim, modelJSON)
+        trims[trimName] = trimData
+
+    return trims
+
+
 def getMetaData(modelJSON):
     lexicon = getLexicon(modelJSON)
     meta = lexicon["metadata"]
@@ -223,7 +246,6 @@ def getMetaData(modelJSON):
         "range_source": meta["specs"]["data"][0]["meta"]["specs"]["range"]["source"]
     }
     return metaData
-
 
 
 def getTrimInfo(trim, modelJSON):
@@ -240,23 +262,13 @@ def getTrimInfo(trim, modelJSON):
     trimDict = {
         "price": priceForOption(trim, modelJSON),
         "deliveryEstimate": getDeliveryEstForTrim(trim, modelJSON),
-        "specs": "specs",
-        "options": "options"
+        "specs": getSpecsForTrim(trim, modelJSON),
+        "standard_config":  getStandardConfiguration(trim, modelJSON),
+        "options": getAvailableOptions(trim, modelJSON)
     }
 
 
     return trimName, trimDict
-
-
-def allTrimsInfo(modelJSON):
-    trims = {}
-    configurable_trims = getConfigurableTrims(modelJSON)
-    trimsList = list(configurable_trims.keys())
-    for trim in trimsList:
-        trimName, trimData = getTrimInfo(trim, modelJSON)
-        trims[trimName] = trimData
-
-    return trims
 
 
 def getModelData(modelJSON):
@@ -264,18 +276,12 @@ def getModelData(modelJSON):
         "model": getModel(modelJSON),
         "date": getDate(modelJSON),
         "meta": getMetaData(modelJSON),
-        "trim": allTrimsInfo(modelJSON)
+        "trim": allTrimsInfo(modelJSON),
+        "options": getPriceOptions(modelJSON)
     }
     return modelData
 
-
-
-def getAllAvailableOptionsForTrim(trim, modelJSON):
-    """Takes the trim and modelJSON and exports a list of available options
-    with name and price"""
-    return
-
-
+# Spec for Trim
 def getSpecsForTrim(trim, modelJSON):
     """Takes the trim and modelJSON and returns a list
     with the specs:
@@ -289,11 +295,94 @@ def getSpecsForTrim(trim, modelJSON):
         "range": trimSpecs["range"],
         "topspeed": trimSpecs["topspeed"],
         "acceleration": trimSpecs["acceleration"],
-        "overrides": trimSpecs["overrides"]
+        "overrides": specChangingOptions(trimSpecs)
     }
 
     return specs
 
+
+def specChangingOptions(specs):
+    overrides = specs["overrides"]
+    for override in overrides:
+        for key, option in enumerate(override['selected_by']['and']):
+            if option.startswith('$'):
+                override['selected_by']['and'][key] = getOptionPriceAndName(option, modelJSON)
+    return overrides
+
+
+def optionsCodeWithExplanation(modelJSON):
+    options = modelJSON[0]["DSServices"]["Lexicon.my"]["options"]
+    new_dict = {}
+    for key, value in options.items():
+        new_dict[key] = value["name"]
+
+    return new_dict
+
+
+def getOptionPriceAndName(option, modelJSON):
+    """For a given option returns the dicitonary
+    {
+        shortcut: $MTY05
+        name: "White Interior",
+        price: 1200,
+    }
+    """
+    lexicon = getLexicon(modelJSON)
+    try:
+        price = lexicon["options"][option]["price"]
+        for jsonObj in lexicon["options"][option]["pricing"]:
+            if jsonObj["type"] == "base_plus_trim":
+                price = jsonObj["value"]
+    except KeyError:
+        price = None
+
+    try:
+        name = lexicon["options"][option]["name"]
+    except KeyError:
+        name = None
+
+    optionData = {
+        "shortcut": option,
+        "name": name,
+        "price": price,
+    }
+
+
+    return optionData
+
+
+# All available options
+def getPriceOptions(modelJSON):
+    """Takes the options object/dict as input and return a dictionary with the options and their correpsonding pricing"""
+    lexicon = getLexicon(modelJSON)
+    new_dict = {}
+    important_values = ["name", "price", "pricing"]
+    result = {key: {k: v for k, v in value.items() if k in important_values} for key, value in lexicon["options"].items()}
+    return result
+
+
+def getStandardConfiguration(trim, modelJSON):
+    """For the gibven trim returns the base_options list with dicts for the option, price and shortcut"""
+    standardConfig = []
+    lexicon = getLexicon(modelJSON)
+    base_options = lexicon["sku"]["trims"][trim]["configurator"][0]["base_options"]
+    for option in base_options:
+        standardConfig.append(getOptionPriceAndName(option, modelJSON))
+    return standardConfig
+
+
+def getAvailableOptions(trim, modelJSON):
+    """Returns a dict with the available options with their names, prices and shortcuts"""
+    availableOptions = []
+    lexicon = getLexicon(modelJSON)
+
+    combinations = lexicon["sku"]["trims"][trim]["configurator"][0]["combinations"]
+    for combi in combinations:
+        for option in combi:
+            availableOptions.append(getOptionPriceAndName(option, modelJSON))
+
+    return availableOptions
+getModelData
 
 data_dir = "data/"
 url = "https://www.tesla.com/modely/design#overview"
