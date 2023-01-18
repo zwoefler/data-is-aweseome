@@ -271,15 +271,7 @@ def getTrimInfo(trim, modelJSON):
     return trimName, trimDict
 
 
-def getModelData(modelJSON):
-    modelData = {
-        "model": getModel(modelJSON),
-        "date": getDate(modelJSON),
-        "meta": getMetaData(modelJSON),
-        "trim": allTrimsInfo(modelJSON),
-        "options": getPriceOptions(modelJSON)
-    }
-    return modelData
+
 
 # Spec for Trim
 def getSpecsForTrim(trim, modelJSON):
@@ -382,7 +374,18 @@ def getAvailableOptions(trim, modelJSON):
             availableOptions.append(getOptionPriceAndName(option, modelJSON))
 
     return availableOptions
-getModelData
+
+
+def getModelData(modelJSON):
+    modelData = {
+        "model": getModel(modelJSON),
+        "date": getDate(modelJSON),
+        "meta": getMetaData(modelJSON),
+        "trims": allTrimsInfo(modelJSON),
+        "options": getPriceOptions(modelJSON)
+    }
+    return modelData
+
 
 data_dir = "data/"
 url = "https://www.tesla.com/modely/design#overview"
