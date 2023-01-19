@@ -295,11 +295,15 @@ def getSpecsForTrim(trim, modelJSON):
 
 
 def specChangingOptions(specs):
-    overrides = specs["overrides"]
-    for override in overrides:
-        for key, option in enumerate(override['selected_by']['and']):
-            if option.startswith('$'):
-                override['selected_by']['and'][key] = getOptionPriceAndName(option, modelJSON)
+    try:
+        overrides = specs["overrides"]
+        for override in overrides:
+            for key, option in enumerate(override['selected_by']['and']):
+                if option.startswith('$'):
+                    override['selected_by']['and'][key] = getOptionPriceAndName(option, modelJSON)
+    except:
+        overrides = {}
+
     return overrides
 
 
@@ -394,7 +398,7 @@ models = ["models", "model3", "modelx", "modely"]
 data_dir = "data/"
 # url = "https://www.tesla.com/modely/design#overview"
 
-for model in models[:2]:
+for model in models:
     url = f"https://www.tesla.com/{model}/design#overview"
 
     model_page = downloadTeslaModelPage(url)
