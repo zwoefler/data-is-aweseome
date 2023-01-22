@@ -17,11 +17,11 @@ def list_files(folder_path):
     return files
 
 
-def import_html_file(file_path):
+def import_file(file_path):
     try:
         with open(file_path, 'r') as file:
-            html_contents = file.read()
-        return html_contents
+            return file.read()
+
     except FileNotFoundError:
         print(f'File not found: {file_path}')
 
@@ -66,7 +66,7 @@ def exportRawJSON(file, data_dir, isExport=False):
     print("EXPORTING", file)
 
     file_path = os.path.join(data_dir, file)
-    html = import_html_file(file_path)
+    html = import_file(file_path)
     modelJSON = extractJSONFromHTML(html)
     print("READ JSON FROM:", file)
     if (isExport):
@@ -79,4 +79,4 @@ def exportRawJSON(file, data_dir, isExport=False):
 raw_data_dir = "raw_html"
 raw_files = list_files(raw_data_dir)
 for file in raw_files[:1]:
-    exportRawJSON(file, raw_data_dir, True)
+    modelJSON = exportRawJSON(file, raw_data_dir, True)
