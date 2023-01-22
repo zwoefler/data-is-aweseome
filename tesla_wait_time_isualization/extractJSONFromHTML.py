@@ -62,14 +62,18 @@ def exportRawJSONData(modelJSON):
     exportJSONToFile(export_path, modelJSON)
 
 
-raw_data_dir = "raw_html"
-raw_files = list_files(raw_data_dir)
-for file in raw_files[:1]:
-    print(file)
+def exportRawJSON(file, data_dir):
+    print("EXPORTING", file)
 
     file_path = os.path.join(raw_data_dir, file)
     html = import_html_file(file_path)
     modelJSON = extractJSONFromHTML(html)
     exportRawJSONData(modelJSON)
 
-    print("SUCCESSFULLY EXPORTED:", file)
+    print("SUCCESSFULLY EXPORTED:", file, "\n")
+
+
+raw_data_dir = "raw_html"
+raw_files = list_files(raw_data_dir)
+for file in raw_files[:1]:
+    exportRawJSON(file, raw_data_dir)
