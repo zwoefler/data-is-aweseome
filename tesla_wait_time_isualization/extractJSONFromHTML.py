@@ -65,7 +65,7 @@ def exportRawJSONData(modelJSON):
 def exportRawJSON(file, data_dir):
     print("EXPORTING", file)
 
-    file_path = os.path.join(raw_data_dir, file)
+    file_path = os.path.join(data_dir, file)
     html = import_html_file(file_path)
     modelJSON = extractJSONFromHTML(html)
     exportRawJSONData(modelJSON)
