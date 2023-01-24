@@ -13,3 +13,6 @@ At some point, Ill build a webpage to display all that stuff!
 - Graph the tax revenue/loss per hectar in a given city
 - 
 
+## To DO
+- New "Project" script that creates new folder, installs a python virtual env,
+creates a README.md, a requirements.txt (jupyter, pandas) and a "develop.sh" script
