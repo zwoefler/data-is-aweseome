@@ -62,21 +62,62 @@ def exportRawJSONData(modelJSON):
     exportJSONToFile(export_path, modelJSON)
 
 
-def exportRawJSON(file, data_dir, isExport=False):
-    print("EXPORTING", file)
+def getLexicon(modelJSON):
+    """Returns the Lxicon for given modelJSON"""
+    lexiconKey = modelJSON[0]["DSServices"]["KeyManager"]["keys"]["Lexicon"][0]["key"]
+    return modelJSON[0]["DSServices"][lexiconKey]
 
-    file_path = os.path.join(data_dir, file)
-    html = import_file(file_path)
-    modelJSON = extractJSONFromHTML(html)
-    print("READ JSON FROM:", file)
-    if (isExport):
-        exportRawJSONData(modelJSON)
-        print("SUCCESSFULLY EXPORTED:", file, "\n")
 
-    return modelJSON
+def getMetaData(modelJSON):
+    lexicon = getLexicon(modelJSON)
+    meta = lexicon["metadata"]
+    if len(modelJSON) > 1:
+        # New Format Metadata
+        metaData = {
+            "country": modelJSON[1]["App"]["uiCountry"],
+            "currency": meta["currency_code"],
+            "symbol": meta["currency_symbol"],
+            "range_units": meta["specs"]["data"][0]["meta"]["specs"]["range"]["units"],
+            "range_source": meta["specs"]["data"][0]["meta"]["specs"]["range"]["source"]
+        }
+    else:
+        # Old Format Metadata
+        for group in lexicon["groups"]:
+            if group["code"] == "BATTERY_AND_DRIVE":
+                range_source = group["extra_copy"][3]["content"]
+
+
+        metaData = {
+            "country": modelJSON[0]["App"]["uiCountry"],
+            "currency": meta["currency_code"],
+            "symbol": meta["currency_symbol"],
+            "range_units": meta["specs"]["refs"]["distance"]["label"],
+            "range_source": range_source
+        }
+
+    return metaData
+
+
+def getModelData(modelJSON):
+    modelData = {
+        "model": modelJSON[0]["DSServices"]["KeyManager"]["keys"]["Lexicon"][0]["query"]["model"],
+        "date": modelJSON[0]["DSServices"]["date"],
+        "meta": getMetaData(modelJSON),
+        #"trims": allTrimsInfo(modelJSON),
+        #"options": getPriceOptions(modelJSON)
+    }
+    return modelData
 
 
 raw_data_dir = "raw_html"
 raw_files = list_files(raw_data_dir)
 for file in raw_files[:1]:
-    modelJSON = exportRawJSON(file, raw_data_dir, True)
+
+    print("READ JSON FROM:", file)
+    file_path = os.path.join(raw_data_dir, file)
+    html = import_file(file_path)
+    modelJSON = extractJSONFromHTML(html)
+    # exportRawJSONData(modelJSON)
+
+    modelData = getModelData(modelJSON)
+    print("MODELDATA:", modelData)
