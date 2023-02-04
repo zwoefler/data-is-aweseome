@@ -1,50 +1,58 @@
 import json
-import urllib
+import urllib3
 
 
+# Conection timing out? How to solve this porlbem? Try: again later?
 def getAvailableWebArchive(url):
-    availableArchiveURLs = f"https://web.archive.org/cdx/search/cdx?url={url}&output=json"
-    resp = urllib.request.urlopen(availableArchiveURLs)
-    archiveResponse = resp.read().decode('utf-8')
-    jsonArchive = json.loads(archiveResponse)
+    print("Reurning available historic URLs for: ", url)
+    webArchiveSearchURL = f"https://web.archive.org/cdx/search/cdx?url={url}&output=json"
+    http = urllib3.PoolManager()
+    try:
+        resp = http.request("GET", webArchiveSearchURL, retries=8)
+    except:
+        print("Well, there could no download happen for: ", webArchiveSearchURL)
+
+    print("Downloading historic links")
+    jsonArchive = json.loads(resp.data)
     return jsonArchive
 
 
 def getDay(datestring):
-    return datestring[6:8]
+    return datestring[:8]
 
 
 def isSuccessfulRedirect(item):
     if (item[4] == "200"):
         return True
-    else:
-        return False
+
+    return False
 
 
-def buildDownloadLink(date, modelURL):
-    return f"https://web.archive.org/web/{date}/{modelURL}"
-
-
-def isIndividualDate(item, baseDay):
-    if getDay(item[1]) == baseDay:
-        return True
-    if getDay(item[1]) != baseDay:
-        return False
-
+# Dafuq is JSON archive?
+# What does this function do?
 
 def getValidModelArchiveLinks(jsonArchive):
+    """Receives a JSON with links and returns only links that are once a day!"""
     validJSONArchive = []
-    sublist = []
-    baseDay = getDay(jsonArchive[1][1])
+    tempList = []
 
-    for item in jsonArchive[1:]:
-        if isSuccessfulRedirect(item) and item not in sublist:
-            if isIndividualDate(item, baseDay):
-                sublist.append(item)
+    successful_redirect_list = [item for item in jsonArchive[1:] if isSuccessfulRedirect(item)]
+    baseDay = getDay(successful_redirect_list[1][1])
+
+    for index, item in enumerate(successful_redirect_list):
+        print("list index:", index)
+
+        if item not in tempList:
+            print(item)
+            if getDay(item[1]) == baseDay:
+                tempList.append(item)
             else:
                 baseDay = getDay(item[1])
-                validJSONArchive.append(sublist[0])
-                sublist = []
-                sublist.append(item)
+                if len(tempList) <1:
+                    validJSONArchive.append(item)
+                else:
+                    validJSONArchive.append(tempList[0])
+                tempList = []
+                tempList.append(item)
 
     return validJSONArchive
