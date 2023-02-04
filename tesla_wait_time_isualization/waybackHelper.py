@@ -28,6 +28,11 @@ def isSuccessfulRedirect(item):
     return False
 
 
+def buildDownloadLink(date, modelURL):
+    return f"https://web.archive.org/web/{date}/{modelURL}"
+
+
+
 # Dafuq is JSON archive?
 # What does this function do?
 
