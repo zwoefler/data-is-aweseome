@@ -42,14 +42,19 @@ def importModelJSON(json_file):
         return f.read()
 
 
-def priceForOption(option, modelJSON):
-    """Receives the option as '$MTY05' and the modelJSON and returns the price for that option"""
+def getVehiclePrice(trim, modelJSON):
     lexicon = getLexicon(modelJSON)
 
-    price = lexicon["options"][option]["price"]
-    for jsonObj in lexicon["options"][option]["pricing"]:
-        if jsonObj["type"] == "base_plus_trim":
-            price = jsonObj["value"]
+    extra_content = lexicon["options"][trim]["extra_content"]
+    price = None
+
+    try:
+        for item in extra_content:
+            if(item["type"] == "price_indicator_override"):
+                price = item["content"][0]["content"]
+    except:
+        price = None
+        print("Couln't get vehicle price via extra_content")
 
     return price
 
@@ -79,7 +84,7 @@ def getMetaData(modelJSON):
                 "source": None
             }
         }
-        print(e)
+        print("getMetaData Error", e)
 
     metaData = {
         "country": getCountry(modelJSON),
@@ -91,26 +96,29 @@ def getMetaData(modelJSON):
     return metaData
 
 
+def getConfiguratorTrims(modelJSON):
+    configurableTrims = []
+    lexicon = getLexicon(modelJSON)
+    for group in lexicon["groups"]:
+        if (group["code"] == "TRIM" and group["context"] == "configurator"):
+            configurableTrims = group["options"]
+
+    return configurableTrims
+
+
 def getModelData(modelJSON):
 
     lexicon = getLexicon(modelJSON)
-    options = lexicon["options"]
-    modelShort, modelName = getModel(modelJSON)
+    modelShort, _ = getModel(modelJSON)
 
     trims = []
-    for modelKey, option in options.items():
-        print(modelKey)
-        try:
-            if (modelName in option["long_name"]):
-                price = priceForOption(modelKey, modelJSON)
-                trimInfo = {
-                    "price": price,
-                    "trim": option["long_name"],
-                    "trimShorthandle": modelKey
-                }
-                trims.append(trimInfo)
-        except KeyError:
-            continue
+    for trim in configurableTrims:
+        print(trim)
+        trim_data = lexicon["metadata"]["specs"]["data"][0]["options"][trim]
+        trim_data["price"] = getVehiclePrice(trim, modelJSON)
+        trim_data["trimShorthandle"] = trim
+
+        trims.append(trim_data)
 
 
     modelData = {
@@ -133,6 +141,7 @@ for file_name in os.listdir(source_dir):
     modelJSON = json.loads(importedJSON)
 
     print("Model data for file:", file_name)
+    configurableTrims = getConfiguratorTrims(modelJSON)
     modelData = getModelData(modelJSON)
     exportJSONToFile(os.path.join(data_dir, file_name[4:]), modelData)
 
@@ -142,3 +151,16 @@ for file_name in os.listdir(source_dir):
 # DSServices.Lexicon.groups.
 # (context == configurator && code == "TRIM"):
 #   configurableTrims = groups[XX]["options"]
+
+
+# Certain Prices are not int the price entry!
+# But
+# options.$MT10A.extra_content.[x].type == "price_indicator_override"
+# extra_content.1 or 2.content.0.content
+
+
+
+
+def getTrimOptions(modelJSON):
+
+    return trim_metadata
