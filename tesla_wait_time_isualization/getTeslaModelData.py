@@ -141,7 +141,7 @@ def getModelData(modelJSON):
         print(trim)
         try:
             trim_data = lexicon["metadata"]["specs"]["data"][0]["options"][trim]
-        except KeyError:
+        except (KeyError, IndexError):
             trim_data = getRangeViaGroups(trim, battery_content_list)
 
         trim_data["price"] = getVehiclePrice(trim, modelJSON)
