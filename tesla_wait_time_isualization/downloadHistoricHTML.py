@@ -2,6 +2,7 @@ import waybackHelper
 import json
 import os
 import requests
+from sys import argv
 
 def download_html(url, locale, model, date, data_dir="raw_html"):
     try:
@@ -37,35 +38,37 @@ def importJSONFile(json_file):
         return f.read()
 
 
-models = ["models", "model3", "modelx", "modely"]
-locales = ["en_US"]
-raw_html_dir = "raw_html"
-raw_json_dir = "raw_json"
-data_dir = "data"
-
 def file_exists (file_path):
     return os.path.exists(file_path)
 
 
-def getModelsArchiveLinks():
-    for locale in locales:
-        for model in models[3:]:
-            url = f"tesla.com/{model}/design"
-            print(url)
-            waybackJSON = waybackHelper.getAvailableWebArchive(url)
-            waybackLinkList = waybackHelper.getValidModelArchiveLinks(waybackJSON)
-            exportJSONToFile(f"{model}_{locale}_LinkList.json", waybackLinkList)
+def getModelAndLocale(modelLinkFile):
+    """Extracts model and locale from fileName"""
+    splitFileName = modelLinkFile.split('_')
+    model = splitFileName[0]
+    locale = splitFileName[1] + '_' + splitFileName[2]
+    return model, locale
 
 
-modelLinkFile = "modely_en_US_LinkList.json"
-if not file_exists(modelLinkFile):
-    getModelsArchiveLinks()
-else:
+raw_html_dir = "raw_html"
+raw_json_dir = "raw_json"
+data_dir = "data"
+script, modelLinkFile = argv
+
+print("Receiving Download Links for:", modelLinkFile)
+
+if file_exists(modelLinkFile):
     waybackLinkList = json.loads(importJSONFile(modelLinkFile))
+    model, locale = getModelAndLocale(modelLinkFile)
+
+    for item in waybackLinkList:
+        date = item[1]
+        modelURL = item[2]
+        print("Building Downloadlink for item dated:", date)
+        downloadLink = waybackHelper.buildDownloadLink(date, modelURL)
+        print("Downloading HTML for item date:", date)
+        download_html(downloadLink, locale, model, date)
+else:
+    print("Could not find your file:", modelLinkFile)
 
 
-locale = "en_US"
-model = "modely"
-for item in waybackLinkList:
-    downloadLink = waybackHelper.buildDownloadLink(item[1], item[2])
-    download_html(downloadLink, locale, model, item[1])
