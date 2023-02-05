@@ -106,15 +106,44 @@ def getConfiguratorTrims(modelJSON):
     return configurableTrims
 
 
+def getBatteryContentList(modelJSON):
+    lexicon = getLexicon(modelJSON)
+
+    battery_content_list = []
+    for group in lexicon["groups"]:
+        if (group["code"] == "BATTERY_AND_DRIVE" and group["context"] == "configurator"):
+            for content in group["extra_content"]:
+                if (content["type"] == "performance_specs"):
+                    battery_content_list = content
+
+    return battery_content_list
+
+
+def getRangeViaGroups(trim, battery_content_list):
+
+    trim_metadata = {}
+    for item in battery_content_list["content"]:
+        if (item["selected_by"]["and"][0] == trim):
+            trim_metadata = item
+
+    return trim_metadata
+
+
+
 def getModelData(modelJSON):
 
     lexicon = getLexicon(modelJSON)
     modelShort, _ = getModel(modelJSON)
 
     trims = []
+    battery_content_list = getBatteryContentList(modelJSON)
     for trim in configurableTrims:
         print(trim)
-        trim_data = lexicon["metadata"]["specs"]["data"][0]["options"][trim]
+        try:
+            trim_data = lexicon["metadata"]["specs"]["data"][0]["options"][trim]
+        except KeyError:
+            trim_data = getRangeViaGroups(trim, battery_content_list)
+
         trim_data["price"] = getVehiclePrice(trim, modelJSON)
         trim_data["trimShorthandle"] = trim
 
@@ -157,10 +186,3 @@ for file_name in os.listdir(source_dir):
 # But
 # options.$MT10A.extra_content.[x].type == "price_indicator_override"
 # extra_content.1 or 2.content.0.content
-
-
-
-
-def getTrimOptions(modelJSON):
-
-    return trim_metadata
