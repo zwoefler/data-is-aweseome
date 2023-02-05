@@ -9,7 +9,12 @@ def getDate(modelJSON):
 
 
 def getModel(modelJSON):
-    """Returns the Model Name as shortcut like my for ModelY or m3 for Model3"""
+    """
+    Returns the Model Name as shortcut like
+    - my for ModelY
+    - m3 for Model3
+    """
+    lexicon = getLexicon(modelJSON)
     modelShort = modelJSON[0]["DSServices"]["KeyManager"]["keys"]["Lexicon"][0]["query"]["model"]
     try:
         mJSON = modelJSON[1]
@@ -20,8 +25,21 @@ def getModel(modelJSON):
     if(isinstance(mJSON["i18n"], str)):
         mJSON["i18n"] = json.loads(mJSON["i18n"])
 
-    modelString = mJSON["i18n"]["find_my_tesla"]["strings"]["Models"][modelShort]["short_name"]
+    try:
+        modelString = mJSON["i18n"]["find_my_tesla"]["strings"]["Models"][modelShort]["short_name"]
+    except KeyError:
+        for group in lexicon["groups"]:
+            if (group["code"] == "MODEL" and group["context"] == "default"):
+                trim = group["default_options"][0]
 
+        modelString = lexicon["options"][trim]["name"]
+
+    # For my 22042019 en_US there is no "Model Y" in i18n...
+    # But there is one in lexicon.options.$MDLY.name
+
+    # Get it from groups where code == "MODEL" and context == "default"
+    # groups.X.options.0
+    # Look up $MDLY in lexicon.options.$MDLY
 
     return modelShort, modelString
 
