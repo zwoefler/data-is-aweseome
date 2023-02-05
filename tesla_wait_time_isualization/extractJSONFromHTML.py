@@ -2,6 +2,11 @@ import json
 import os
 from datetime import datetime
 
+import bs4
+from bs4 import BeautifulSoup
+import re
+from subprocess import check_output
+
 
 def exportJSONToFile(filename, data):
     """Exports a json object to a given filename"""
@@ -26,12 +31,45 @@ def import_file(file_path):
         print(f'File not found: {file_path}')
 
 
-def extractJSONFromHTML(archiveHTML):
-    endSearchString = "if (typeof window.tesla.env === 'string')"
-    beginningSearchString = "window.tesla = "
+def extractNewDataModel(html):
+    soup = bs4.BeautifulSoup(html)
+    # Find dataJson variable in script tag of html file
+    script = soup.find('script', text=re.compile(r'dataJson'))
 
-    begin = archiveHTML.find(beginningSearchString) + len(beginningSearchString)
+    # Extract two json variables
+    matches = re.finditer(r'const\s*\w*\s*=\s*\{.+?\};', script.text, re.DOTALL)
+    dict_matches = [re.sub(r'const\s*\w*\s*=\s*', '', match.group(0)).rstrip(";") for match in matches]
+    concat_dicts = ",".join(dict_matches)
+
+    # Make Javascript String to extract json Objects
+    js_export_json_string = 'const teslaData = [' + concat_dicts + '];\nprocess.stdout.write(JSON.stringify(teslaData));'
+
+    with open('temp.js', 'w') as f:
+        f.write(js_export_json_string)
+
+    modelData = json.loads(check_output(['node','temp.js']).decode())
+    os.remove("temp.js")
+
+    return modelData
+
+
+def extractJSONFromHTML(archiveHTML):
+    # Old Tesla Data
+    beginningSearchString = "window.tesla = "
+    endSearchString = "if (typeof"
+
+    if (html.find("dataJson = ") > 0):
+        print("New version of Tesla Data")
+        modelJSON = extractNewDataModel(archiveHTML)
+        return modelJSON
+
+    begin = archiveHTML.find(beginningSearchString)
     end = archiveHTML.find(endSearchString)
+
+    if (begin < 0 or end < 0):
+        return []
+
+    begin += len(beginningSearchString)
 
     strippedArchiveHTML = archiveHTML[begin:end].strip()
     modelJSON = json.loads(strippedArchiveHTML.rstrip(";"))
@@ -111,13 +149,18 @@ def getModelData(modelJSON):
 
 raw_data_dir = "raw_html"
 raw_files = list_files(raw_data_dir)
-for file in raw_files[:1]:
+for file in raw_files:
 
-    print("READ JSON FROM:", file)
+    print("Extracting JSON from:", file)
     file_path = os.path.join(raw_data_dir, file)
     html = import_file(file_path)
     modelJSON = extractJSONFromHTML(html)
-    # exportRawJSONData(modelJSON)
+    if (len(modelJSON) < 1):
+        print(file, "does not contain valid JSON!")
+        continue
 
-    modelData = getModelData(modelJSON)
-    print("MODELDATA:", modelData)
+    print("Exporting JSON file", file)
+    exportRawJSONData(modelJSON)
+
+    # modelData = getModelData(modelJSON)
+    # print("MODELDATA:", modelData)
