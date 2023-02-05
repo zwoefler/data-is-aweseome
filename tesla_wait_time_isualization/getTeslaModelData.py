@@ -50,6 +50,7 @@ def getVehiclePrice(trim, modelJSON):
 
     try:
         for item in extra_content:
+            # Alternative would be "price_indicator_override"
             if(item["type"] == "price_indicator_override"):
                 price = item["content"][0]["content"]
     except:
@@ -86,10 +87,17 @@ def getMetaData(modelJSON):
         }
         print("getMetaData Error", e)
 
+    try:
+        currency = meta["currency_code"]
+        symbol = meta["currency_symbol"]
+    except KeyError:
+        currency = None
+        symbol = None
+
     metaData = {
         "country": getCountry(modelJSON),
-        "currency": meta["currency_code"],
-        "symbol": meta["currency_symbol"],
+        "currency": currency,
+        "symbol": symbol,
         "range_units": meta_specs["range"]["units"],
         "range_source": meta_specs["range"]["source"]
     }
@@ -120,14 +128,12 @@ def getBatteryContentList(modelJSON):
 
 
 def getRangeViaGroups(trim, battery_content_list):
-
     trim_metadata = {}
     for item in battery_content_list["content"]:
         if (item["selected_by"]["and"][0] == trim):
             trim_metadata = item
 
     return trim_metadata
-
 
 
 def getModelData(modelJSON):
