@@ -40,7 +40,13 @@ def getDate(modelJSON):
 
 def getModel(modelJSON):
     """Returns the Model Name as shortcut like my for ModelY or m3 for Model3"""
-    return modelJSON[0]["DSServices"]["KeyManager"]["keys"]["Lexicon"][0]["query"]["model"]
+    modelShort = modelJSON[0]["DSServices"]["KeyManager"]["keys"]["Lexicon"][0]["query"]["model"]
+    try:
+        modelString = modelJSON[1]["i18n"]["find_my_tesla"]["strings"]["Models"][modelShort]["short_name"]
+    except IndexError:
+        modelString = modelJSON[0]["i18n"]["find_my_tesla"]["strings"]["Models"][modelShort]["short_name"]
+
+    return modelShort, modelString
 
 
 def getLexicon(modelJSON):
@@ -49,35 +55,8 @@ def getLexicon(modelJSON):
     return modelJSON[0]["DSServices"][lexiconKey]
 
 
-def getExportData(jsonData):
-    return {
-        "model": getModel(jsonData),
-        "locale": getLocale(jsonData),
-        "downloadDate": getDownloadDate(jsonData)
-    }
-
-
 def deleteTempJavascriptFile(tempFile):
     os.remove(tempFile)
-
-
-def getTeslaModelJSON(soup_page):
-    script = soup_page.find('script', text=re.compile(r'dataJson'))
-    matches = re.finditer(r'const\s*\w*\s*=\s*\{.+?\};', script.text, re.DOTALL)
-    dict_matches = [re.sub(r'const\s*\w*\s*=\s*', '', match.group(0)).rstrip(";") for match in matches]
-    concat_dicts = ",".join(dict_matches)
-    js_export_json_string = 'const teslaData = [' + concat_dicts + '];\nprocess.stdout.write(JSON.stringify(teslaData));'
-    with open('temp.js', 'w') as f:
-        f.write(js_export_json_string)
-    modelData = json.loads(check_output(['node','temp.js']).decode())
-    deleteTempJavascriptFile("temp.js")
-
-    exportData = getExportData(modelData)
-    exportID = buildIDForJSONFile(exportData["model"], exportData["locale"], exportData["downloadDate"])
-    exportFilename = "raw_" + exportID + '.json'
-
-    exportJSONToFile(data_dir + exportFilename, modelData)
-    return exportFilename
 
 
 def exportJSONToFile(filename, data):
@@ -128,7 +107,12 @@ def getDeliveryEstForTrim(trim, modelJSON):
 
 def getAllTrims(modelJSON):
     lexicon = getLexicon(modelJSON)
-    trims = lexicon["sku"]["trims"]
+    try:
+        trims = lexicon["sku"]["trims"]
+    except KeyError as e:
+        print("Can't read ['sku']['trims']", e)
+    else:
+        print("ELSE")
     return trims
 
 def getConfigurableTrims(modelJSON):
@@ -236,11 +220,24 @@ def allTrimsInfo(modelJSON):
     return trims
 
 
+def getCountry(modelJSON):
+    """Returns the country code from the modelJSON"""
+    try:
+        country = modelJSON[1]["App"]["uiCountry"]
+    except IndexError:
+        country = modelJSON[0]["App"]["uiCountry"]
+    except:
+        print("ERROR: Getting Country")
+
+    return country
+
 def getMetaData(modelJSON):
     lexicon = getLexicon(modelJSON)
     meta = lexicon["metadata"]
+
+
     metaData = {
-        "country": modelJSON[1]["App"]["uiCountry"],
+        "country": getCountry(modelJSON),
         "currency": meta["currency_code"],
         "symbol": meta["currency_symbol"],
         "range_units": meta["specs"]["data"][0]["meta"]["specs"]["range"]["units"],
@@ -383,28 +380,40 @@ def getAvailableOptions(trim, modelJSON):
 
 
 def getModelData(modelJSON):
+    lexicon = getLexicon(modelJSON)
+    options = lexicon["options"]
+    modelShort, modelName = getModel(modelJSON)
+
+    trims = []
+    for modelKey, option in options.items():
+        if (modelName in option["long_name"]):
+            price = priceForOption(modelKey, modelJSON)
+            trimInfo = {
+                "price": price,
+                "trim": option["long_name"],
+                "trimShorthandle": modelKey
+            }
+            trims.append(trimInfo)
+
     modelData = {
-        "model": getModel(modelJSON),
+        "model": modelShort,
         "date": getDate(modelJSON),
         "meta": getMetaData(modelJSON),
-        "trims": allTrimsInfo(modelJSON),
-        "options": getPriceOptions(modelJSON)
+        "trims": trims,
+        # "options": getPriceOptions(modelJSON)
     }
     return modelData
 
 
+data_dir = "data"
+source_dir = "raw_json"
+file_name = "raw_my_en_US_14012023_030332.json"
 
-models = ["models", "model3", "modelx", "modely"]
-data_dir = "data/"
-# url = "https://www.tesla.com/modely/design#overview"
 
-for model in models:
-    url = f"https://www.tesla.com/{model}/design#overview"
+# Importing JSON file
+importPath = os.path.join(source_dir, file_name)
+importedJSON = importModelJSON(importPath)
+modelJSON = json.loads(importedJSON)
 
-    model_page = downloadTeslaModelPage(url)
-    filename = getTeslaModelJSON(model_page)
-    modelJSON = json.loads(importModelJSON(data_dir + filename))
-
-    availableLocales = modelJSON[1]["App"]["availableLocales"]
-    modelData = getModelData(modelJSON)
-    exportJSONToFile(data_dir + filename[4:], modelData)
+modelData = getModelData(modelJSON)
+exportJSONToFile(os.path.join(data_dir, file_name[4:]), modelData)
