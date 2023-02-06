@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-  <head>
-    <title>Model Dropdowns</title>
-  </head>
-  <body>
-    <h1>Select Model and Trim</h1>
-
-    <form method="post">
-        <div>
-          <label for="trim">Select a Trim:</label>
-          <select id="trim" name="trim">
-            {% for trim in trims %}
-              <option value="{{ trim }}">{{ trim }}</option>
-            {% endfor %}
-          </select>
-        </div>
-    </form>
-
-  </body>
+<head>
+  <title>Vehicle Model Data</title>
+</head>
+<body>
+  <h1>Vehicle Model Data</h1>
+  <form action="/" method="post">
+      <br>
+      <label for="trim">Trim:</label>
+      <select name="trim" id="trim">
+          {% for trim in model_data["m3"].keys() %}
+          <option value="{{ trim }}">{{ trim }}</option>
+          {% endfor %}
+      </select>
+      <br><br>
+      <input type="submit" value="Submit">
+  </form>
+  <br><br>
+  {% if image %}
+  <img src="data:image/png;base64,{{ image }}">
+  {% endif %}
+</body>
 </html>
