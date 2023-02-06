@@ -4,9 +4,9 @@ from datetime import datetime
 import sys
 
 
-trim = sys.argv[1]
-model = "m3"
-dataFile = "data_m3_en_US.json"
+model = sys.argv[1]
+trim = sys.argv[2]
+dataFile = f"aggregatedData_{model}_en_US.json"
 
 with open(dataFile, "r") as f:
     modelData = json.load(f)
