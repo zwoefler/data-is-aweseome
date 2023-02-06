@@ -68,13 +68,13 @@ def getVehiclePrice(trim, modelJSON):
         print("TRY PRICE via extra_content")
         for item in extra_content:
             # Alternative would be "price_indicator_override"
-            if(item["type"] == "price_indicator_override"):
+            if(item["type"] == "option_price_override"):
                 price = item["content"][0]["content"]
             else:
                 price = None
 
-        print("pricing Object")
         if(price is None):
+            print("pricing Object")
             for jsonObj in lexicon["options"][trim]["pricing"]:
                 if jsonObj["type"] == "base_plus_trim":
                     price = jsonObj["value"]
@@ -161,6 +161,12 @@ def getRangeViaGroups(trim, battery_content_list):
     return trim_metadata
 
 
+def getDisplayName(trim):
+    for item in lexicon["options"][trim]["extra_copy"]:
+        if(item["type"] == "name"):
+            return item["content"]
+
+
 def getModelData(modelJSON):
 
     lexicon = getLexicon(modelJSON)
@@ -176,6 +182,7 @@ def getModelData(modelJSON):
             trim_data = getRangeViaGroups(trim, battery_content_list)
 
         trim_data["price"] = getVehiclePrice(trim, modelJSON)
+        trim_data["displayedName"] = getDisplayName(trim)
         trim_data["trimShorthandle"] = trim
 
         trims.append(trim_data)
@@ -194,11 +201,14 @@ def getModelData(modelJSON):
 data_dir = "final_data"
 source_dir = "raw_json"
 
+
+
 for file_name in os.listdir(source_dir):
     # Importing JSON file
     importPath = os.path.join(source_dir, file_name)
     importedJSON = importModelJSON(importPath)
     modelJSON = json.loads(importedJSON)
+    lexicon = getLexicon(modelJSON)
 
     print("Model data for file:", file_name)
     configurableTrims = getConfiguratorTrims(modelJSON)
