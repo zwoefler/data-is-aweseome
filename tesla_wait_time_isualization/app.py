@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import io
 import base64
 import json
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -16,11 +17,13 @@ def index():
         trim = request.form['trim']
         data = model_data[model][trim]['data']
 
-        x = [item[0] for item in data]
-        y = [item[1] for item in data]
+        dates = [item[0] for item in data]
+        prices = [item[1] for item in data]
+        dates = [datetime.fromtimestamp(date / 1000) for date in dates]
+
 
         fig = plt.figure()
-        plt.plot(x, y)
+        plt.plot(dates, prices)
         plt.xlabel('Timestamp')
         plt.ylabel('Price')
         plt.title(f"{model} {trim} Price over time")

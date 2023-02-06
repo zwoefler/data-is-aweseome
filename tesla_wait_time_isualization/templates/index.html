@@ -8,9 +8,9 @@
       <br>
       <label for="trim">Trim:</label>
       <select name="trim" id="trim">
-          {% for trim in model_data["m3"].keys() %}
-          <option value="{{ trim }}">{{ trim }}</option>
-          {% endfor %}
+        {% for trim, data in model_data["m3"].items() %}
+        <option value="{{ trim }}">{{ trim }} - {{ data["name"] }}</option>
+        {% endfor %}
       </select>
       <br><br>
       <input type="submit" value="Submit">
