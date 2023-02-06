@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+  <head>
+    <title>Model Dropdowns</title>
+  </head>
+  <body>
+    <h1>Select Model and Trim</h1>
+
+    <form method="post">
+        <div>
+          <label for="trim">Select a Trim:</label>
+          <select id="trim" name="trim">
+            {% for trim in trims %}
+              <option value="{{ trim }}">{{ trim }}</option>
+            {% endfor %}
+          </select>
+        </div>
+    </form>
+
+  </body>
+</html>

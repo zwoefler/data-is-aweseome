@@ -4,3 +4,4 @@ matplotlib
 bs4
 requests
 urllib3
+flask
