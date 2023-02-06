@@ -1,33 +1,22 @@
-import glob
-import json
 import matplotlib.pyplot as plt
+import json
 from datetime import datetime
-import os
+import sys
 
-trimID = "$MT324"
-data_dir = "final_data"
-files = "m3_en_US_*json"
 
-json_files = glob.glob(os.path.join(data_dir, files))
+trim = sys.argv[1]
+model = "m3"
+dataFile = "data_m3_en_US.json"
 
-priceData = []
+with open(dataFile, "r") as f:
+    modelData = json.load(f)
 
-for file_path in json_files:
-    with open(file_path, "r") as f:
-        data = json.load(f)
-
-    trims = data["trims"]
-
-    for trim in trims:
-        if trim["trimShorthandle"] == trimID:
-            price = trim["price"]
-            date = datetime.fromtimestamp(data["date"] / 1000)
-            priceData.append((date, price))
-
-sorted_data = sorted(priceData, key=lambda x: x[0])
+print(modelData[model][trim])
+sorted_data = sorted(modelData[model][trim]["data"], key=lambda x: x[0])
 dates, prices = zip(*sorted_data)
+dates = [datetime.fromtimestamp(date / 1000) for date in dates]
 plt.plot(dates, prices)
 plt.xlabel("Date")
 plt.ylabel("Price in USD")
-plt.title("Price changes for" + trimID)
+plt.title("Price changes for" + modelData[model][trim]["name"])
 plt.show()
