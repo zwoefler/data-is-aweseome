@@ -6,6 +6,7 @@
 - Get data for all regions available since "the beginning"
 - Get data for China
 - Get List of available locales
+- Simplyfy script to get the price and date for a given model/trim
 
 
 - Write scipt that compares all available URLs from the Waybackmachine with the downloaded HTML and extracted JSON files!
@@ -44,8 +45,17 @@ The data is gathered automatically from the Wayback Machine which doesn't save t
 We download the data from the Wayback Archive.
 For multiple saved pages for the same day we download the first saved instance and discard the others. Cutting out duplicates.
 
-OUr automation pipeline isn't yet able to gather "older" (pre 2018) data.
+Our automation pipeline isn't yet able to gather "older" (pre 2018) data.
 Working on that!
+
+The data (currently) doesn't account for discontinued or currently unavailable models.
+For example there used to be a "Model 3 Standard Range Plus" which became simply the "Model 3".
+And the vehicle didn't magically decided it kicks off the "Standard Range Plus" Label.
+It is simply the cheapest available option.
+However, looking at the code we (currently) plot the vehicles price by it's identifier!
+The Model 3 displayed in the design studio has the ID "$MT322" and the name "Model 3 Rear-Wheel Drive" but is displayed as "Model 3".
+One of the earlier cheapest Model 3 offerings has the internal ID "$MT308" and the name "Standard Range Plus Rear-Wheel Drive".
+
 
 
 Example:
