@@ -8,10 +8,10 @@ import os
 
 data_dir = "final_data"
 locale = "en_US"
-model = "m3"
+model = "mx"
 files = f"{model}_{locale}_*json"
 
-exportFileName = f"data_{model}_{locale}.json"
+exportFileName = f"aggregatedData_{model}_{locale}.json"
 
 def exportModelData(jsonData):
     with open(exportFileName, "w") as f:
