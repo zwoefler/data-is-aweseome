@@ -21,7 +21,6 @@ def getModel(modelJSON):
     except IndexError:
         mJSON = modelJSON[0]
 
-    mJSON["i18n"]
     if(isinstance(mJSON["i18n"], str)):
         mJSON["i18n"] = json.loads(mJSON["i18n"])
 
@@ -62,18 +61,26 @@ def importModelJSON(json_file):
 
 def getVehiclePrice(trim, modelJSON):
     lexicon = getLexicon(modelJSON)
-
     extra_content = lexicon["options"][trim]["extra_content"]
-    price = None
 
+    price = 0
     try:
+        print("TRY PRICE via extra_content")
         for item in extra_content:
             # Alternative would be "price_indicator_override"
             if(item["type"] == "price_indicator_override"):
                 price = item["content"][0]["content"]
+            else:
+                price = None
+
+        print("pricing Object")
+        if(price is None):
+            for jsonObj in lexicon["options"][trim]["pricing"]:
+                if jsonObj["type"] == "base_plus_trim":
+                    price = jsonObj["value"]
     except:
-        price = None
-        print("Couln't get vehicle price via extra_content")
+        print("ERROR getting price for:", trim)
+
 
     return price
 
