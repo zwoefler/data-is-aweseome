@@ -4,7 +4,8 @@
 
 ## ToDos
 - Write scipt that compares all available URLs from the Waybackmachine with the downloaded HTML and extracted JSON files!
--
+- Use that script to exclude old URLs from being redownloaded!
+- Combine steps of downloading HTML and extracting JSON without saving the HTML!
 
 
 
