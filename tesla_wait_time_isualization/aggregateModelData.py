@@ -1,17 +1,12 @@
 import glob
 import json
-import matplotlib.pyplot as plt
-from datetime import datetime
 import os
 
-# Write function to get ALL data for a given Model
+# Write function to get ALL importedJSON for a given Model
 
 data_dir = "final_data"
-locale = "en_US"
-model = "mx"
-files = f"{model}_{locale}_*json"
+filename = "m*_en_US_*.json"
 
-exportFileName = f"aggregatedData_{model}_{locale}.json"
 
 def exportModelData(jsonData):
     with open(exportFileName, "w") as f:
@@ -19,20 +14,24 @@ def exportModelData(jsonData):
 
 ####################################################
 
-json_files = glob.glob(os.path.join(data_dir, files))
+json_files = glob.glob(os.path.join(data_dir, filename))
+locale = json_files[0][14:19]
+exportFileName = f"aggregatedData_{locale}_model_data.json"
 
 priceData = []
 
-exportData= {
-    model: {}
-}
+exportData= {}
 
 for file_path in json_files:
     with open(file_path, "r") as f:
-        data = json.load(f)
+        importedJSON = json.load(f)
 
     print("FILE:", file_path)
-    trims = data["trims"]
+    trims = importedJSON["trims"]
+    model = importedJSON["model"]
+
+    if (model not in exportData):
+        exportData[model] = {}
 
     for trimObj in trims:
         if (trimObj["trimShorthandle"] not in exportData[model]):
@@ -41,7 +40,7 @@ for file_path in json_files:
                 "name": trimObj["displayedName"]
             }
         price = trimObj["price"]
-        date = data["date"]
+        date = importedJSON["date"]
         exportData[model][trimObj["trimShorthandle"]]["data"].append((date, price))
 
 
