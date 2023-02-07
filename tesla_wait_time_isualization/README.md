@@ -9,7 +9,7 @@
 - [ ] Include options: Name, Price, specs (range, accel)
 - [X] Get List of available locales (getLocales.py)
 - [ ] Make price range from 0 to max!
-- [ ] Make timeline from earliest datapoint until latest
+- [X] Make timeline from earliest datapoint until latest
 - [ ] Combine ALL graphs i nthe same chart
 - [ ] Simplyfy script to get the price and date for a given model/trim
 - [ ] Stitch tirm data together (All Long Range variants, all SR and so on)

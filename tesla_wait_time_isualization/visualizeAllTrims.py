@@ -6,6 +6,7 @@ import sys
 model = sys.argv[1]
 dataFile = "aggregatedData_en_US_model_data.json"
 locale = dataFile[15:20]
+country = locale[3:]
 
 with open(dataFile, "r") as f:
     modelData = json.load(f)
@@ -22,8 +23,9 @@ for trimObj in modelData[model].values():
     ax.plot(dates, prices, label=name)
 
 ax.legend()
-# plt.plot(dates, prices)
+ax.set_ylim(bottom=0)
+
 plt.xlabel("Date")
 plt.ylabel("Price in USD")
-plt.title("Price changes for: " + model + " In " + locale)
+plt.title(model + " in " + country)
 plt.show()
