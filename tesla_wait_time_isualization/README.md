@@ -3,17 +3,29 @@
 
 
 ## ToDos
-- Get data for all regions available since "the beginning"
-- Get data for China
-- Get List of available locales
-- Simplyfy script to get the price and date for a given model/trim
+- [ ] Get data for all regions available since "the beginning"
+- [ ] Get data for China
+- [ ] Include earliest delivery date into aggreagted data
+- [ ] Include options: Name, Price, specs (range, accel)
+- [X] Get List of available locales (getLocales.py)
+- [ ] Make price range from 0 to max!
+- [ ] Make timeline from earliest datapoint until latest
+- [ ] Combine ALL graphs i nthe same chart
+- [ ] Simplyfy script to get the price and date for a given model/trim
+- [ ] Stitch tirm data together (All Long Range variants, all SR and so on)
+- [ ] Write scipt that compares all available URLs from the Waybackmachine with the downloaded HTML and extracted JSON files!
+- [ ] Use that script to exclude old URLs from being redownloaded!
+- [ ] Combine steps of downloading HTML and extracting JSON without saving the HTML!
+- [ ] Get visualization online!
+
+## Stitching data together
+A few problems:
+- Datasaet includes non sold vehicles (Include flag #notSold)
+- stitch together similar vehicles by price and date
 
 
-- Write scipt that compares all available URLs from the Waybackmachine with the downloaded HTML and extracted JSON files!
-- Use that script to exclude old URLs from being redownloaded!
-- Combine steps of downloading HTML and extracting JSON without saving the HTML!
 
-
+---
 
 ## Scope
 Collect all available Tesla Model data form the WaybackMachine.
