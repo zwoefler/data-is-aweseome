@@ -22,6 +22,16 @@ for trimObj in modelData[model].values():
 
     ax.plot(dates, prices, label=name)
 
+# Add horizontal lines for every 10,000
+for i in range(0, int(ax.get_ylim()[1]), 10000):
+    ax.axhline(i, color='gray', linestyle='dotted')
+
+# Add vertical lines every two months
+xmin, xmax = ax.get_xlim()
+for i in range(0, int((xmax - xmin) / (2 * 30.5)), 2):
+    x = xmin + i * (2 * 30.5)
+    ax.axvline(x, color='gray', linestyle='dotted')
+
 ax.legend()
 ax.set_ylim(bottom=0)
 
