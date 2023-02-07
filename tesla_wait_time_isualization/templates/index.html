@@ -4,16 +4,36 @@
 </head>
 <body>
   <h1>Vehicle Model Data</h1>
-  <form action="/" method="post">
-      <br>
-      <label for="trim">Trim:</label>
-      <select name="trim" id="trim">
-        {% for trim, data in model_data["m3"].items() %}
-        <option value="{{ trim }}">{{ trim }} - {{ data["name"] }}</option>
-        {% endfor %}
-      </select>
-      <br><br>
-      <input type="submit" value="Submit">
+  <form action="/model_selected" method="post">
+    <label for="model-select">Model:</label>
+    <select id="model-select" name="model" onchange="this.form.submit()">
+      {% if selected_model %}
+      <option value="{{ selected_model }}">Selected: {{ selected_model }}</option>
+      {% else %}
+      <option value="">-- Select Model --</option>
+      {% endif %}
+      {% for model in models %}
+      <option value="{{ model }}">{{ model }}</option>
+      {% endfor %}
+    </select>
+  </form>
+  <br>
+  <form action="/trim_selected" method="post">
+    <label for="trim-select">Trim:</label>
+    <select id="trim-select" name="trim" onchange="this.form.submit()">
+      {% if selected_trim %}
+      <option value="{{ selected_trim }}">{{ selected_trim }}</option>
+      {% else %}
+      <option value="">-- Select Trim --</option>
+      {% endif %}
+
+      {% if selected_model %}
+      {% for trim in trims %}
+      <option value="{{ trim }}">{{ trim }}</option>
+      {% endfor %}
+      <input name="model" type="hidden" value="{{ selected_model }}"></input>
+      {% endif %}
+    </select>
   </form>
   <br><br>
   {% if image %}
