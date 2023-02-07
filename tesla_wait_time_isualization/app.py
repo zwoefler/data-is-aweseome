@@ -4,7 +4,6 @@ import io
 import base64
 import json
 from datetime import datetime
-import logging
 
 app = Flask(__name__)
 
@@ -12,13 +11,11 @@ with open('aggregatedData_en_US_model_data.json', 'r') as f:
     model_data = json.load(f)
 
 models = model_data.keys()
-trims = []
 
 @app.route("/model_selected", methods=["POST"])
 def model_selected():
     model = request.form["model"]
-    logging.warning(model)
-    trims = list(model_data[model].keys())
+    trims = list(model_data[model].items())
     return render_template("index.html", models=models, selected_model=model, trims=trims)
 
 
@@ -28,6 +25,8 @@ def trim_selected():
     model = request.form['model']
 
     data = model_data[model][trim]['data']
+    trims = list(model_data[model].items())
+    trim_name = model_data[model][trim]["name"]
 
     dates = [item[0] for item in data]
     prices = [item[1] for item in data]
@@ -37,14 +36,14 @@ def trim_selected():
     plt.plot(dates, prices)
     plt.xlabel('Timestamp')
     plt.ylabel('Price')
-    plt.title(f"{model} {trim} Price over time")
+    plt.title(f"{model}: {trim_name} - {trim} Price over time")
 
     image = io.BytesIO()
     fig.savefig(image, format='png')
     image.seek(0)
     image_base64 = base64.b64encode(image.getvalue()).decode('utf-8')
 
-    return render_template('index.html', models=models, trims=trims, selected_model=model, selected_trim=trim, image=image_base64)
+    return render_template('index.html', models=models, selected_model=model, trims=trims, selected_trim=trim, trim_name=trim_name, image=image_base64)
 
 
 @app.route('/', methods=['GET'])
