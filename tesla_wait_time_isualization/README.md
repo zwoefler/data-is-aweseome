@@ -1,6 +1,12 @@
 # Tesla Delivery Visualizer
 
 
+## Order!
+1. Get Waybackmachine URL: saveWebArchiveTeslaURLs.py
+2. Read Model WaybackMachine URLs: downloadHistoricHTML.py model3_en_US_LinkList.json
+3. extractJSONFromHTML.py
+4. getTeslaModelData.py
+
 
 ## ToDos
 - [ ] Get data for all regions available since "the beginning"
@@ -8,11 +14,11 @@
 - [ ] Include earliest delivery date into aggreagted data
 - [ ] Include options: Name, Price, specs (range, accel)
 - [X] Get List of available locales (getLocales.py)
-- [ ] Make price range from 0 to max!
+- [X] Make price range from 0 to max!
 - [X] Make timeline from earliest datapoint until latest
-- [ ] Combine ALL graphs i nthe same chart
-- [ ] Simplyfy script to get the price and date for a given model/trim
-- [ ] Stitch tirm data together (All Long Range variants, all SR and so on)
+- [X] Combine ALL graphs i nthe same chart
+- [X] Simplyfy script to get the price and date for a given model/trim
+- [X] Stitch trim data together (All Long Range variants, all SR and so on)
 - [ ] Write scipt that compares all available URLs from the Waybackmachine with the downloaded HTML and extracted JSON files!
 - [ ] Use that script to exclude old URLs from being redownloaded!
 - [ ] Combine steps of downloading HTML and extracting JSON without saving the HTML!
