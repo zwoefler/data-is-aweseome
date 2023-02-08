@@ -18,23 +18,6 @@
     </select>
   </form>
   <br>
-  <form action="/trim_selected" method="post">
-    <label for="trim-select">Trim:</label>
-    <select id="trim-select" name="trim" onchange="this.form.submit()">
-      {% if selected_trim %}
-      <option value="{{ selected_trim }}">Selected: {{ trim_name }} - {{ selected_trim }}</option>
-      {% else %}
-      <option value="">-- Select Trim --</option>
-      {% endif %}
-
-      {% if selected_model %}
-      {% for trim, value in trims %}
-      <option value="{{ trim }}">{{ value["name"] }} - {{ trim }}</option>
-      {% endfor %}
-      <input name="model" type="hidden" value="{{ selected_model }}"></input>
-      {% endif %}
-    </select>
-  </form>
   <br><br>
   {% if image %}
   <img src="data:image/png;base64,{{ image }}">

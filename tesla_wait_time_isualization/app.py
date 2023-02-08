@@ -4,6 +4,7 @@ import io
 import base64
 import json
 from datetime import datetime
+import visualizeAllTrims
 
 app = Flask(__name__)
 
@@ -15,8 +16,9 @@ models = model_data.keys()
 @app.route("/model_selected", methods=["POST"])
 def model_selected():
     model = request.form["model"]
-    trims = list(model_data[model].items())
-    return render_template("index.html", models=models, selected_model=model, trims=trims)
+    image_base64 = visualizeAllTrims.visualizeModel(model)
+
+    return render_template("index.html", models=models, selected_model=model, image=image_base64)
 
 
 @app.route("/trim_selected", methods=["POST"])
