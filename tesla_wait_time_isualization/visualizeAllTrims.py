@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import io
 import base64
 import json
+import sys
 
 
 def importModelJSON(dataFile):
@@ -57,3 +58,13 @@ def visualizeModel(model, dataFile="aggregatedData_en_US_model_data.json"):
     image= createImage(figure)
 
     return image
+
+
+def base64_to_png(base64_image, file_path):
+    with open(file_path, "wb") as f:
+        f.write(base64.b64decode(base64_image))
+
+
+model = sys.argv[1]
+base64_image = visualizeModel(model)
+base64_to_png(base64_image, f"tesla_us_{model}_prices.png")
