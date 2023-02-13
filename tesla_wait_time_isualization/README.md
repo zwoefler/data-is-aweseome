@@ -3,6 +3,7 @@
 
 ## Order!
 1. Get Waybackmachine URL: saveWebArchiveTeslaURLs.py
+-
 2. Read Model WaybackMachine URLs: downloadHistoricHTML.py model3_en_US_LinkList.json
 3. extractJSONFromHTML.py
 4. getTeslaModelData.py
@@ -88,6 +89,14 @@ This might reuslt in us showing a price-action on say Feb 13, when in reality th
 
 
 # FAQ
+
+### Why are there some missing values?
+We use an automated process to count. We are not maniacs!
+Many things can go wrong:
+- Interrupted connection when downloading the data
+- Gaps in our automation that don't catch all data representations
+- We are NOT using live data. The timelag is about 2 days
+- Using the Waybackmachine for "historic" data. The Waybackmachine didn't capture the webpage on every day
 
 ### Why is not every single day represented?
 The data is downloaded from the WaybackMachine which doesn't save the pages for every single day.
