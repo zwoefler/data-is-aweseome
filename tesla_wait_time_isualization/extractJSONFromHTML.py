@@ -1,7 +1,7 @@
 import json
 import os
 from datetime import datetime
-
+from compareToAvailableData import compare_to_set
 import bs4
 from bs4 import BeautifulSoup
 import re
@@ -91,6 +91,8 @@ def exportRawJSONData(modelJSON):
     download_date = modelJSON[0]["DSServices"]["date"]
     date = datetime.utcfromtimestamp(download_date / 1000).strftime('%d%m%Y_%H%M%S')
 
+    # file[5:-4] + ".json"
+
     # Build export filename
     exportID = f"{model}_{locale}_{date}"
     export_filename = "raw_" + exportID + '.json'
@@ -148,6 +150,9 @@ def getModelData(modelJSON):
 
 
 raw_data_dir = "raw_html"
+raw_json_dir = "raw_json"
+
+
 raw_files = list_files(raw_data_dir)
 for file in raw_files:
 
