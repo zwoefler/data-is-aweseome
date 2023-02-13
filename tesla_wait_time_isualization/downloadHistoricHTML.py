@@ -3,6 +3,7 @@ import json
 import os
 import requests
 from sys import argv
+from compareToAvailableData import get_undownloaded_wayback_URLs
 
 def download_html(url, locale, model, date, data_dir="raw_html"):
     try:
@@ -58,16 +59,20 @@ script, modelLinkFile = argv
 print("Receiving Download Links for:", modelLinkFile)
 
 if file_exists(modelLinkFile):
-    waybackLinkList = json.loads(importJSONFile(modelLinkFile))
+
+    missing_wayback_URLs = get_undownloaded_wayback_URLs(modelLinkFile)
+    print(missing_wayback_URLs)
+
     model, locale = getModelAndLocale(modelLinkFile)
 
-    for item in waybackLinkList:
+    for item in missing_wayback_URLs:
         date = item[1]
         modelURL = item[2]
         print("Building Downloadlink for item dated:", date)
         downloadLink = waybackHelper.buildDownloadLink(date, modelURL)
         print("Downloading HTML for item date:", date)
         download_html(downloadLink, locale, model, date)
+
 else:
     print("Could not find your file:", modelLinkFile)
 
