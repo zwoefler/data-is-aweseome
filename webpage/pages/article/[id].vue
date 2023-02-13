@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p id="title" class="font-bold">{{ article.title }}</p>
+    <p id="title" class="font-bold text-2xl">{{ article.title }}</p>
     <p id="published">{{ article.publishedAt }}</p>
     <br>
     <img :src="imageURL" alt="">
@@ -21,6 +21,5 @@
   const response = await findOne<Article>('articles', route.params.id, { populate: ["images"]})
   const article = response.data.attributes
   const imageURL = new URL(article.images.data[0].attributes.url, baseURL).toString()
-
 
 </script>
