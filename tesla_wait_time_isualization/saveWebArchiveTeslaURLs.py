@@ -1,9 +1,6 @@
 import os
 import json
 import waybackHelper
-import urllib
-
-
 
 def file_exists (file_path):
     return os.path.exists(file_path)
