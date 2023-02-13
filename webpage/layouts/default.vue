@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div class="h-12 bg-black">
-      Data is Awesome
-    </div>
+    <Navbar/>
     <div>
       <slot ></slot>
     </div>
