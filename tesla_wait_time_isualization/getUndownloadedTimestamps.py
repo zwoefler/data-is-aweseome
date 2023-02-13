@@ -3,15 +3,11 @@ import json
 import os
 import sys
 
-def get_wayback_timestamps(linkFile):
+def import_wayback_JSON(linkFile):
     with open(linkFile) as f:
         waybackJSON = json.load(f)
 
-    timestamps = []
-    for item in waybackJSON:
-        timestamps.append(item[1])
-
-    return timestamps
+    return waybackJSON
 
 
 def timestamps_from_HTML_files(html_dir, filename):
@@ -25,25 +21,26 @@ def timestamps_from_HTML_files(html_dir, filename):
     return filename_timestamps
 
 
-def get_missing_timestamps(html_timestamps, wayback_timestamps):
-    missing_timestmaps = [timestamp for timestamp in wayback_timestamps if timestamp not in html_timestamps]
-    return missing_timestmaps
+def get_missing_wayback_URLs(html_timestamps, wayback_timestamps):
+    missing_wayback_URLs = []
+    for item in wayback_timestamps:
+        if item[1] not in html_timestamps:
+            missing_wayback_URLs.append(item)
+    return missing_wayback_URLs
 
 
-def get_undownloaded_timestamps(linkFile):
+def get_undownloaded_wayback_URLs(linkFile):
     html_dir = "raw_html"
     model = linkFile[:6]
     locale = linkFile[7:12]
     html_filename_template = f"html_raw_{locale}_{model}_*.html"
 
-    wayback_timestamps = get_wayback_timestamps(linkFile)
+    waybackJSON = import_wayback_JSON(linkFile)
     html_timestamps = timestamps_from_HTML_files(html_dir, html_filename_template)
-    missing_timestamps = get_missing_timestamps(html_timestamps, wayback_timestamps)
-    print("Model: ", model, "and locale:", locale, missing_timestamps)
-
-    return missing_timestamps
+    missing_wayback_URLs = get_missing_wayback_URLs(html_timestamps, waybackJSON)
+    return missing_wayback_URLs
 
 
 linkFile = sys.argv[1]
-get_undownloaded_timestamps(linkFile)
+get_undownloaded_wayback_URLs(linkFile)
 
