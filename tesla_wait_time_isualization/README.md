@@ -7,6 +7,7 @@
 2. Read Model WaybackMachine URLs: downloadHistoricHTML.py model3_en_US_LinkList.json
 3. extractJSONFromHTML.py
 4. getTeslaModelData.py
+5. aggregateModelData.py
 
 
 ## ToDos
