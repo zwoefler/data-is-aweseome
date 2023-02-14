@@ -5,7 +5,7 @@ import os
 # Write function to get ALL importedJSON for a given Model
 
 data_dir = "final_data"
-filename = "m*_en_US_*.json"
+filename = "en_US_*.json"
 
 
 def exportModelData(jsonData):
@@ -15,7 +15,7 @@ def exportModelData(jsonData):
 ####################################################
 
 json_files = glob.glob(os.path.join(data_dir, filename))
-locale = json_files[0][14:19]
+locale = json_files[0][11:16]
 exportFileName = f"aggregatedData_{locale}_model_data.json"
 
 priceData = []

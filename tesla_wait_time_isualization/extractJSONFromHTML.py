@@ -1,7 +1,6 @@
 import json
 import os
 from datetime import datetime
-from compareToAvailableData import compare_to_set
 import bs4
 from bs4 import BeautifulSoup
 import re
@@ -80,22 +79,7 @@ def extractJSONFromHTML(archiveHTML):
 
 def exportRawJSONData(modelJSON):
     # Extract Locale from modelJSON
-    if(len(modelJSON) > 1):
-        locale = modelJSON[1]["App"]["locale"]
-    else:
-        locale = modelJSON[0]["App"]["locale"]
-
-    model = modelJSON[0]["DSServices"]["KeyManager"]["keys"]["Lexicon"][0]["query"]["model"]
-
-    # Datetime Object to
-    download_date = modelJSON[0]["DSServices"]["date"]
-    date = datetime.utcfromtimestamp(download_date / 1000).strftime('%d%m%Y_%H%M%S')
-
-    # file[5:-4] + ".json"
-
-    # Build export filename
-    exportID = f"{model}_{locale}_{date}"
-    export_filename = "raw_" + exportID + '.json'
+    export_filename = file[5:-5] + ".json"
     export_path = os.path.join("raw_json", export_filename)
 
     # Export JSON file to given filename
@@ -152,8 +136,9 @@ def getModelData(modelJSON):
 raw_data_dir = "raw_html"
 raw_json_dir = "raw_json"
 
-
+# Only extract data from HTMl files for which their corresponding JSON file is missing!
 raw_files = list_files(raw_data_dir)
+
 for file in raw_files:
 
     print("Extracting JSON from:", file)
@@ -167,5 +152,3 @@ for file in raw_files:
     print("Exporting JSON file", file)
     exportRawJSONData(modelJSON)
 
-    # modelData = getModelData(modelJSON)
-    # print("MODELDATA:", modelData)

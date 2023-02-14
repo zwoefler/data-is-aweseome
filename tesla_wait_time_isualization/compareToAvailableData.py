@@ -29,6 +29,23 @@ def get_missing_wayback_URLs(html_timestamps, wayback_timestamps):
     return missing_wayback_URLs
 
 
+def compareHTMLToAvailableJSON(html_dir, json_dir):
+    """Compare the files in the 'raw_html' dir with 'raw_json'"""
+    amount_files_raw_html = os.listdir(html_dir)
+    amount_files_raw_json = os.listdir(json_dir)
+    if len(amount_files_raw_html) == len(amount_files_raw_json):
+        return
+    return
+
+
+def compare_to_set(base_list, comparison_set):
+    differences = []
+    for item in base_list:
+        if item not in comparison_set:
+            differences.append(item)
+    return differences
+
+
 def get_undownloaded_wayback_URLs(linkFile):
     html_dir = "raw_html"
     model = linkFile[:6]

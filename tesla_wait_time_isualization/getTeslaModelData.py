@@ -214,16 +214,3 @@ for file_name in os.listdir(source_dir):
     configurableTrims = getConfiguratorTrims(modelJSON)
     modelData = getModelData(modelJSON)
     exportJSONToFile(os.path.join(data_dir, file_name[4:]), modelData)
-
-
-
-# Available Trims for "old" raw_ms_en_US_16102020_064817.json
-# DSServices.Lexicon.groups.
-# (context == configurator && code == "TRIM"):
-#   configurableTrims = groups[XX]["options"]
-
-
-# Certain Prices are not int the price entry!
-# But
-# options.$MT10A.extra_content.[x].type == "price_indicator_override"
-# extra_content.1 or 2.content.0.content
