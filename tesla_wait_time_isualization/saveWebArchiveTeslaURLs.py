@@ -11,8 +11,7 @@ def exportJSONToFile(filename, data):
         json.dump(data, f)
 
 
-def getModelLinks(locale, model):
-    url = f"tesla.com/{model}/design"
+def getModelLinks(locale, model, url):
     print("Historic URLs for: ", url)
     waybackJSON = waybackHelper.getAvailableWebArchive(url)
 
@@ -25,11 +24,14 @@ def getModelLinks(locale, model):
     return
 
 models = ["models", "model3", "modelx", "modely"]
-locales = ["en_US"]
+# "en_US"
+locales = ["zh_CN"]
 
+# url = f"tesla.com/{model}/design"
 
 for locale in locales:
     for model in models:
-        getModelLinks(locale, model)
+        url = f"tesla.cn/{model}/design"
+        getModelLinks(locale, model, url)
 
 
