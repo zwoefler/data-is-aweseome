@@ -10,6 +10,9 @@
 5. aggregateModelData.py
 
 
+## Problems
+- Chinese Font/text isn't redenred correctly in images
+
 ## ToDos
 - [ ] Get data for all regions available since "the beginning"
 - [ ] Get data for China

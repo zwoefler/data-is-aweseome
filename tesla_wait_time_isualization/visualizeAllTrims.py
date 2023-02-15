@@ -14,6 +14,7 @@ def importModelJSON(dataFile):
 
     return modelData
 
+
 def plotModel(modelData, model, country):
     fig, ax = plt.subplots(figsize=(16,9))
 
@@ -39,7 +40,8 @@ def plotModel(modelData, model, country):
 
     return fig
 
-def createImage(fig):
+
+def createBase64Image(fig):
     image = io.BytesIO()
     fig.savefig(image, format='png')
     image.seek(0)
@@ -48,23 +50,17 @@ def createImage(fig):
     return image_base64
 
 
-def visualizeModel(model, dataFile="aggregatedData_en_US_model_data.json"):
-    dataFile = "aggregatedData_en_US_model_data.json"
-    locale = dataFile[15:20]
-    country = locale[3:]
-
-    modelJSON = importModelJSON(dataFile)
-    figure = plotModel(modelJSON, model, country)
-    image= createImage(figure)
-
-    return image
-
-
 def base64_to_png(base64_image, file_path):
     with open(file_path, "wb") as f:
         f.write(base64.b64decode(base64_image))
 
 
-model = sys.argv[1]
-base64_image = visualizeModel(model)
-base64_to_png(base64_image, f"tesla_us_{model}_prices.png")
+dataFile = sys.argv[1]
+modelJSON = importModelJSON(dataFile)
+locale = dataFile[15:20]
+country = locale[3:]
+
+for model in modelJSON.keys():
+    figure = plotModel(modelJSON, model, country)
+    base64_image = createBase64Image(figure)
+    base64_to_png(base64_image, f"tesla_{country}_{model}_prices.png")

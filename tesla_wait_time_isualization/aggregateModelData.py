@@ -5,7 +5,7 @@ import os
 # Write function to get ALL importedJSON for a given Model
 
 data_dir = "final_data"
-filename = "en_US_*.json"
+filename = "zh_CN_*.json"
 
 
 def exportModelData(jsonData):

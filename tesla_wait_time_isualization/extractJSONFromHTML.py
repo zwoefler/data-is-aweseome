@@ -137,10 +137,20 @@ raw_data_dir = "raw_html"
 raw_json_dir = "raw_json"
 
 # Only extract data from HTMl files for which their corresponding JSON file is missing!
-raw_files = list_files(raw_data_dir)
+html_files = list_files(raw_data_dir)
+json_files = list_files(raw_json_dir)
+
+json_files_set = set()
+for filename in json_files:
+    json_files_set.add(filename)
+
+raw_files = []
+for html_file in html_files:
+    if html_file[-36:-5] + ".json" not in json_files_set:
+        raw_files.append(html_file)
+
 
 for file in raw_files:
-
     print("Extracting JSON from:", file)
     file_path = os.path.join(raw_data_dir, file)
     html = import_file(file_path)
@@ -151,4 +161,3 @@ for file in raw_files:
 
     print("Exporting JSON file", file)
     exportRawJSONData(modelJSON)
-
