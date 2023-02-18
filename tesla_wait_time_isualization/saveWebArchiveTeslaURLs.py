@@ -19,13 +19,14 @@ def getModelLinks(locale, model, url):
     print("Retunring valid Model Archive links")
     waybackLinkList = waybackHelper.getValidModelArchiveLinks(waybackJSON)
 
-    export_path = f"{model}_{locale}_LinkList.json"
+    export_path = os.path.join(data_dir, f"{model}_{locale}_LinkList.json")
     print("Exporting to: ", export_path)
     exportJSONToFile(export_path, waybackLinkList)
     return
 
 models = ["models", "model3", "modelx", "modely"]
 locales = ["zh_CN", "en_US", "no_NO", "de_DE"]
+data_dir = "wayback_LinkLists"
 
 for locale in locales:
     for model in models:
