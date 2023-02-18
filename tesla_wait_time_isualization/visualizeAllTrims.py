@@ -3,11 +3,11 @@ import matplotlib.pyplot as plt
 import json
 from datetime import datetime
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 import io
 import base64
 import json
 import sys
-
 
 def importModelJSON(dataFile):
     with open(dataFile, "r") as f:
@@ -30,10 +30,19 @@ def plotModel(modelData, model, country):
 
         ax.plot(dates, prices, label=name)
 
+    max_y_value = int(ax.get_ylim()[1])
+    if max_y_value < 180000:
+        dotted_line_every = 10000
+    else:
+        dotted_line_every = 100000
+
     # Add horizontal lines for every 10,000
-    for i in range(0, int(ax.get_ylim()[1]), 10000):
+    for i in range(0, max_y_value, dotted_line_every):
         ax.axhline(i, color='gray', linestyle='dotted')
 
+    # format the y-axis ticks with comma delimiter for thousands
+    fmt = ticker.StrMethodFormatter("{x:,.0f}")
+    ax.yaxis.set_major_formatter(fmt)
 
     ax.legend()
     ax.set_ylim(bottom=0)
@@ -57,7 +66,6 @@ def createBase64Image(fig):
 def base64_to_png(base64_image, file_path):
     with open(file_path, "wb") as f:
         f.write(base64.b64decode(base64_image))
-
 
 dataFile = sys.argv[1]
 exportDirectory = "price_charts"
