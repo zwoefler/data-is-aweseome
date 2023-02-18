@@ -17,9 +17,12 @@ def importModelJSON(dataFile):
 
 
 def plotModel(modelData, model, country):
+
+    currency = modelData["meta"]["currency"]
+
     fig, ax = plt.subplots(figsize=(16,9))
 
-    for trimObj in modelData[model].values():
+    for trimObj in modelData["models"][model].values():
         name = trimObj["name"]
         dates = [item[0] for item in trimObj["data"]]
         dates = [datetime.fromtimestamp(date / 1000) for date in dates]
@@ -36,7 +39,7 @@ def plotModel(modelData, model, country):
     ax.set_ylim(bottom=0)
     plt.rcParams['font.family'] = ['Noto Sans CJK JP']
     plt.xlabel("Date")
-    plt.ylabel("Price in USD")
+    plt.ylabel("Price in" + currency)
     plt.title(model + " in " + country)
 
     return fig
@@ -62,7 +65,7 @@ modelJSON = importModelJSON(dataFile)
 locale = dataFile[15:20]
 country = locale[3:]
 
-for model in modelJSON.keys():
+for model in modelJSON["models"].keys():
     figure = plotModel(modelJSON, model, country)
     base64_image = createBase64Image(figure)
     export_filename = f"tesla_{country}_{model}_prices.png"
