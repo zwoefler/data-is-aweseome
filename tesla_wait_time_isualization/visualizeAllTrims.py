@@ -1,3 +1,4 @@
+import os
 import matplotlib.pyplot as plt
 import json
 from datetime import datetime
@@ -56,6 +57,7 @@ def base64_to_png(base64_image, file_path):
 
 
 dataFile = sys.argv[1]
+exportDirectory = "price_charts"
 modelJSON = importModelJSON(dataFile)
 locale = dataFile[15:20]
 country = locale[3:]
@@ -63,4 +65,6 @@ country = locale[3:]
 for model in modelJSON.keys():
     figure = plotModel(modelJSON, model, country)
     base64_image = createBase64Image(figure)
-    base64_to_png(base64_image, f"tesla_{country}_{model}_prices.png")
+    export_filename = f"tesla_{country}_{model}_prices.png"
+    export_path = os.path.join(exportDirectory, export_filename)
+    base64_to_png(base64_image, export_path)
