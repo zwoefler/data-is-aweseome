@@ -33,7 +33,7 @@ def plotModel(modelData, model, country):
 
     ax.legend()
     ax.set_ylim(bottom=0)
-
+    plt.rcParams['font.family'] = ['Noto Sans CJK JP']
     plt.xlabel("Date")
     plt.ylabel("Price in USD")
     plt.title(model + " in " + country)
