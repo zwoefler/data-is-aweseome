@@ -12,6 +12,7 @@ def exportJSONToFile(filename, data):
 
 
 def getModelLinks(locale, model, url):
+    print("")
     print("Historic URLs for: ", url)
     waybackJSON = waybackHelper.getAvailableWebArchive(url)
 
@@ -24,14 +25,17 @@ def getModelLinks(locale, model, url):
     return
 
 models = ["models", "model3", "modelx", "modely"]
-# "en_US"
-locales = ["zh_CN"]
-
-# url = f"tesla.com/{model}/design"
+locales = ["zh_CN", "en_US", "no_NO", "de_DE"]
 
 for locale in locales:
     for model in models:
-        url = f"tesla.cn/{model}/design"
+        print("locale:", locale)
+        if locale == "zh_CN":
+            url = f"tesla.cn/{model}/design"
+        elif locale == "en_US":
+            url = f"tesla.com/{model}/design"
+        else:
+            url = url = f"tesla.com/{locale}/{model}/design"
         getModelLinks(locale, model, url)
 
 
