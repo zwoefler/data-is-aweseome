@@ -45,11 +45,11 @@ def file_exists (file_path):
 
 def getModelAndLocale(modelLinkFile):
     """Extracts model and locale from fileName"""
-    splitFileName = modelLinkFile.split('_')
-    model = splitFileName[0]
-    locale = splitFileName[1] + '_' + splitFileName[2]
+    model = modelLinkFile[-26:-20]
+    locale = modelLinkFile[-19:-14]
     return model, locale
 
+##############################################################
 
 raw_html_dir = "raw_html"
 raw_json_dir = "raw_json"
