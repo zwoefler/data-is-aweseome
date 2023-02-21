@@ -4,6 +4,7 @@ from datetime import datetime
 import bs4
 from bs4 import BeautifulSoup
 import re
+import logging
 from subprocess import check_output
 
 
@@ -122,6 +123,8 @@ def getMetaData(modelJSON):
     return metaData
 
 
+
+
 def getModelData(modelJSON):
     modelData = {
         "model": modelJSON[0]["DSServices"]["KeyManager"]["keys"]["Lexicon"][0]["query"]["model"],
@@ -132,6 +135,9 @@ def getModelData(modelJSON):
     }
     return modelData
 
+# Set up logging
+log = "extractJSON.log"
+logging.basicConfig(filename=log,level=logging.DEBUG,format='%(asctime)s %(message)s', datefmt='%d/%m/%Y %H:%M:%S')
 
 raw_data_dir = "raw_html"
 raw_json_dir = "raw_json"
@@ -156,7 +162,7 @@ for file in raw_files:
     html = import_file(file_path)
     modelJSON = extractJSONFromHTML(html)
     if (len(modelJSON) < 1):
-        print(file, "does not contain valid JSON!")
+        logging.warning(file + " does not contain valid JSON!")
         continue
 
     print("Exporting JSON file", file)
