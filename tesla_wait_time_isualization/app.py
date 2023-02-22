@@ -4,7 +4,7 @@ import io
 import base64
 import json
 from datetime import datetime
-import visualizeAllTrims
+import createPriceCharts
 
 app = Flask(__name__)
 
@@ -16,7 +16,7 @@ models = model_data.keys()
 @app.route("/model_selected", methods=["POST"])
 def model_selected():
     model = request.form["model"]
-    image_base64 = visualizeAllTrims.visualizeModel(model)
+    image_base64 = createPriceCharts.visualizeModel(model)
 
     return render_template("index.html", models=models, selected_model=model, image=image_base64)
 
