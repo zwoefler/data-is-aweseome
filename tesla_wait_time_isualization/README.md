@@ -3,7 +3,6 @@
 
 ## Order!
 1. Get Waybackmachine URL: saveWebArchiveTeslaURLs.py
--
 2. Read Model WaybackMachine URLs: downloadHistoricHTML.py model3_en_US_LinkList.json
 3. extractJSONFromHTML.py
 4. getTeslaModelData.py
@@ -12,6 +11,9 @@
 
 ## Problems
 - Chinese Font/text isn't redenred correctly in images
+- Raw_Files get too big. Write pipeline, that only saves the file when it fails
+- Pipeline on GitHub that downloads the HTML, gets the ModelJSON for that vehicle/country and pushes to final_data
+- Model S and Model X have larger chunks of missing or 0 data outside the US
 
 ## ToDos
 - [ ] Get data for all regions available since "the beginning"
