@@ -24,6 +24,7 @@ def cutAudioClip(line_string):
     """
     Cut audio between timestamps and save clip as name (ffmpeg)
     """
+    print("Cutting Audio for: ", line_string)
     info = getRegexInformationFromString(line_string)
     export_name = createExportName(info["name"])
     os.system(f"ffmpeg -i landesparteitag_25.02.22_audio.mp3 -ss {info['beginSpeech']} -to {info['endSpeech']} -c copy speeches/{export_name}.mp3")
@@ -36,15 +37,6 @@ def audioToText(audioFile):
     result = model.transcribe(audioFile)
 
     return result
-
-
-def cutAllAudioClips(list_of_lines):
-    """Cuts all the Speech Audio Clips into smaller mp3s and saves them in folder 'speeches'"""
-    for line in list_of_lines:
-        print("LINE:", line)
-        cutAudioClip(line)
-
-    return
 
 
 def transcribeAllClips():
@@ -61,8 +53,6 @@ def transcribeAllClips():
                 json.dump(speech, f)
 
 
-# Cut all videoclips and put into folder "speeches"
-# Take each clip and transcribe to txt
 torch.cuda.is_available()
 if torch.cuda.is_available():
     print("CUDA")
@@ -92,4 +82,7 @@ list_of_lines = [
     "Daniel May: 5:15:45 - 5:20:07. Questions: 5:20:30 - 5:22:40",
     "Sabine Schwöbel-Lehmann: 5:23:10 - 5:28:45. Questions: 5:29:08 - 5:5:30:43",
 ]
+for line_string in list_of_lines:
+    cutAudioClip(line_string)
+
 transcribeAllClips()
