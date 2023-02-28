@@ -1,5 +1,5 @@
+import json
 import re
-
 
 regex = re.compile(r'^'
                    r'(?P<name>[^:]+):\s*'
@@ -11,8 +11,12 @@ regex = re.compile(r'^'
 
 with open("speeches.md", "r") as file:
     lines = file.readlines()
+    speeches_info = []
     for line in lines:
         match = regex.match(line)
         if match:
             info = match.groupdict()
-            print(info)
+            speeches_info.append(info)
+
+with open("speeches_info.json", "w") as outfile:
+    json.dump(speeches_info, outfile)
