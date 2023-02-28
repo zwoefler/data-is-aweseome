@@ -49,3 +49,70 @@ Anja Zeller: 4:58:49 - 5:04:07. Questions: 5:04:30 - 5:05:50
 Daniel May: 5:15:45 - 5:20:07. Questions: 5:20:30 - 5:22:40
 Sabine Schwöbel-Lehmann: 5:23:10 - 5:28:45. Questions: 5:29:08 - 5:5:30:43
 
+## 11. Place
+Miriam Dahlke: 5:45:26 - 5:50:37.
+
+
+## 12. Place
+Felix Martin: 5:55:29 - 6:00:26. Questions: 6:00:50 - 6:02:12
+
+## 13. Place
+Nina Eisenhart: 6:06:20 - 6:11:06. Questions: 6:11:30 - 6:13:07
+
+## 14. Place
+Torsten Leveringhaus: 6:24:10 - 6:29:15. Questions: 6:30:00 - 6:32:08
+
+
+## 15. Place
+Vanessa Gronemann: 6:36:10 - 6:41:48. Questions: 6:42:00 - 6:44:00
+
+## 16. Place
+Sascha Meier: 6:48:55 - 6:54:00. Questions: 6:54:30 - 6:56:35
+
+## 17. Place
+Kathrin Anders: 7:01:10 - 7:06:11. Questions: 7:06:30 - 7:08:37
+Gianina Zimmermann: 7:09:30 - 7:15:17. Questions: 7:15:32 - 7:18:12
+
+## 18. Place
+Ronney Aamoucke: 7:24:38 - 7:28:40. Questions: 7:28:52 - 7:30:12
+Andreas Ewald: 7:30:36 - 7:35:22
+Bernd Meffert: 7:36:07 -7:40:35. Questions: 7:40:45 - 7:41:31
+Hans-Jürgen Müller: 7:42:07 - 7:46:53
+
+## 19. Place
+Julia Herz: 7:54:18 - 7:59:10. Questions: 7:59:30 - 8:01:21
+Anette Huber: 8:02:00 - 8:07:40. Questions: 8:07:50 - 8:08:35
+Katrin Schleenbecker: 8:09:00 - 8:14:20. Questions: 8:14:30 - 8:15:50
+
+## 20. Place
+Markus Hofmann: 8:28:35 -8:34:04. Questions: 8:34:15 - 8:36:46
+Christoph Sippel: 8:37:10 - 8:42:44. Questions:8:43:50 - 8:45:12
+Marcus Stadler: 8:45:40 -8:50:45. Questions: 8:50:48 - 8:51:48
+
+## 21. Place
+Anjte Bördner: 9:04:18 - 9:09:50
+Silvia Brünnel: 9:10:40 - 9:16:12. Questions: 9:16:24 - 9:17:35
+Anke Föh-Harshman: 9:17:59 - 9:23:25
+Friederike von Franqué 9:23:57 - 9:27:55
+Marion Messik: 9:28:35 - 9:33:45
+Mirja Mietzker-Becker: 9:34:55 - 9:40:02
+Bianca Strauß: 9:41:45 - 9:47:10
+
+## 22. Place
+Frank Diefenbach: 9:59:45 - 10:05:15
+Haluk Kaya: 10:05:45 - 10:10:50
+Mahfooz Malik: 10:11:30 - 10:16:45. Questions: 10:16:55 - 10:19:35
+Sven Mathes: 10:19:55 - 10:24:22
+
+## 23. Place
+Mirjam Schmidt: 10:44:30 - 10:49:55. Questions: 10:50:15 - 10:52:15
+
+## 24. Place
+Thomas Gudehus: 11:04:23 - 11:09:25
+Dominik Lawetzky: 11:10:00 -11:15:05. Questions: 11:15:33 - 11:17:18
+Eric Tjarks: 11:17:38 - 11:22:05
+Lasse Westphal 11:23:00 - 11:28:30. Questions: 11:28:30 - 11:29:30
+
+## 25. Place
+Nilab Alokuzay-Kiesinger: 11:41:42 - 11:47:18
+Emely Green: 11:48:02 - 11:53:07
