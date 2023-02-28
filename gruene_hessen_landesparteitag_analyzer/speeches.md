@@ -5,18 +5,6 @@ Angela Dorn: 1:17:52 - 1:25:20. Questions: 1:25:50 - 1:28:40
 Tarek Al-Wazir: 1:36:45 - 1:42:35. Questions: 1:43:05 - 1:46:37
 Joachim Mietusch: 1:47:35 - 1:53:25. Questions: 1:53:40 - 1:55:54
 
-## Antrag auf das Votum der MP-Kandidatur
-Angela Dorn: 2:01:55 - 2:07:40
-Tarek Al-Wazir: 2:09:43 - 2:14:40
-
-Sigrid Erfurth: 2:15:45 - 2:17:44
-Tarek Al-Wazir: 2:18:00 - 2:18:55
-
-Michael Kolmer: 2:22:00 - 1:23:15
-Manuela Rottmann: 2:23:28 - 2:24:07
-Sven Schöller: 2:24:22 - 2:25:11
-Sigrid Hansen: 2:25:26 - 2:26:30
-
 ## 3. Place
 Martina Feldmayer: 2:27:45 - 2:33:11. Questions: 2:33:41 - 2:36:01
 
