@@ -16,7 +16,7 @@ Want a frontend to put YouTube link, select your range of time for the video, ge
 
 ## Steps
 - Download youtube video
-- Write Python script to 
+- Write Python script to
     iterate timestamps
     cut audio into clips
     push to whisper
@@ -25,6 +25,7 @@ Want a frontend to put YouTube link, select your range of time for the video, ge
 - Save text
 - get text from video/audio (per timestamp)
 - split into indiviudal speeches
+- include "text", "name", speaker_id" in the JSON file
 
 # Timestamps
 ## 1. Place
@@ -42,7 +43,7 @@ Sigrid Erfurth: 2:15:45 - 2:17:44
 Tarek Al-Wazir: 2:18:00 - 2:18:55
 
 
-## 
+##
 Michael Kolmer: 2:22:00 - 1:23:15
 Manuela Rottmann: 2:23:28 - 2:24:07
 Sven Schöller: 2:24:22 - 2:25:11
