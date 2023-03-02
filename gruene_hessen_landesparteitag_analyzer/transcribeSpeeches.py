@@ -1,16 +1,21 @@
+import sys
 import os
 import whisper
 import torch
 import json
 
 def cutAudio(info, audioFile):
-    os.system(f"ffmpeg -i landesparteitag_25.02.22_audio.mp3 -ss {info['beginSpeech']} -to {info['endSpeech']} -c copy {audioFile}")
+    os.system(f"ffmpeg -i {sourceAudio} -ss {info['beginSpeech']} -to {info['endSpeech']} -c copy {audioFile}")
     return
 
 
-def createExportName(name):
+def createExportName(info):
     """Returns the export name based on speaker name"""
-    return name.strip().lower().replace(" ", "_")
+    export_name = info["name"].strip().lower().replace(" ", "_")
+    if info["reminder"]:
+        return "reminder_" + export_name
+
+    return export_name
 
 
 def audioToText(audioFile):
@@ -35,6 +40,9 @@ def transcribeFile(file, info):
             json.dump(speech, f)
 
 
+# Calculate speech length
+# Transcribe Questions
+
 
 
 torch.cuda.is_available()
@@ -46,14 +54,21 @@ else:
     DEVICE = "cpu"
 
 folder = "speeches/"
+sourceAudio = "landesparteitag-am-25.und-26.februar-2023-ta.mp3"
 
-with open("speeches_info.json", "r") as f:
+with open(sys.argv[1], "r") as f:
     speech_info_list = json.load(f)
 
 for info in speech_info_list:
-    export_name = createExportName(info["name"])
+    export_name = createExportName(info)
     audioFile = os.path.join(folder, export_name + ".mp3")
     print("Working on:", audioFile)
+    if info["question"]:
+        questionAudioFile = os.path.join(folder, "question_" + export_name + ".mp3")
+        if not os.path.isfile(questionAudioFile):
+            cutAudio(info, questionAudioFile)
+            transcribeFile(questionAudioFile, info)
+
     if not os.path.isfile(audioFile):
         cutAudio(info, audioFile)
     transcribeFile(audioFile, info)
