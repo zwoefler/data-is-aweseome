@@ -2,7 +2,7 @@ import json
 import re
 
 regex = re.compile(r'^'
-                   r'(?:(?P<reminder>Reminder\.))?'
+                   r'(?:(?P<reminder>Reminder\.\s))?'
                    r'(?P<name>[^:]+):\s*'
                    r'(?P<beginSpeech>\d+:\d+:\d+)\s*-\s*'
                    r'(?P<endSpeech>\d+:\d+:\d+)'
