@@ -60,6 +60,8 @@ with open(sys.argv[1], "r") as f:
     speech_info_list = json.load(f)
 
 for info in speech_info_list:
+    if "youtube_id" in info:
+        continue
     export_name = createExportName(info)
     audioFile = os.path.join(folder, export_name + ".mp3")
     print("Working on:", audioFile)
