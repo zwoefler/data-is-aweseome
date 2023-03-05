@@ -18,7 +18,7 @@ for speechJSONFile in glob(folder + '/*.json'):
 
     speech_text = jsonData["text"]
 
-    buzzword_prompt = "Extrahiere die 5 wichtigesten Schlagworte und konkreten politischen Forderungen aus dieser Rede und stelle sie als JSON-Format zur Verfügung. Sollten keine Vorhanden sein lasse die Liste leer: \n\n"
+    buzzword_prompt = "Extrahiere die 5 wichtigesten Schlagworte und konkreten politischen Forderungen aus dieser Rede als Python-Liste: \n\n"
     summarize = "Summarize the following speech and add a list of the three key topics that the speaker talked about:\n\n"
     summarize_prompt = "Eine Zusammenfassung der Rede in weniger als vier Sätzen für Leute die die Veranstaltung nicht besuchten:\n\n "
 
