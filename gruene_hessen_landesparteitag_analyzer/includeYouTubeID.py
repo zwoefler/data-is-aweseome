@@ -9,7 +9,7 @@ import sys
 def createExportName(info):
     """Returns the export name based on speaker name"""
     export_name = info["name"].strip().lower().replace(" ", "_")
-    if "reminder" in info:
+    if info["reminder"]:
         return "reminder_" + export_name
 
     return export_name
