@@ -4,3 +4,4 @@ numpy
 openai
 openai-whisper
 python-dotenv
+unidecode

@@ -13,6 +13,12 @@ Want a frontend to put YouTube link, select your range of time for the video, ge
 4. Word-Count overview
 5. Summary Word-Count with sentiment (renewable energies, wind and solar, etc. are one group!)
 
+## Do CI
+1. getSpeechesInfo.py
+2. transcribeSpeeches.py
+3. summarizeSpeeches.py
+4. includeYouTubeID.py
+
 
 ## Steps
 - Download youtube video
