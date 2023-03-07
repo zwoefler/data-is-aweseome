@@ -1,5 +1,7 @@
 import json
 import re
+import sys
+import os
 
 regex = re.compile(r'^'
                    r'(?:(?P<reminder>Reminder\.\s))?'
@@ -10,8 +12,10 @@ regex = re.compile(r'^'
                    r'(?P<beginQuestions>\d+:\d+:\d+)\s*-\s*'
                    r'(?P<endQuestions>\d+:\d+:\d+))?')
 
+filename = sys.argv[1]
+exportname = os.path.splitext(filename)[0] + "_info.json"
 
-with open("speeches_2.md", "r") as file:
+with open(filename, "r") as file:
     lines = file.readlines()
     speeches_info = []
     for line in lines:
@@ -20,5 +24,5 @@ with open("speeches_2.md", "r") as file:
             info = match.groupdict()
             speeches_info.append(info)
 
-with open("speeches_info_2.json", "w") as outfile:
+with open(exportname, "w") as outfile:
     json.dump(speeches_info, outfile)
