@@ -81,7 +81,7 @@ Marcus Stadler: 8:45:40 -8:50:45. Questions: 8:50:48 - 8:51:48
 Anjte Bördner: 9:04:18 - 9:09:50
 Silvia Brünnel: 9:10:40 - 9:16:12. Questions: 9:16:24 - 9:17:35
 Anke Föh-Harshman: 9:17:59 - 9:23:25
-Friederike von Franqué 9:23:57 - 9:27:55
+Friederike von Franqué: 9:23:57 - 9:27:55
 Marion Messik: 9:28:35 - 9:33:45
 Mirja Mietzker-Becker: 9:34:55 - 9:40:02
 Bianca Strauß: 9:41:45 - 9:47:10
@@ -99,7 +99,7 @@ Mirjam Schmidt: 10:44:30 - 10:49:55. Questions: 10:50:15 - 10:52:15
 Thomas Gudehus: 11:04:23 - 11:09:25
 Dominik Lawetzky: 11:10:00 -11:15:05. Questions: 11:15:33 - 11:17:18
 Eric Tjarks: 11:17:38 - 11:22:05
-Lasse Westphal 11:23:00 - 11:28:30. Questions: 11:28:30 - 11:29:30
+Lasse Westphal: 11:23:00 - 11:28:30. Questions: 11:28:30 - 11:29:30
 
 ## 25. Place
 Nilab Alokuzay-Kiesinger: 11:41:42 - 11:47:18
