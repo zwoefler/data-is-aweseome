@@ -3,3 +3,4 @@ jupyter
 requests
 python-dotenv
 matplotlib
+openpyxl
