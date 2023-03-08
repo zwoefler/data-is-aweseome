@@ -10,6 +10,8 @@ touch requirements.txt
 
 echo "pandas" >> requirements.txt
 echo "jupyter" >> requirements.txt
+echo "requests" >> requirements.txt
+echo "python-dotenv" >> requirements.txt
 
 cp ../develop.sh .
 
