@@ -11,3 +11,5 @@ python3 extractJSONFromHTML.py
 python3 getTeslaModelData.py
 
 python3 aggregateModelData.py
+
+python3 createPriceCharts.py
