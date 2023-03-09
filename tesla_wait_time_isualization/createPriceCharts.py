@@ -9,7 +9,6 @@ import matplotlib.ticker as ticker
 import io
 import base64
 import json
-import sys
 
 def importModelJSON(dataFile):
     with open(dataFile, "r") as f:
