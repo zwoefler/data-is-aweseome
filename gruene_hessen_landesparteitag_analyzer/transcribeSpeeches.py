@@ -62,11 +62,6 @@ for info in speech_info_list:
     export_name = createExportName(info)
     audioFile = os.path.join(folder, export_name + ".mp3")
     print("Working on:", audioFile)
-    # if info["question"]:
-    #     questionAudioFile = os.path.join(folder, "question_" + export_name + ".mp3")
-    #     if not os.path.isfile(questionAudioFile):
-    #         cutAudio(info, questionAudioFile)
-    #         transcribeFile(questionAudioFile, info)
 
     if not os.path.isfile(audioFile):
         cutAudio(info, audioFile)
