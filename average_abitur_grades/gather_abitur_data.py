@@ -44,12 +44,12 @@ archive_url = "https://www.kmk.org/dokumentation-statistik/statistik/schulstatis
 def main():
     if os.path.isfile(zip_links_file):
         zip_links = load_json_data(zip_links_file)
-        print("Data read from file:", zip_links)
+        return zip_links
     else:
         webpage = download_kmk_webpage(url)
         zip_links = get_zip_links(webpage)
         export_to_JSON(zip_links_file, zip_links)
-        print("Data downloaded and saved to file: ", zip_links)
+        return zip_links
 
 
 

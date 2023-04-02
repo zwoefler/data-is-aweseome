@@ -43,19 +43,16 @@ class TestDownloadKMKWebpage(unittest.TestCase):
 
 
     @patch('builtins.open', mock_open(read_data='["xxx.zip", "yyy.zip"]'))
-    def test_when_json_link_file_exist(self):
+    def test_when_json_link_file_exist_load_json_file_instead_of_download(self):
         if(os.path.isfile(zip_link_file)):
-            main()
-            self.assertEqual('Data read from file: ["xxx.zip", "yyy.zip"]',
-                            f'Data read from file: {main()}')
+            data = main()
+            self.assertEqual(data, ["xxx.zip", "yyy.zip"])
 
 
-    def test_download_data_when_zip_file_doesnt_exist(self):
+    def test_when_json_link_file_doesnt_exist(self):
         if(not os.path.isfile(zip_link_file)):
             main()
             self.assertTrue(os.path.isfile(zip_link_file))
-
-
 
 
 
