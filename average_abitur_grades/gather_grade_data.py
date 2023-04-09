@@ -8,9 +8,8 @@ url = "https://www.kmk.org/dokumentation-statistik/statistik/schulstatistik/abit
 domain = "https://www.kmk.org"
 
 # 1. Download HTML
-def get_xlsx_links(url):
-    response = requests.get(url)
-    soup = BeautifulSoup(response.text, "html.parser")
+def get_xlsx_links(html):
+    soup = BeautifulSoup(html, "html.parser")
     links = []
     for link in soup.find_all("a"):
         href = link.get("href")
@@ -49,6 +48,8 @@ def return_excel_as_JSON(excel_file):
 
 
 # 2. Get list of excel downloadlinks from HTML
+
+
 # 3. Import Excel to Pandas and return list of germany
 def main():
     get_xlsx_links(url)

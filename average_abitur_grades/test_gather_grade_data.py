@@ -4,15 +4,22 @@ import gather_grade_data
 
 url = "https://www.kmk.org/dokumentation-statistik/statistik/schulstatistik/abiturnoten.html"
 
+
 class TestGatherGradeData(unittest.TestCase):
     def test_return_list_of_xlsx_for_given_HTML(self):
-        excel_links = gather_grade_data.get_xlsx_links(url)
+        with open('test_data/Abiturnoten.html') as f:
+            html_string = f.read()
+        excel_links = gather_grade_data.get_xlsx_links(html_string)
+
+        real_links = ['https://www.kmk.org/fileadmin/Dateien/pdf/Statistik/Dokumentationen/Schnellmeldung_Abiturnoten_2022.xlsx', 'https://www.kmk.org/fileadmin/Dateien/pdf/Statistik/Dokumentationen/Aus_Abiturnoten_2021.xlsx', 'https://www.kmk.org/fileadmin/Dateien/pdf/Statistik/Dokumentationen/Aus_Abiturnoten_2020_Werte.xlsx']
 
         self.assertIsInstance(excel_links, list)
         self.assertGreater(len(excel_links), 2)
         for link in excel_links:
             self.assertTrue("https://www.kmk.org" in link)
             self.assertTrue(link.endswith(".xlsx"))
+
+        self.assertEqual(excel_links, real_links)
 
     def test_providing_grade_excel_returns_json_as_JSON(self):
         excel_file = "test_data/Schnellmeldung_Abiturnoten_2022.xlsx"
