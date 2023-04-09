@@ -1,9 +1,10 @@
+import os
 import unittest
 import json
 import gather_grade_data
 
 url = "https://www.kmk.org/dokumentation-statistik/statistik/schulstatistik/abiturnoten.html"
-
+archive_url = "https://www.kmk.org/dokumentation-statistik/statistik/schulstatistik/abiturnoten/archiv-abiturnoten.html"
 
 class TestGatherGradeData(unittest.TestCase):
     def test_return_list_of_xlsx_for_given_HTML(self):
@@ -38,6 +39,23 @@ class TestGatherGradeData(unittest.TestCase):
         year = gather_grade_data.get_year_of_grade_report(excel_file)
 
         self.assertEqual(year, 2022)
+
+
+    def test_get_correct_excel_file_name(self):
+        excel_link = 'https://www.kmk.org/fileadmin/Dateien/pdf/Statistik/Dokumentationen/Aus_Abiturnoten_2020_Werte.xlsx'
+        filename = gather_grade_data.get_excel_file_name(excel_link)
+
+        self.assertEqual(filename, "Aus_Abiturnoten_2020_Werte.xlsx")
+
+
+    def test_for_excel_files_return_valid_JSON(self):
+        excel_files_list = ["Schnellmeldung_Abiturnoten_2022.xlsx"]
+        abitur_grade_json = gather_grade_data.abitur_grades_as_JSON(excel_files_list, folder='test_data')
+
+        self.assertTrue(os.path.exists('excel_files/'))
+        self.assertIsInstance(abitur_grade_json, dict)
+        self.assertIsInstance(abitur_grade_json[2022], dict)
+        self.assertAlmostEqual(abitur_grade_json[2022]["states"]["BW"]["Notenmittel"], 2.23, places=1)
 
 if __name__ == '__main__':
     unittest.main()

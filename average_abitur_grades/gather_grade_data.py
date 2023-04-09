@@ -8,6 +8,11 @@ url = "https://www.kmk.org/dokumentation-statistik/statistik/schulstatistik/abit
 domain = "https://www.kmk.org"
 
 # 1. Download HTML
+def return_html_from_url(url):
+    response = requests.get(url)
+    return response.text
+
+
 def get_xlsx_links(html):
     soup = BeautifulSoup(html, "html.parser")
     links = []
@@ -17,6 +22,21 @@ def get_xlsx_links(html):
             download_link = domain + href
             links.append(download_link)
     return links
+
+
+def get_excel_file_name(excel_link):
+    filename = excel_link.split('/')[-1]
+    return filename
+
+
+def download_excel_to_folder(excel_link, filename, folder="excel_files"):
+    response = requests.get(excel_link)
+    if response.status_code == 200:
+        with open(os.path.join(folder, filename), 'wb') as f:
+            f.write(response.content)
+    else:
+        print('Error downloading file')
+    return
 
 
 def get_year_of_grade_report(excel_file):
@@ -39,20 +59,42 @@ def return_excel_as_JSON(excel_file):
         states[k] = dict(zip(index, v))
 
     excel_json = {
-        "year" : 2022,
+        "year" : get_year_of_grade_report(excel_file),
         "states": states
     }
 
     return excel_json
 
+def abitur_grades_as_JSON(excel_files_list, folder="excel_files"):
+    grades_json = {}
+    for file in excel_files_list:
+        filename = os.path.join(folder, file)
+        year = get_year_of_grade_report(filename)
+        excel_json = return_excel_as_JSON(filename)
+        grades_json[year] = excel_json
+    return grades_json
 
 
-# 2. Get list of excel downloadlinks from HTML
-
+def export_garde_JSON(grade_json, filename="abitur_grades.json"):
+    with open(filename, 'w') as f:
+        json.dump(grade_json, f)
+    return
 
 # 3. Import Excel to Pandas and return list of germany
 def main():
-    get_xlsx_links(url)
+    html = return_html_from_url(url)
+    excel_links = get_xlsx_links(html)
+    for link in excel_links:
+        file_name = get_excel_file_name(link)
+        download_excel_to_folder(link, file_name)
+
+    excel_files = os.listdir('excel_files/')
+    grade_json = abitur_grades_as_JSON(excel_files)
+    export_garde_JSON(grade_json)
+
+
+
+
 
 
 if __name__ == '__main__':
