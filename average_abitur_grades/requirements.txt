@@ -3,3 +3,5 @@ jupyter
 requests
 python-dotenv
 pytest
+bs4
+openpyxl
