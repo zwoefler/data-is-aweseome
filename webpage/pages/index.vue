@@ -2,9 +2,9 @@
   <div>
     INDEX PAGE
     <p>Data Analysis</p>
-    <p v-for="project in projects">
+    <router-link :to="project.project" v-for="project in projects">
       {{ project.project }}
-    </p>
+    </router-link>
   </div>
 </template>
 
