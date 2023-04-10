@@ -85,5 +85,19 @@ class TestGatherGradeData(unittest.TestCase):
         self.assertEqual(len(abitur_grade_json[2022]["grades"]), 31)
 
 
+    def test_form_zip_link_to_excel_files(self):
+        archive_zip_url = "https://kmk.org/fileadmin/Dateien/pdf/Statistik/Aus_Abiturnoten_2006_2013.zip"
+        extract_folder = 'extract_folder'
+        list_of_excel_files = gather_grade_data.download_excel_files_from_zip_download(archive_zip_url, extract_folder)
+
+        self.assertEqual(len(list_of_excel_files), 8)
+        self.assertTrue(list_of_excel_files[5].endswith('.xls'))
+
+
+    # def test_include_aggregated_overviews_as_zips(self):
+    #     archive_zip_url = "https://kmk.org/fileadmin/Dateien/pdf/Statistik/Aus_Abiturnoten_2006_2013.zip"
+    #     gather_grade_data.abitur_grades_as_JSON(excel_files_list, )
+
+
 if __name__ == '__main__':
     unittest.main()

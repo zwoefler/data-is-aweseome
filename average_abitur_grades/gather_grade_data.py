@@ -1,8 +1,11 @@
 from bs4 import BeautifulSoup
 import requests
+import io
+import zipfile
 import os
 import json
 import pandas as pd
+import shutil
 
 urls = [
     "https://www.kmk.org/dokumentation-statistik/statistik/schulstatistik/abiturnoten.html",
@@ -25,6 +28,19 @@ def get_xlsx_links(html):
             download_link = domain + href
             links.append(download_link)
     return links
+
+
+def download_excel_files_from_zip_download(zip_link, extract_folder='extract_folder'):
+    response = requests.get(zip_link)
+    zip_file = zipfile.ZipFile(io.BytesIO(response.content))
+    zip_file.extractall(extract_folder)
+    zip_file.close()
+    for file in os.listdir(extract_folder):
+        if not file.endswith('.xls'):
+            filepath = os.path.join(extract_folder, file)
+            os.remove(filepath)
+    extracted_excel_files = os.listdir(extract_folder)
+    return extracted_excel_files
 
 
 def get_excel_file_name(excel_link):
@@ -100,8 +116,17 @@ def export_garde_JSON(grade_json, filename="abitur_grades.json"):
         json.dump(grade_json, f)
     return
 
-# 3. Import Excel to Pandas and return list of germany
+
+zip_download_link = "https://kmk.org/fileadmin/Dateien/pdf/Statistik/Aus_Abiturnoten_2006_2013.zip"
+exctract_folder = "extract_folder"
+
 def main():
+    zip_excel_files = download_excel_files_from_zip_download(zip_download_link, exctract_folder)
+    for filename in zip_excel_files:
+        from_path = os.path.join(exctract_folder, filename)
+        to_path = os.path.join('excel_files', filename)
+        shutil.move(from_path, to_path)
+
     for link in urls:
         html = return_html_from_url(link)
         excel_links = get_xlsx_links(html)
