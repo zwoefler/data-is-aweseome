@@ -18,37 +18,6 @@ The data should have:
 - Grades (1.0 - 4.0) for Germany (total)
 - Average Grade for given year per state and total
 
-The JSON format:
-```
-{
-    years: [2006, ..., 2022]
-    grades: {
-        total: [1.2, ..., 3.2],
-        bw: [1.2, ..., 3.2],
-        nw: [1.2, ..., 3.2],
-    },
-    distribution: {
-        total: {
-            1.0: 56,
-            1.1: 127,
-            ...
-            4.0: 24
-        },
-        bw: {
-            1.0: 56,
-            1.1: 127,
-            ...
-            4.0: 24
-        },
-        nw: {
-            1.0: 56,
-            1.1: 127,
-            ...
-            4.0: 24
-        },
-    }
-}
-```
 
 
 1. Download Zips
