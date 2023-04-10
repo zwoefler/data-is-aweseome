@@ -1,12 +1,24 @@
 import os
 import unittest
-import json
 import gather_grade_data
 
 url = "https://www.kmk.org/dokumentation-statistik/statistik/schulstatistik/abiturnoten.html"
 archive_url = "https://www.kmk.org/dokumentation-statistik/statistik/schulstatistik/abiturnoten/archiv-abiturnoten.html"
 
 class TestGatherGradeData(unittest.TestCase):
+
+
+    def test_return_list_of_xls_for_given_html(self):
+        with open('test_data/Archiv - Abiturnoten.html') as f:
+            html_string = f.read()
+        excel_links = gather_grade_data.get_xlsx_links(html_string)
+
+        assert_link_2018 = excel_links[1]
+        self.assertTrue("https://www.kmk.org" in assert_link_2018)
+        self.assertGreater(len(excel_links), 5)
+        self.assertTrue(assert_link_2018.endswith('.xls'))
+
+
     def test_return_list_of_xlsx_for_given_HTML(self):
         with open('test_data/Abiturnoten.html') as f:
             html_string = f.read()
@@ -19,6 +31,7 @@ class TestGatherGradeData(unittest.TestCase):
         for link in excel_links:
             self.assertTrue("https://www.kmk.org" in link)
             self.assertTrue(link.endswith(".xlsx"))
+
 
         self.assertEqual(excel_links, real_links)
 
@@ -56,6 +69,21 @@ class TestGatherGradeData(unittest.TestCase):
         self.assertIsInstance(abitur_grade_json, dict)
         self.assertIsInstance(abitur_grade_json[2022], dict)
         self.assertAlmostEqual(abitur_grade_json[2022]["states"]["BW"]["Notenmittel"], 2.23, places=1)
+
+
+    def test_calculated_average_grade_for_country(self):
+        excel_files_list = ["Schnellmeldung_Abiturnoten_2022.xlsx"]
+        abitur_grade_json = gather_grade_data.abitur_grades_as_JSON(excel_files_list, folder='test_data')
+
+        self.assertAlmostEqual(abitur_grade_json[2022]["average_grade"], 2.28, places=2)
+        self.assertEqual(abitur_grade_json[2022]["number_of_tests"], 311804)
+        self.assertEqual(abitur_grade_json[2022]["passed"], 299787)
+        self.assertEqual(abitur_grade_json[2022]["number_failed"], 12017)
+        self.assertAlmostEqual(abitur_grade_json[2022]["percentage_failed"], 3.85, places=2)
+
+        self.assertEqual(abitur_grade_json[2022]["grades"][2.3], 14979)
+        self.assertEqual(len(abitur_grade_json[2022]["grades"]), 31)
+
 
 if __name__ == '__main__':
     unittest.main()

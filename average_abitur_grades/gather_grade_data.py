@@ -4,7 +4,10 @@ import os
 import json
 import pandas as pd
 
-url = "https://www.kmk.org/dokumentation-statistik/statistik/schulstatistik/abiturnoten.html"
+urls = [
+    "https://www.kmk.org/dokumentation-statistik/statistik/schulstatistik/abiturnoten.html",
+    "https://www.kmk.org/dokumentation-statistik/statistik/schulstatistik/abiturnoten/archiv-abiturnoten.html"]
+
 domain = "https://www.kmk.org"
 
 # 1. Download HTML
@@ -18,7 +21,7 @@ def get_xlsx_links(html):
     links = []
     for link in soup.find_all("a"):
         href = link.get("href")
-        if href and href.endswith(".xlsx"):
+        if href.endswith(".xlsx") or href.endswith('.xls'):
             download_link = domain + href
             links.append(download_link)
     return links
@@ -55,12 +58,29 @@ def return_excel_as_JSON(excel_file):
     index = noten_sheet["Land"].tolist()
     states = noten_sheet.iloc[:,1:].to_dict(orient='list')
 
-    for k,v, in states.items():
+    country_grades = noten_sheet.iloc[5:, 1:17].sum(axis=1).tolist()
+    index_country_grades = index[5:]
+
+    country_aggregated_grades_weights = [a*b for a,b in (zip(country_grades, index_country_grades))]
+
+    number_of_tests = noten_sheet.iloc[0, 1:].sum()
+    passed = noten_sheet.iloc[1, 1:].sum()
+    number_failed = noten_sheet.iloc[2, 1:].sum()
+    average_grade = sum(country_aggregated_grades_weights) / passed
+    percentage_failed = (number_failed / number_of_tests) * 100
+
+    for k,v in states.items():
         states[k] = dict(zip(index, v))
 
     excel_json = {
         "year" : get_year_of_grade_report(excel_file),
-        "states": states
+        "grades": dict(zip(index_country_grades, country_grades)),
+        "states": states,
+        "number_of_tests": number_of_tests,
+        "passed": passed,
+        "number_failed": number_failed,
+        "average_grade": average_grade,
+        "percentage_failed": percentage_failed
     }
 
     return excel_json
@@ -82,11 +102,13 @@ def export_garde_JSON(grade_json, filename="abitur_grades.json"):
 
 # 3. Import Excel to Pandas and return list of germany
 def main():
-    html = return_html_from_url(url)
-    excel_links = get_xlsx_links(html)
-    for link in excel_links:
-        file_name = get_excel_file_name(link)
-        download_excel_to_folder(link, file_name)
+    for link in urls:
+        html = return_html_from_url(link)
+        excel_links = get_xlsx_links(html)
+
+        for link in excel_links:
+            file_name = get_excel_file_name(link)
+            download_excel_to_folder(link, file_name)
 
     excel_files = os.listdir('excel_files/')
     grade_json = abitur_grades_as_JSON(excel_files)
