@@ -1,6 +1,11 @@
 <template>
   <div>
     <h1>Abiturnoten</h1>
+    <div>
+      <select v-model="selectedOption">
+        <option v-for="option in selectionOptions" :key="option" :value="option">{{ option }}</option>
+      </select>
+    </div>
     <Linechart :chartData="chartData" :chartOptions="chartOptions"></Linechart>
   </div>
 </template>
@@ -30,9 +35,10 @@ var chartData = {
     }
   }
 
-  var selection = ref(["Total"])
+  var selectedOption = ref()
+  var selectionOptions = ref(["Total"])
   for (const key in grades_data[2006]["states"]){
-    selection.value.push(key)
+    selectionOptions.value.push(key)
   }
 
 
