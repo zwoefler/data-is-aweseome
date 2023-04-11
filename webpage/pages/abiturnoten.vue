@@ -30,10 +30,17 @@ var chartData = {
     }
   }
 
-for (const key in grades_data) {
-  chartData["labels"].push(grades_data[key]["year"])
-  chartData["datasets"][0]["data"].push(grades_data[key]["average_grade"])
-}
+  var selection = ref(["Total"])
+  for (const key in grades_data[2006]["states"]){
+    selection.value.push(key)
+  }
+
+
+  for (const key in grades_data) {
+    chartData["labels"].push(grades_data[key]["year"])
+    chartData["datasets"][0]["data"].push(grades_data[key]["average_grade"])
+
+  }
 
 
 </script>
