@@ -1,5 +1,5 @@
 <template>
-  <Line :data="props.chartData" :options="props.chartOptions" />
+  <Line :data="chartData" :options="props.chartOptions" />
 </template>
 
 
@@ -28,14 +28,51 @@ ChartJS.register(
 
 
 const props = defineProps({
+  labels: {
+    type: Array,
+    required: true
+  },
+  data: {
+    type: Array,
+    required: true
+  },
+  label: {
+    type: String,
+    required: true
+  },
   chartOptions: {
     type: Object,
     required: true
   },
-  chartData: {
-    type: Object,
-    required: true
-  }
 })
+
+var chartData = ref({
+    labels: props.labels,
+    datasets: [
+      {
+        label: 'Durchschnittliche Abiturnoten Deutschland 2006 - 2022',
+        backgroundColor: '#f87979',
+        data: props.data
+      },
+    ],
+  })
+
+  watch(
+  () => props.data,
+  () => {
+    console.log(props.data)
+    chartData.value = {
+    labels: props.labels,
+    datasets: [
+      {
+        label: 'Durchschnittliche Abiturnoten Deutschland 2006 - 2022',
+        backgroundColor: '#f87979',
+        data: props.data
+      },
+    ],
+  }
+  }
+)
+
 
 </script>
