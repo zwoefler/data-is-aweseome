@@ -13,3 +13,14 @@ The data should have:
 - Grades (1.0 - 4.0) for every state
 - Grades (1.0 - 4.0) for Germany (total)
 - Average Grade for given year per state and total
+
+## ToDo
+Change dataset:
+Filter for Average Grades:
+```
+years: [],
+average_grade: {
+    "Total": [],
+    "BW": []
+}
+```
