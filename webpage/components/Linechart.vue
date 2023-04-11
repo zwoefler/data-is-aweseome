@@ -3,7 +3,7 @@
 </template>
 
 
-<script>
+<script lang="ts">
 import { Line } from 'vue-chartjs'
 import {
   Chart as ChartJS,
@@ -26,25 +26,42 @@ ChartJS.register(
   Legend
 )
 
+import grades_data from 'assets/abitur_grades.json'
+
 export default {
   name: 'LineChart',
   components: { Line },
-  data() {
-    return {
-      chartData: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [
-          {
-            label: 'Data One',
-            backgroundColor: '#f87979',
-            data: [40, 39, 10, 40, 39, 80, 40]
-          }
-        ]
-      },
-      chartOptions: {
-        responsive: true,
-        maintainAspectRatio: true
+  setup() {
+    var chartData = {
+      labels: [],
+      datasets: [
+        {
+          label: 'Durchschnittliche Abiturnoten Deutschland 2006 - 2022',
+          backgroundColor: '#f87979',
+          data: []
+        },
+      ],
+    }
+    var chartOptions = {
+      responsive: true,
+      maintainAspectRatio: true,
+      scales: {
+        y: {
+          min: 1.0,
+          max: 4.0
+        }
       }
+    }
+
+    for (const key in grades_data) {
+      chartData["labels"].push(grades_data[key]["year"])
+      chartData["datasets"][0]["data"].push(grades_data[key]["average_grade"])
+    }
+
+
+    return {
+      chartOptions,
+      chartData
     }
   }
 }
