@@ -6,8 +6,6 @@ url = "https://www.kmk.org/dokumentation-statistik/statistik/schulstatistik/abit
 archive_url = "https://www.kmk.org/dokumentation-statistik/statistik/schulstatistik/abiturnoten/archiv-abiturnoten.html"
 
 class TestGatherGradeData(unittest.TestCase):
-
-
     def test_return_list_of_xls_for_given_html(self):
         with open('test_data/Archiv - Abiturnoten.html') as f:
             html_string = f.read()
@@ -94,9 +92,18 @@ class TestGatherGradeData(unittest.TestCase):
         self.assertTrue(list_of_excel_files[5].endswith('.xls'))
 
 
-    # def test_include_aggregated_overviews_as_zips(self):
-    #     archive_zip_url = "https://kmk.org/fileadmin/Dateien/pdf/Statistik/Aus_Abiturnoten_2006_2013.zip"
-    #     gather_grade_data.abitur_grades_as_JSON(excel_files_list, )
+    def test_average_grade_for_total_exists_as_own_timeline(self):
+        excel_files_list = ["Schnellmeldung_Abiturnoten_2022.xlsx"]
+        abitur_grade_json = gather_grade_data.abitur_grades_as_JSON(excel_files_list, folder='test_data')
+
+        self.assertEqual(abitur_grade_json["average_grade"]["Total"][0], 2.279767968591033)
+
+
+    def test_grade_json_has_label_list_with_years(self):
+        excel_files_list = ["Schnellmeldung_Abiturnoten_2022.xlsx"]
+        abitur_grade_json = gather_grade_data.abitur_grades_as_JSON(excel_files_list, folder='test_data')
+
+        self.assertTrue(abitur_grade_json["years"])
 
 
 if __name__ == '__main__':
