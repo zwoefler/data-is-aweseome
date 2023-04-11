@@ -3,8 +3,9 @@
 </template>
 
 
-<script lang="ts">
+<script setup lang="ts">
 import { Line } from 'vue-chartjs'
+import grades_data from 'assets/abitur_grades.json'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -26,12 +27,6 @@ ChartJS.register(
   Legend
 )
 
-import grades_data from 'assets/abitur_grades.json'
-
-export default {
-  name: 'LineChart',
-  components: { Line },
-  setup() {
     var chartData = {
       labels: [],
       datasets: [
@@ -42,6 +37,7 @@ export default {
         },
       ],
     }
+
     var chartOptions = {
       responsive: true,
       maintainAspectRatio: true,
@@ -57,13 +53,4 @@ export default {
       chartData["labels"].push(grades_data[key]["year"])
       chartData["datasets"][0]["data"].push(grades_data[key]["average_grade"])
     }
-
-
-    return {
-      chartOptions,
-      chartData
-    }
-  }
-}
-
 </script>
