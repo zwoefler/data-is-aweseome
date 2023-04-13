@@ -14,6 +14,13 @@ The data should have:
 - Grades (1.0 - 4.0) for Germany (total)
 - Average Grade for given year per state and total
 
+
+
+## Requirements
+- Each selection "BW" - must hvae corresponding name "Baden Würtemberg"
+- Each state has it's own datarow [2.25, 2.20, 2.19, etc.]
+
+
 ## ToDo
 Change dataset:
 Filter for Average Grades:
