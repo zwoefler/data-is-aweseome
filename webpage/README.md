@@ -40,3 +40,13 @@ npm run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+
+## ToDOs
+#### Avergae Abitur Grades
+- [ ] Display each state or total averages over the years
+- [ ] Display Histogram of grades for given year and total
+- [ ] Display Histogram of grades for given year and given state
+- [ ] Toggle Total and display one more graph as comparison
+- [ ] Compare two graphs for given states or total!
+
