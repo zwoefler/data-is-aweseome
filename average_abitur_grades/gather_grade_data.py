@@ -104,7 +104,8 @@ def return_excel_as_JSON(excel_file):
 def abitur_grades_as_JSON(excel_files_list, folder="excel_files"):
     grades_json = {}
     grades_json["average_grade"] = {
-        "Total": []
+        "Total": [],
+
     }
     grades_json["years"] = []
 
@@ -112,9 +113,19 @@ def abitur_grades_as_JSON(excel_files_list, folder="excel_files"):
         filename = os.path.join(folder, file)
         year = get_year_of_grade_report(filename)
         excel_json = return_excel_as_JSON(filename)
+
+        for state in excel_json["states"]:
+            if state not in grades_json["average_grade"]:
+                grades_json["average_grade"][state] = []
+            grades_json["average_grade"][state].append(excel_json["states"][state]["Notenmittel"])
+
         grades_json[year] = excel_json
-        grades_json["average_grade"]["Total"].append(excel_json["average_grade"])
         grades_json["years"].append(year)
+
+    for year in grades_json["years"]:
+        grades_json["average_grade"]["Total"].append(grades_json[year]["average_grade"])
+
+
     return grades_json
 
 
