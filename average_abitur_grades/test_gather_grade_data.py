@@ -99,11 +99,12 @@ class TestGatherGradeData(unittest.TestCase):
         self.assertEqual(abitur_grade_json["average_grade"]["Total"][-1], 2.279767968591033)
         self.assertEqual(abitur_grade_json["average_grade"]["NI"][-1], 2.383948497854077)
 
-    def test_grade_json_has_label_list_with_years(self):
-        excel_files_list = ["Schnellmeldung_Abiturnoten_2022.xlsx"]
+    def test_grade_json_has_sorted_label_list_with_years(self):
+        excel_files_list = ["Schnellmeldung_Abiturnoten_2022.xlsx", "Aus_Abiturnoten_2010.xls"]
         abitur_grade_json = gather_grade_data.abitur_grades_as_JSON(excel_files_list, folder='test_data')
 
         self.assertTrue(abitur_grade_json["years"])
+        self.assertEqual(abitur_grade_json["years"], sorted(abitur_grade_json["years"]))
 
 
 if __name__ == '__main__':

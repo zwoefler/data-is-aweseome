@@ -105,7 +105,6 @@ def abitur_grades_as_JSON(excel_files_list, folder="excel_files"):
     grades_json = {}
     grades_json["average_grade"] = {
         "Total": [],
-
     }
     grades_json["years"] = []
 
@@ -122,6 +121,7 @@ def abitur_grades_as_JSON(excel_files_list, folder="excel_files"):
         grades_json[year] = excel_json
         grades_json["years"].append(year)
 
+    grades_json["years"] = sorted(grades_json["years"])
     for year in grades_json["years"]:
         grades_json["average_grade"]["Total"].append(grades_json[year]["average_grade"])
 
