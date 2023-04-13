@@ -29,6 +29,9 @@ var chartOptions = ref({
 
 var selectedOption = ref("Total")
 var selectionOptions = ref(["Total"])
+labels.value = grades_data["years"]
+data.value = grades_data["average_grade"][selectedOption.value]
+
 for (const key in grades_data[2006]["states"]){
   selectionOptions.value.push(key)
 }
@@ -42,22 +45,10 @@ for (const key in grades_data[2006]["states"]){
 )
 
 function changeSelection(selection: string){
-  labels.value = []
   data.value = []
-  for (const key in grades_data) {
-      if (selection == "Total"){
-        labels.value.push(grades_data[key]["year"])
-        data.value.push(grades_data[key]["average_grade"])
-      } else {
-        labels.value.push(grades_data[key]["year"])
-        data.value.push(grades_data[key]["states"][selection]["Notenmittel"])
-      }
-    }
+  data.value = grades_data["average_grade"][selection]
 }
 
-for (const key in grades_data) {
-  labels.value.push(grades_data[key]["year"])
-  data.value.push(grades_data[key]["average_grade"])
-}
+
 
 </script>
