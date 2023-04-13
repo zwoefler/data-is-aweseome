@@ -113,18 +113,20 @@ def abitur_grades_as_JSON(excel_files_list, folder="excel_files"):
         year = get_year_of_grade_report(filename)
         excel_json = return_excel_as_JSON(filename)
 
-        for state in excel_json["states"]:
-            if state not in grades_json["average_grade"]:
-                grades_json["average_grade"][state] = []
-            grades_json["average_grade"][state].append(excel_json["states"][state]["Notenmittel"])
-
         grades_json[year] = excel_json
         grades_json["years"].append(year)
 
     grades_json["years"] = sorted(grades_json["years"])
-    for year in grades_json["years"]:
-        grades_json["average_grade"]["Total"].append(grades_json[year]["average_grade"])
 
+    for year in grades_json["years"]:
+        for state, value in grades_json[year]["states"].items():
+            if isinstance(value, dict):
+                if state not in grades_json["average_grade"]:
+                    grades_json["average_grade"][state] = []
+                grades_json["average_grade"][state].append(grades_json[year]["states"][state]["Notenmittel"])
+
+        average_grade_for_year = grades_json[year]["average_grade"]
+        grades_json["average_grade"]["Total"].append(average_grade_for_year)
 
     return grades_json
 
