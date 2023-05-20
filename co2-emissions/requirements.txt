@@ -1,0 +1,7 @@
+pandas
+jupyter
+requests
+python-dotenv
+tabula-py
+seaborn
+matplotlib
