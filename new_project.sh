@@ -17,6 +17,8 @@ cp ../develop.sh .
 
 python3 -m venv Env
 
+source Env/bin/activate
+
 pip install --upgrade pip
 
 pip install -r requirements.txt
