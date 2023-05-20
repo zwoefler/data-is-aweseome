@@ -3,6 +3,27 @@
 
 Germany decided to phase out Nuclear energy as a source for electricity.
 
+Now that nuclear is missing in the electricity mix some people worry that:
+
+1. We will burn more Coal now
+2. Emit more CO2 emissions because a low carbon electricity source is missing
+3. There is not enough electricity
+4. Nuclear Powerplants should have continued to run
+
+
+THis project pulls data to answer these questions.
+
+## Get electricity production and consumption data in Germay over the past 10 years by source
+
+
+## Get CO2 Emissions for electricity in Germay and map with previous data
+
+
+
+---
+
+
+
 This decision has been in the making since the early 2000s, was reaffirmed in the early 2010s, after the Nuclear Powerplant in Fukushima, Japan had an accident.
 
 The phaseout was scheduled for late 2022.
@@ -22,13 +43,6 @@ to run until 15. April 2023.
 In 2021, when 6 nuclear power plants were still running it made up 12,6% (65,4 TWh) of Germanys electricty production.
 
 In 2022 it was 6,4% (32,7 TWh).
-
-Now that nuclear is missing in the electricity mix some people worry that:
-
-1. We will burn more Coal now
-2. Emit more CO2 emissions because a low carbon electricity source is missing
-3. There is not enough electricity
-4. Nuclear Powerplants should have continued to run
 
 # 📜 The History
 
