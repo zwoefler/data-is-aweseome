@@ -6,6 +6,8 @@ def plot_co2_emissions(df, labels_column, ticks_every = 5):
     max_y = amount_options * ticks_every
     y_steps_list = list(range(ticks_every, max_y + 1, ticks_every))
 
+
+    plt.style.use("seaborn")
     fig, ax = plt.subplots()
     for i, value in enumerate(y_steps_list):
         min_value = df.iloc[i]["Min"]
@@ -18,7 +20,7 @@ def plot_co2_emissions(df, labels_column, ticks_every = 5):
     ax.set_xlim(0, 1000)
     ax.set_xlabel('CO2 Emissions')
 
-    plt.grid()
+    plt.grid(True)
     plt.show()
 
 df = pd.read_csv("co2_emissions.csv")
