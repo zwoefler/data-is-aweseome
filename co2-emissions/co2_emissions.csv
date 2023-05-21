@@ -1,0 +1,13 @@
+Options,Min,Median,Max
+Coal — PC,740.0,820.0,910.0
+Gas — Combined Cycle,410.0,490.0,650.0
+Biomass — cofiring,620.0,740.0,890.0
+Biomass — dedicated,130.0,230.0,420.0
+Geothermal,6.0,38.0,79.0
+Hydropower,1.0,24.0,2200.0
+Nuclear,3.7,12.0,110.0
+Concentrated Solar Power,8.8,27.0,63.0
+Solar PV — rooftop,26.0,41.0,60.0
+Solar PV — utility,18.0,48.0,180.0
+Wind onshore,7.0,11.0,56.0
+Wind offshore,8.0,12.0,35.0
