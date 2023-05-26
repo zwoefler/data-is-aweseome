@@ -1,7 +1,10 @@
 import unittest
 import pull_energy_charts_data as pe
+import create_download_links as cl
 from unittest.mock import patch
 from requests import Response
+import os
+import shutil
 import errors
 
 class TestHelperFunctions(unittest.TestCase):
@@ -14,7 +17,7 @@ class TestHelperFunctions(unittest.TestCase):
         """
         Creates correct filename to export energy jsons to!
         """
-        filename = pe.create_filename(self.folder, self.query_string)
+        filename = cl.create_filename(self.folder, self.query_string)
 
         self.assertEqual(filename, "energy_data/year_2022.json")
 
@@ -33,24 +36,76 @@ class TestHelperFunctions(unittest.TestCase):
         Creates the correct url to pull the energy data from
         """
         base_url = f"https://www.energy-charts.info/charts/power/data/de/"
-        url = pe.create_url(self.query_string, base_url)
+        url = cl.create_url(self.query_string, base_url)
 
         self.assertEqual(url, "https://www.energy-charts.info/charts/power/data/de/year_2022.json")
-
 
 class TestFetchingEnergyData(unittest.TestCase):
     def setup(self):
         pass
 
-    @patch(pe.requests.get)
-    def test_return_None_for_not_downloadable_data(self, mock_get):
-        # Mock the requests.get() function to return a response with status code 404
-        mock_get.return_value = Response()
-        mock_get.return_value.status_code = 404
-        url = "https://example.com/energy_data"
 
-        with self.assertRaises(errors.DataNotAvailableException):
-            pe.download_energy_data(url)
+    # def test_if_service_not_reachable_throw_application_no_reachable(self):
+    #     error_message = """Service not reachable.
+    #     Could be because ther service is
+    #     - offline
+    #     - no data under that URL available"""
+
+
+    #     with self.assertRaises as context:
+    #         energy_data = pe.pull_data_from_url(url)
+
+    #     self.assertEqual(str(context.exception), error_message)
+
+
+
+
+    def test_create_correct_export_file_name_from_url(self):
+        url = "https://www.energy-charts.info/charts/power/data/de/year_1990.json"
+
+        export_filename = pe.create_export_filename(url)
+
+        self.assertEqual(export_filename, "data_year_1990.json")
+
+
+class TestWriteDataToJSONFile(unittest.TestCase):
+    def setUp(self):
+        self.folder = "test_data"
+        if os.path.exists(self.folder):
+            shutil.rmtree(self.folder)
+
+
+    def test_when_folder_does_not_exist_throws_FileNotFoundError(self):
+        with self.assertRaises(FileNotFoundError):
+            pe.write_json_data_to_file(folder="data", filename="test_data.json", json_data={})
+
+
+    def test_when_folder_does_not_exist_asks_user_to_create_folder(self):
+        expected_error_message = "data/ - Folder does not exist."
+
+        with self.assertRaises(FileNotFoundError) as context:
+            pe.write_json_data_to_file(folder="data", filename="test_data.json", json_data={})
+
+        self.assertEqual(str(context.exception), expected_error_message)
+
+
+    def test_put_downloaded_files_into_data_folder(self):
+        # Setup
+        os.mkdir(self.folder)
+
+        filename = "test_data_2023.json"
+        data = ["Something here", "Some more thing"]
+
+
+        pe.write_json_data_to_file(self.folder, filename, data)
+
+        self.assertTrue(os.path.exists("test_data/test_data_2023.json"))
+
+        #TearDown
+        os.remove("test_data/test_data_2023.json")
+        os.rmdir("test_data/")
+
+
 
 if __name__ == '__main__':
     unittest.main()
