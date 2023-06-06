@@ -62,12 +62,6 @@ def convert_timestamp(timestamp):
 def aggregate_energy_types(energy_1, energy_2):
     return [x + y for x, y in zip(energy_1, energy_2)]
 
-# Get list of data json files
-# Read each file
-# Find desired energy sources
-# Get timestamps - convert to daily - convert to datetime timestamps
-# Get coal data - convert to daily (net) production
-
 
 def get_aggreagted_coal_data(data_set):
     coal_sources = find_brown_and_hard_coal(data_set)
@@ -83,8 +77,11 @@ def get_aggreagted_coal_data(data_set):
 
 def main():
     json_files = get_json_data_files()
-    print(json_files)
     coal_data = {
+        "metadata": {
+            time_units: "datetime objects at start of days",
+            data_units: "MWh"
+        },
         "time": [],
         "data": []
     }
