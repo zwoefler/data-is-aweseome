@@ -21,7 +21,7 @@ def create_query_string(intervall_query_string, date_query_string):
     return search_string
 
 def main():
-    year_list = list(range(1990, 2023))
+    year_list = list(range(1990, 2024))
     base_url = "https://www.energy-charts.info/charts/power/data/de/"
     old_base_url = "https://www.energy-charts.info/charts/power/raw_data/de/"
     search_urls = []

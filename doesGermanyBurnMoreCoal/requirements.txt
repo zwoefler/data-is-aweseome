@@ -2,3 +2,5 @@ pandas
 jupyter
 requests
 python-dotenv
+matplotlib
+seaborn
