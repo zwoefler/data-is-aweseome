@@ -20,7 +20,10 @@ grouped_df = filtered_df.groupby('year')
 
 for year, data in grouped_df:
     days = (data['time'] - pd.Timestamp(year=year, month=1, day=1)).dt.days
-    ax.plot(days, data['data'], label=str(year))
+    if year == 2023:
+        ax.plot(days, data["data"], label=str(year), alpha=1)
+    else:
+        ax.plot(days, data['data'], label=str(year), alpha=0.2)
 
 ax.set_xlabel('Days in Year')
 ax.set_ylabel('Coal Production in TWh')
