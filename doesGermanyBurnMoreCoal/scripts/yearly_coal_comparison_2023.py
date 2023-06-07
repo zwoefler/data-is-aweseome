@@ -28,6 +28,8 @@ for year, data in grouped_df:
 # Add a horizontal red line at the 105th day
 ax.axvline(x=105, color='red', label="Nuclear phaseout in Germany 15.04.23")
 
+ax.yaxis.grid(True, linestyle='-', linewidth=0.5)
+
 formatter = ticker.FuncFormatter(lambda x, pos: f'{x/1e3:.1f}')
 ax.yaxis.set_major_formatter(formatter)
 
