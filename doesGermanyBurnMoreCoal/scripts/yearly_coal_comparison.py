@@ -23,11 +23,17 @@ for year, data in grouped_df:
     if year == 2023:
         ax.plot(days, data["data"], label=str(year), alpha=1)
     else:
-        ax.plot(days, data['data'], label=str(year), alpha=0.2)
+        ax.plot(days, data['data'], label=str(year), alpha=0.1)
+
+# Add a horizontal red line at the 105th day
+ax.axvline(x=105, color='red', label="Nuclear phaseout in Germany 15.04.23")
+
+formatter = ticker.FuncFormatter(lambda x, pos: f'{x/1e3:.1f}')
+ax.yaxis.set_major_formatter(formatter)
 
 ax.set_xlabel('Days in Year')
-ax.set_ylabel('Coal Production in TWh')
-ax.set_title('Data Comparison across Years')
+ax.set_ylabel('Daily Coal Production in GWh')
+ax.set_title('Daily Germany Net Coal Production - Data Comparison 2015 through 2023')
 ax.legend()
 
 plt.show()
