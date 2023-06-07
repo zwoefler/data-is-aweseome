@@ -20,13 +20,13 @@ grouped_df = filtered_df.groupby('year')
 
 for year, data in grouped_df:
     days = (data['time'] - pd.Timestamp(year=year, month=1, day=1)).dt.days
-    if year == 2023:
+    if year == 2022:
         ax.plot(days, data["data"], label=str(year), alpha=1)
     else:
         ax.plot(days, data['data'], label=str(year), alpha=0.1)
 
 # Add a horizontal red line at the 105th day
-ax.axvline(x=105, color='red', label="Nuclear phaseout 3/3 in Germany 15.04.23")
+ax.axvline(x=0, color='red', label="Nuclear phaseout 3/6 in Germany 31.12.2021")
 
 ax.yaxis.grid(True, linestyle='-', linewidth=0.5)
 
