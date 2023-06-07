@@ -9,21 +9,22 @@ from helpers import open_json
 coal_data = open_json("coal_data.json")
 
 df = pd.DataFrame(coal_data)
-df["time"] = pd.to_datetime(df["time"])
-
+df['time'] = pd.to_datetime(df['time'])
 df['year'] = df['time'].dt.year
+
+filtered_df = df[df['year'].between(2015, 2023)]
 
 fig, ax = plt.subplots()
 
-sns.lineplot(data=df, x='time', y='data', hue='year', ax=ax)
+grouped_df = filtered_df.groupby('year')
 
-ax.xaxis.set_major_locator(plt.MaxNLocator(10))
+for year, data in grouped_df:
+    days = (data['time'] - pd.Timestamp(year=year, month=1, day=1)).dt.days
+    ax.plot(days, data['data'], label=str(year))
 
-ax.set_xlabel('Year')
-ax.set_ylabel('Data')
-ax.set_title('Data over the years')
-ax.legend(title='Year')
-
-plt.xticks(rotation=45)
+ax.set_xlabel('Days in Year')
+ax.set_ylabel('Coal Production in TWh')
+ax.set_title('Data Comparison across Years')
+ax.legend()
 
 plt.show()
