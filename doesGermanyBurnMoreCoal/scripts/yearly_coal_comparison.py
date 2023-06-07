@@ -3,6 +3,7 @@ import json
 import datetime
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
+import seaborn as sns
 from helpers import open_json
 
 coal_data = open_json("coal_data.json")
@@ -11,15 +12,18 @@ df = pd.DataFrame(coal_data)
 df["time"] = pd.to_datetime(df["time"])
 
 df['year'] = df['time'].dt.year
-grouped_df = df.groupby('year')
 
-fig, ax = plt.subplots(figsize=(12, 8))
+fig, ax = plt.subplots()
 
-for year, data in grouped_df:
-    ax.plot(data['time'], data['data'], label=str(year))
+sns.lineplot(data=df, x='time', y='data', hue='year', ax=ax)
 
-ax.set_xlabel('Time')
-ax.set_ylabel('Net Electricity Produced (TWh)')
-ax.set_title('Coal production compared years 2015 through 2023')
+ax.xaxis.set_major_locator(plt.MaxNLocator(10))
+
+ax.set_xlabel('Year')
+ax.set_ylabel('Data')
+ax.set_title('Data over the years')
+ax.legend(title='Year')
+
+plt.xticks(rotation=45)
 
 plt.show()
