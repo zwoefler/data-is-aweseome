@@ -28,9 +28,9 @@ for i, value in enumerate(df_sorted[value_column]):
 for bar, label, economy in zip(bars, df_sorted[label_column], df_sorted["Economy"]):
     if "World" in label:
         bar.set_color('gray')
-    if "OECD" in label:
+    elif "OECD" in label:
         bar.set_color('gray')
-    if "Euro area" in label:
+    elif "Euro area" in label:
         bar.set_color('gray')
     elif "OECD countries" in economy:
         bar.set_color('orange')
