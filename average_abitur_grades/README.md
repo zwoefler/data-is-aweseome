@@ -31,3 +31,5 @@ average_grade: {
     "BW": []
 }
 ```
+
+- Data order in the JSON is weird! Years should probably always be together with the data for easier visualization

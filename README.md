@@ -1,8 +1,11 @@
 # Data is Awesome
-Repository for data visualizations
+Repository for data visualizations of all kinds.
+
+Whatever comes to mind.
 
 ### 📏 Rules
 - Every Datasource must be publicly available
+- No paywalls
 - A script must give access from data download to final JSON-file
 
 
