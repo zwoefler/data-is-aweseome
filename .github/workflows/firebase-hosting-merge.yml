@@ -23,3 +23,5 @@ jobs:
           channelId: live
           projectId: daten-sind-geil
           entryPoint: webpage/
+          sparse-checkout: |
+            webpage

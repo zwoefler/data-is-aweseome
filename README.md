@@ -7,6 +7,7 @@ Whatever comes to mind.
 - Every Datasource must be publicly available
 - No paywalls
 - A script must give access from data download to final JSON-file
+- Each datafolder must store the relevant data in a data/ directory (Save CI time)
 
 
 # Projects
