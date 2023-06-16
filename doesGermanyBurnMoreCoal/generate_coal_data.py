@@ -78,10 +78,6 @@ def get_aggreagted_coal_data(data_set):
 def main():
     json_files = get_json_data_files()
     coal_data = {
-        "metadata": {
-            time_units: "datetime objects at start of days",
-            data_units: "MWh"
-        },
         "time": [],
         "data": []
     }
