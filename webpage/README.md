@@ -1,6 +1,7 @@
-# Nuxt 3 Minimal Starter
+# Data is Awesome Webpage
+Visualize the data in this project via a simple userinterface
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+
 
 ## Setup
 
