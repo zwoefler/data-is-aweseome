@@ -12,8 +12,8 @@ echo "pandas" >> requirements.txt
 echo "jupyter" >> requirements.txt
 echo "requests" >> requirements.txt
 echo "python-dotenv" >> requirements.txt
+echo "matplotlib" >> requirements.txt
 
-cp ../develop.sh .
 
 python3 -m venv Env
 
