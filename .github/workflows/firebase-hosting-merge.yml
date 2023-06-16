@@ -21,4 +21,5 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_DATEN_SIND_GEIL }}'
           channelId: live
-          projectId: webpage/
+          projectId: daten-sind-geil
+          entryPoint: webpage/
