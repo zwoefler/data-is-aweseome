@@ -18,8 +18,9 @@ def convert_month_year_date_to_datetime_object(date_string, date_format="%Y %b")
     return date
 
 
-def visualize_data(x_axis, y_axis, title, x_label, y_label):
-    plt.plot(x_axis, y_axis)
+def visualize_data(x_axis, data, title, x_label, y_label):
+    for data_column in data:
+        plt.plot(x_axis, data_column)
     plt.title(title)
     plt.xlabel(x_label)
     plt.ylabel(y_label)
@@ -37,9 +38,11 @@ data = pd.read_html("insolvenzen.html")[0][:-1]
 date_column = data[data.columns[0]] + " " + data[data.columns[1]]
 date_column = date_column.apply(lambda x: convert_month_year_date_to_datetime_object(x)).tolist()
 insolvencies = data[data.columns[2]].apply(lambda x: int("".join(x.split()))).tolist()
+companies = data[data.columns[3]].apply(lambda x: int("".join(x.split()))).tolist()
+consumer = data[data.columns[4]].apply(lambda x: int("".join(x.split()))).tolist()
 
 
+data = [insolvencies, companies, consumer]
 
 
-
-visualize_data(date_column, insolvencies, title="Insolvenzen Deutschland", x_label="Months", y_label="Insolvencies (total)")
+visualize_data(date_column, data, title="Insolvenzen Deutschland", x_label="Months", y_label="Insolvencies (total)")
