@@ -36,6 +36,10 @@ def create_export_filename(url):
     export_filename = split_url[5] + "_" + split_url[-1]
     return export_filename
 
+def file_exists(folder, filename):
+    filepath = os.path.join(folder, filename)
+    return os.path.isfile(filepath)
+
 
 def main():
     url_file = "search_urls.json"
@@ -43,6 +47,8 @@ def main():
     search_urls = read_search_urls_list_from_file(url_file)
     for url in search_urls:
         filename = create_export_filename(url)
+        if file_exists(folder, filename):
+            continue
         try:
             energy_data = pull_data_from_url(url)
             if len(energy_data) > 1:
