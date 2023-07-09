@@ -1,8 +1,11 @@
 # Insolvenzen und Geschaeftsaufgaben in Deutschland
 
 1. Insolvenzen URL:https://www.destatis.de/DE/Themen/Branchen-Unternehmen/Unternehmen/Gewerbemeldungen-Insolvenzen/Tabellen/Insolvenzen.html#241898
+Insolvenzen seit 1953: https://www.destatis.de/DE/Themen/Branchen-Unternehmen/Unternehmen/Gewerbemeldungen-Insolvenzen/Tabellen/lrins01.html#242428
+
 2. Per API?
 
+- Get all insolvencies by month (or year?) beyond 2007 to include the financial crisis
 
 
 ## Vorgehen
@@ -12,6 +15,8 @@
 
 
 ## ❓️Open Questions
+
+
 ### What are these categories?
 Alle exklusiv.
 
