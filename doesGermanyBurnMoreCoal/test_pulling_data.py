@@ -45,20 +45,6 @@ class TestFetchingEnergyData(unittest.TestCase):
         pass
 
 
-    # def test_if_service_not_reachable_throw_application_no_reachable(self):
-    #     error_message = """Service not reachable.
-    #     Could be because ther service is
-    #     - offline
-    #     - no data under that URL available"""
-
-
-    #     with self.assertRaises as context:
-    #         energy_data = pe.pull_data_from_url(url)
-
-    #     self.assertEqual(str(context.exception), error_message)
-
-
-
 
     def test_create_correct_export_file_name_from_url(self):
         url = "https://www.energy-charts.info/charts/power/data/de/year_1990.json"
