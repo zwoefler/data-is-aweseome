@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Abiturnoten</h1>
     <div>
       <select v-model="selectedOption">
         <option v-for="option in selectionOptions" :key="option" :value="option">{{ option }}</option>
