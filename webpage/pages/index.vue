@@ -1,21 +1,15 @@
 <template>
   <div>
-    <router-link :to="project.project" v-for="project in projects">
-      {{ project.project }}
+    <router-link :to="blog._path" v-for="blog in data">
+      {{ blog.title }} - {{ blog.description }}
     </router-link>
   </div>
 </template>
 
 <script setup lang="ts">
-interface Project {
-  project: string;
-  link:string;
-}
+const { data } = await useAsyncData('home', () => queryContent('data-blog')
+  .only(['title', '_path', 'description'])
+  .find()
+)
 
-  const projects: Object[] = [
-    {
-      project: "Abiturnoten",
-      link: "/abiturnoten"
-    }
-  ]
 </script>
