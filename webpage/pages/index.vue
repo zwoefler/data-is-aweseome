@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p>Data Analysis</p>
     <router-link :to="project.project" v-for="project in projects">
       {{ project.project }}
     </router-link>
