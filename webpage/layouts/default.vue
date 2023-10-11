@@ -1,7 +1,7 @@
 <template>
-  <div class="container mx-auto flex flex-col h-screen">
+  <div class="flex flex-col">
     <Navbar/>
-    <div class="max-h-min flex-1">
+    <div class="min-h-screen w-full flex mx-auto justify-center max-w-sm md:max-w-lg px-4 md:px-0">
       <slot></slot>
     </div>
     <Footer/>

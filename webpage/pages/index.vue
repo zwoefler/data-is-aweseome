@@ -1,8 +1,10 @@
 <template>
   <div>
-    <router-link :to="blog._path" v-for="blog in data">
-      {{ blog.title }} - {{ blog.description }}
-    </router-link>
+    <div class="flex flex-col">
+      <router-link :to="blog._path" v-for="blog in data">
+        {{ blog.title }} - {{ blog.description }}
+      </router-link>
+    </div>
   </div>
 </template>
 
