@@ -11,6 +11,7 @@
 <script setup lang="ts">
 const { data } = await useAsyncData('home', () => queryContent('data-blog')
   .only(['title', '_path', 'description'])
+  .where({ draft: { $ne: true } })
   .find()
 )
 
