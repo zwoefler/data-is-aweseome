@@ -1,3 +1,6 @@
+---
+draft: true
+---
 # I am a testblog
 
 And waht are you?
