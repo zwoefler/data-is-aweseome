@@ -63,7 +63,7 @@ def aggregate_energy_types(energy_1, energy_2):
     return [x + y for x, y in zip(energy_1, energy_2)]
 
 
-def get_aggreagted_coal_data(data_set):
+def get_aggreagted_electricity_data(data_set):
     coal_sources = find_brown_and_hard_coal(data_set)
 
     quarter_hour_timestamps = data_set[0]["xAxisValues"]
@@ -76,18 +76,19 @@ def get_aggreagted_coal_data(data_set):
 
 
 def main():
+    electricty_source_data_json = "coal_data.json"
     json_files = get_json_data_files()
-    coal_data = {
+    electricity_data = {
         "time": [],
         "data": []
     }
     for file in json_files:
         yearly_electricity_data = open_json(f"data/{file}")
-        daily_coal, daily_timestamps = get_aggreagted_coal_data(yearly_electricity_data)
-        coal_data["time"].extend(daily_timestamps)
-        coal_data["data"].extend(daily_coal)
+        daily_coal, daily_timestamps = get_aggreagted_electricity_data(yearly_electricity_data)
+        electricity_data["time"].extend(daily_timestamps)
+        electricity_data["data"].extend(daily_coal)
 
-    write_json_data_to_file(coal_data, "coal_data.json")
+    write_json_data_to_file(electricity_data, electricty_source_data_json)
     return
 
 if __name__ == "__main__":
