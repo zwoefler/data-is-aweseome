@@ -1,7 +1,6 @@
 import json
 import requests
 import os
-import errors
 
 
 def pull_data_from_url(url):

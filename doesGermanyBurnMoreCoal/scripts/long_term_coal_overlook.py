@@ -21,9 +21,9 @@ ax.plot(averages.index, averages, label='Average')
 
 ax.fill_between(averages.index, minimums, maximums, alpha=0.2, label='Min-Max Range')
 
-ax.set_xlabel('Dates')
-ax.set_ylabel('Net Electricity Produced (TWh)')
-ax.set_title('Average Data with Min-Max Range')
+ax.set_xlabel('Years')
+ax.set_ylabel('Net Daily Coal Electricty Produced (TWh)')
+ax.set_title('Average Daily Coal Production with Min-Max Range')
 
 formatter = ticker.FuncFormatter(lambda x, pos: f'{x/1e6:.1f}')
 ax.yaxis.set_major_formatter(formatter)
