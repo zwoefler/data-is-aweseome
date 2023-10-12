@@ -1,7 +1,7 @@
 <template>
-  <main class="w-full">
+  <main class="w-full flex justify-center">
     <ContentDoc v-slot="{ doc }">
-      <article class="prose prose-lg md:prose-xl">
+      <article class="prose md:prose-xl">
         <ContentRenderer :value="doc">
         </ContentRenderer>
       </article>
