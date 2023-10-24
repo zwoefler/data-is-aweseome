@@ -9,24 +9,22 @@ jobs:
   scrape_and_save:
     runs-on: ubuntu-latest
     steps:
-    - name: Git checkout
-      uses: actions/checkout@v4
-      with:
-        sparse-checkout: |
-          .github
-          parkleitsystem
-    - uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
-        cache: 'pip' # caching pip dependencies
-    - run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-    - name: Run scraping script and save data
-      run: |
-        parkhouse_data=$(python3 scraping_parkleitsystem.py )
-        filename="$(echo "$parkhouse_data" | jq -r .timestamp).json"
-        touch data/$filename
-        echo $parkhouse_data > "data/$filename"
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v5
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+            parkleitsystem
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          cache: 'pip' # caching pip dependencies
+      - run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run scraping script and save data
+        run: |
+          parkhouse_data=$(python3 scraping_parkleitsystem.py)
+          filename="$(echo "$parkhouse_data" | jq -r .timestamp).json"
+          touch data/$filename
+          echo $parkhouse_data > "data/$filename"
+      - uses: peter-evans/create-pull-request@v5
