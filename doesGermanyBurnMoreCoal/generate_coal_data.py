@@ -22,11 +22,6 @@ def get_json_data_files():
     return sorted(matching_files)
 
 
-def get_daily_timestamps(timestamps):
-    daily_timestamps = timestamps[::4][::24]
-    return daily_timestamps
-
-
 def get_daily_electricity_consumption(energy_consumption_data):
     daily_electricity_production = []
     hourly_energy_production = energy_consumption_data[::4]
@@ -52,7 +47,7 @@ def find_brown_and_hard_coal(values_for_year, search_terms=["Braunkohle", "Stein
     return coal_lists
 
 
-def convert_timestamp(timestamp):
+def timestamp_to_human_readable_time(timestamp):
     timestamp_seconds = timestamp / 1000
     dt = datetime.datetime.fromtimestamp(timestamp_seconds)
     formatted_time = dt.strftime('%Y-%m-%d %H:%M:%S')
@@ -67,8 +62,8 @@ def get_aggreagted_electricity_data(data_set):
     coal_sources = find_brown_and_hard_coal(data_set)
 
     quarter_hour_timestamps = data_set[0]["xAxisValues"]
-    daily_timestamps = get_daily_timestamps(quarter_hour_timestamps)
-    daily_datetime_timestamps = [convert_timestamp(stamp) for stamp in daily_timestamps]
+    daily_timestamps = quarter_hour_timestamps[::4][::24]
+    daily_datetime_timestamps = [timestamp_to_human_readable_time(stamp) for stamp in daily_timestamps]
 
     quarter_hour_coal = aggregate_energy_types(coal_sources[0]["data"], coal_sources[1]["data"])
     daily_coal = get_daily_electricity_consumption(quarter_hour_coal)
@@ -90,6 +85,7 @@ def main():
 
     write_json_data_to_file(electricity_data, electricty_source_data_json)
     return
+
 
 if __name__ == "__main__":
     main()

@@ -19,6 +19,11 @@ THis project pulls data to answer these questions.
 ## Get CO2 Emissions for electricity in Germay and map with previous data
 
 
+## Deutschland = Strombettler?
+- Electricity production in Germany
+- Imports
+- Imports France & Poland
+
 
 ---
 

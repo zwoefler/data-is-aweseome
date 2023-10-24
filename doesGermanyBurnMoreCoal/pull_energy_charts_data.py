@@ -11,6 +11,7 @@ def pull_data_from_url(url):
         json_data = {}
     return json_data
 
+
 def write_json_data_to_file(folder, filename, json_data):
     if not os.path.exists(folder):
         raise FileNotFoundError(f"{folder}/ - Folder does not exist.")
@@ -23,6 +24,7 @@ def create_query_string(intervall_query_string, date_query_string):
     search_string = intervall_query_string + "_" + str(date_query_string) + ".json"
     return search_string
 
+
 def read_search_urls_list_from_file(search_string_file):
     with open(search_string_file, "r") as f:
         search_urls = json.load(f)
@@ -34,6 +36,7 @@ def create_export_filename(url):
     split_url = url.split("/")
     export_filename = split_url[5] + "_" + split_url[-1]
     return export_filename
+
 
 def file_exists(folder, filename):
     filepath = os.path.join(folder, filename)
@@ -55,6 +58,7 @@ def main():
         except Exception as e:
             print("skipping url", url)
             print(e.message)
+
 
 if __name__ == "__main__":
     main()

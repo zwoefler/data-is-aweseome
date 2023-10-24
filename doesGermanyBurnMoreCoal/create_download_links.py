@@ -20,6 +20,7 @@ def create_query_string(intervall_query_string, date_query_string):
     search_string = intervall_query_string + "_" + str(date_query_string) + ".json"
     return search_string
 
+
 def main():
     year_list = list(range(1990, 2024))
     base_url = "https://www.energy-charts.info/charts/power/data/de/"
@@ -37,6 +38,7 @@ def main():
         search_urls.append(old_url)
 
     write_json_data_to_file(search_urls, "search_urls.json")
+
 
 if __name__ == "__main__":
     main()
