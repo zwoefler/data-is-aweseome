@@ -30,7 +30,3 @@ jobs:
           echo $parkhouse_data > "data/$filename"
       - uses: peter-evans/create-pull-request@v5
         id: cpr
-      - name: Check outputs
-        if: ${{ steps.cpr.outputs.pull-request-number }}
-        run: |
-          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
