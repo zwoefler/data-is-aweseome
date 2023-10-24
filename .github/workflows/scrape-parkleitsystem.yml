@@ -25,6 +25,7 @@ jobs:
         run: |
           parkhouse_data=$(python3 scraping_parkleitsystem.py)
           filename="$(echo "$parkhouse_data" | jq -r .timestamp).json"
+          mkdir data
           touch data/$filename
           echo $parkhouse_data > "data/$filename"
       - uses: peter-evans/create-pull-request@v5
