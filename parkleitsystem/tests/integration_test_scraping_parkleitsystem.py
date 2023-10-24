@@ -39,8 +39,8 @@ class FunctionalExtractParkhouseInformation(unittest.TestCase):
         self.assertIn("Parken in Gießen", soup.title.text)
 
         parkhouse_info = scraping_parkleitsystem.scrape_webpage(html)
-
-        self.assertRegex(parkhouse_info["timestamp"], r'\d{2}:\d{2} Uhr - \d{2}.\d{2}.\d{4}')
+                                                    #13102023-1900
+        self.assertRegex(parkhouse_info["timestamp"], r'\d{8}-\d{4}')
         self.assertIsInstance(parkhouse_info, dict)
         self.assertIsInstance(parkhouse_info["parkhouses"], list)
         self.assertIsInstance(parkhouse_info["parkhouses"][0], dict)

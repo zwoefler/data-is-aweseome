@@ -70,7 +70,6 @@ class DefaultHTMLDataExtraction(unittest.TestCase):
         parkhouse_information = scraping_parkleitsystem.scrape_webpage(PAGE_HTML)
 
         self.assertIsInstance(parkhouse_information["timestamp"], str)
-        self.assertEqual(parkhouse_information["timestamp"], "19:00 Uhr - 13.10.2023")
         self.assertIsInstance(parkhouse_information, dict)
         self.assertIsInstance(parkhouse_information["parkhouses"], list)
         self.assertIs(len(parkhouse_information["parkhouses"]), 8)
@@ -97,8 +96,7 @@ class DefaultHTMLDataExtraction(unittest.TestCase):
 
     def test_get_last_updated_time(self):
         last_updated = scraping_parkleitsystem.get_last_updated_time(PAGE_HTML)
-        self.assertEqual(last_updated, "19:00 Uhr - 13.10.2023")
-
+        self.assertEqual(last_updated, "13102023-1900")
 
 
 if __name__ == '__main__':

@@ -53,8 +53,10 @@ def get_last_updated_time(html):
     soup = BeautifulSoup(html, "html.parser")
     find_result = soup.find("small", { "class": "last-update" }).text
     last_updated = find_result.split(":", 1)[1].strip()
+    time = "".join(last_updated.split()[0].split(":"))
+    date = "".join(last_updated.split()[-1].split("."))
 
-    return last_updated
+    return f"{date}-{time}"
 
 
 def scrape_webpage(html):
