@@ -1,8 +1,7 @@
-name: Scrape Parkleitsystem Gießen
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+name: "Scrape Parkleitsystem Gießen"
 on:
   schedule:
-    - cron:  '*/10 * * * *'
+  - cron: '*/10 * * * *'
 defaults:
   run:
     working-directory: parkleitsystem/
