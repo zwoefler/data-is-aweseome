@@ -11,6 +11,11 @@ jobs:
     steps:
     - name: Git checkout
       uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        cache: 'pip' # caching pip dependencies
+    - run: pip install -r requirements.txt
     - name: Run scraping script and save data
       run: |
         parkhouse_data=$(python3 scraping_parkleitsystem.py )
