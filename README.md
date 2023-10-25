@@ -1,5 +1,5 @@
 # Data is Awesome
-Opinionated data sets and visualizations.
+Opinionated visualized data and answered questions with data!
 
 Whatever comes to mind.
 
