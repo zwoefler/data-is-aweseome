@@ -28,10 +28,10 @@ jobs:
           mkdir -p data
           touch data/$filename
           echo $parkhouse_data > "data/$filename"
-      - uses: peter-evans/create-pull-request@v5
-        id: cpr
-        branch-suffix: random
-      - name: Check outputs
-        if: ${{ steps.cpr.outputs.pull-request-number }}
+      - name: Push changes to MASTER
         run: |
-          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          git config user.name ${{ secrets.GIT_USERNAME }}
+          git config user.email ${{ secrets.GIT_USEREMAIL }}
+          git add .
+          git commit -m 'Adding new parkhouse data'
+          git push
