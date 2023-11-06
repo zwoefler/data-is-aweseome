@@ -46,6 +46,14 @@ class SummarizeParkleitsystemData(unittest.TestCase):
         self.assertEqual(message, "Skipped 01112023-0934, it already exists in the dataset")
 
 
+    def test_list_of_files_from_directory(self):
+        data_directory = "data/"
+
+        list_of_files = generate_parkleitsystem_data.list_files_in_directory(data_directory)
+
+        self.assertIsInstance(list_of_files, list)
+
+
 
 if __name__ == '__main__':
     unittest.main()

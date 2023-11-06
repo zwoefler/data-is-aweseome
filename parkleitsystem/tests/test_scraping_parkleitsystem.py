@@ -26,8 +26,6 @@ class DefaultHTMLDataExtraction(unittest.TestCase):
         self.assertEqual(str(exception.exception), "No div element with class 'free' found")
 
 
-
-
     def test_returns_correct_parkhouse_data_for_correct_html(self):
         parkhouse_html_div = """
         <div class="info-panel">
@@ -62,8 +60,6 @@ class DefaultHTMLDataExtraction(unittest.TestCase):
             self.assertIn("free_spaces", parkhouse_dict)
             self.assertIn("occupied_spaces", parkhouse_dict)
             self.assertIn("max_spaces", parkhouse_dict)
-
-
 
 
     def test_scrape_correct_information_from_valid_html(self):
