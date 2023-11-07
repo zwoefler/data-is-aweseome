@@ -1,5 +1,96 @@
 import unittest
 import generate_parkleitsystem_data
+import json
+import os
+
+class FileSystemTests(unittest.TestCase):
+    def setUp(self):
+        self.fake_json_path = "fake_json.json"
+        self.fake_directory = "fake_directory"
+        self.fake_json = [
+            { "timestamp": "01112023", "parkhouses": [{ "name": "Dern-Passage", "free_spaces": 69, "occupied_spaces": 31, "max_spaces": 100 }]}
+        ]
+        self.fake_files_list = ["fake_file_1.json", "fake_file_2.json", "fake_file_3.json", "fake_file_4.json"]
+
+        fake_directory = self.fake_directory
+        if not os.path.exists(fake_directory):
+            os.mkdir(self.fake_directory)
+
+
+        def create_file(file_path, file_data):
+            with open(file_path, 'w', encoding='utf-8') as f:
+                json.dump(file_data, f, ensure_ascii=False, indent=4)
+
+
+        fake_files_list = self.fake_files_list
+        for fake_file_path in fake_files_list:
+            fake_json_path = os.path.join(fake_directory, fake_file_path)
+            create_file(fake_json_path, self.fake_json)
+
+        # Create single fake_json_file
+        create_file(self.fake_json_path, self.fake_json)
+
+
+    def tearDown(self):
+        def remove_file(file_path):
+            if os.path.exists(file_path) and os.path.isfile(file_path):
+                os.remove(file_path)
+            else:
+                print(f"Error deleting {file_path}")
+
+
+        def remove_directory(directory_path):
+            if os.path.exists(fake_directory):
+                os.rmdir(fake_directory)
+            else:
+                print(f"Error deleting Direcotry {fake_directory}")
+
+        fake_directory = self.fake_directory
+        fake_files = self.fake_files_list
+        for fake_file in fake_files:
+            file_to_remove = os.path.join(fake_directory, fake_file)
+            remove_file(file_to_remove)
+
+        remove_file(self.fake_json_path)
+        remove_directory(fake_directory)
+
+
+    def test_read_json_data_from_file(self):
+        json_path = self.fake_json_path
+        expected_json_data = self.fake_json
+
+        json_data = generate_parkleitsystem_data.read_json_file(json_path)
+
+        self.assertEqual(json_data, expected_json_data)
+
+
+    def test_write_json_data_to_file(self):
+        fake_json_path = self.fake_json_path
+        json_data = self.fake_json
+        generate_parkleitsystem_data.write_json_to_file(fake_json_path, json_data)
+
+        self.assertTrue(os.path.exists(fake_json_path))
+
+
+    def test_list_of_files_from_directory(self):
+        data_directory = self.fake_directory
+        expected_list_of_files = self.fake_files_list
+
+        list_of_files = generate_parkleitsystem_data.list_files_in_directory(data_directory)
+
+        self.assertIsInstance(list_of_files, list)
+        self.assertEqual(len(list_of_files), len(expected_list_of_files))
+        self.assertCountEqual(list_of_files, expected_list_of_files)
+
+
+    def test_throw_Error_when_data_directory_doesnt_exist(self):
+        wrong_data_directory = "wrong_directory"
+
+        with self.assertRaises(FileNotFoundError):
+            generate_parkleitsystem_data.list_files_in_directory(wrong_data_directory)
+
+
+
 
 class SummarizeParkleitsystemData(unittest.TestCase):
     def test_add_new_data_to_existing_data(self):
@@ -45,13 +136,6 @@ class SummarizeParkleitsystemData(unittest.TestCase):
         self.assertEqual(parkleitsystem_data, final_data)
         self.assertEqual(message, "Skipped 01112023-0934, it already exists in the dataset")
 
-
-    def test_list_of_files_from_directory(self):
-        data_directory = "data/"
-
-        list_of_files = generate_parkleitsystem_data.list_files_in_directory(data_directory)
-
-        self.assertIsInstance(list_of_files, list)
 
 
 
