@@ -1,5 +1,8 @@
 import os
 import json
+import datetime
+import csv
+from io import StringIO
 
 def read_json_file(json_path):
     with open(json_path) as f:
@@ -12,6 +15,35 @@ def write_json_to_file(json_path, json_data):
         json.dump(json_data, f)
 
     return
+
+
+def export_csv_to_file(filename, csv_data):
+    with open(filename, "w") as csv_file:
+        csv_file.write(csv_data)
+    return
+
+
+def create_export_filename(parkhouse_name):
+    today = datetime.datetime.now().strftime("%d%m%Y")
+    lower_parkhouse_name = parkhouse_name.lower()
+    file_name = f"{lower_parkhouse_name}_data_{today}.json"
+    return file_name
+
+
+def convert_json_to_csv(json_data):
+    buffer = StringIO()
+    csv_writer = csv.writer(buffer)
+
+    # Write the header
+    csv_writer.writerow(json_data[0].keys())
+
+    # Write the values for each key
+    for row in json_data:
+        csv_writer.writerow(row.values())
+
+    # Get the CSV data from the buffer
+    csv_data = buffer.getvalue()
+    return csv_data
 
 
 def add_new_data(existing_data, new_data):
@@ -41,10 +73,10 @@ def aggregate_data(data_files_list, existing_parkhouse_data):
     return parkhouse_data
 
 
-def extract_single_parkhouse_info(parkhouse, parkhouse_timed_data):
-    timestamp = parkhouse_timed_data["timestamp"]
+def extract_single_parkhouse_info(parkhouse, timestamped_parkhouse_data):
+    timestamp = timestamped_parkhouse_data["timestamp"]
 
-    for i, parkhouse_dict in enumerate(parkhouse_timed_data["parkhouses"]):
+    for i, parkhouse_dict in enumerate(timestamped_parkhouse_data["parkhouses"]):
         if parkhouse_dict["name"] == parkhouse:
             single_parkhouse = {
                 "timestamp": timestamp,
@@ -59,8 +91,18 @@ def extract_single_parkhouse_info(parkhouse, parkhouse_timed_data):
 
 def get_single_parkhouse_data(parkhouse_name, parkhouse_data_file):
     single_parkhouse_info = []
-    # Read contents from parkhouse_data_file
-    # Iterate that content each dict goes into
-    single_parkhouse_info = extract_parkhouse_info(parkhouse_name, parkhouse_timed_data)
+    all_parkhouse_data = read_json_file(parkhouse_data_file)
+    for timestamped_parkhouse_data in all_parkhouse_data:
+        parkhouse_info = extract_single_parkhouse_info(parkhouse_name, timestamped_parkhouse_data)
+        single_parkhouse_info.append(parkhouse_info)
 
+    write_json_to_file("dern-passage_data_05112023.json", single_parkhouse_info)
+
+    return
+
+
+def export_single_parkhouse_data_to_csv(parkhouse_json_file):
+    json_parkhouse_data = read_json_file(parkhouse_json_file)
+    csv_data = convert_json_to_csv(json_parkhouse_data)
+    export_csv_to_file("dern-passage_01112023.csv", csv_data)
     return

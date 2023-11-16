@@ -2,6 +2,7 @@ import unittest
 import json
 from datetime import datetime
 import os
+import tempfile
 import generate_parkleitsystem_data
 
 class FunctionalSummarzeParkhouseData(unittest.TestCase):
@@ -100,15 +101,25 @@ class FunctionalSummarzeParkhouseData(unittest.TestCase):
         self.assertTrue(file_exists)
 
 
-    def test_get_data_for_parkhouse(self):
+    def test_get_data_for_single_parkhouse(self):
         # Isabel wants to get the data for a single parkhouse
         # She provides the script with the path to the aggregated file
         # And gets a file <parkhouse_name_ddmmyyyy.json> with all the data just
         # for one parkhouse
 
         parkhouse_name = "Dern-Passage"
-        parkhouse_data_file = "parkhouse_data_05112023.json"
         expected_output_file = "dern-passage_data_05112023.json"
+        parkhouse_data = [
+            { "timestamp": "01112023-0950", "parkhouses": [{ "name": "Dern-Passage", "free_spaces": 69, "occupied_spaces": 31, "max_spaces": 100 },
+                                                      { "name": "Karstadt", "free_spaces": 100, "occupied_spaces": 20, "max_spaces": 120 }]},
+            { "timestamp": "01112023-0955", "parkhouses": [{ "name": "Dern-Passage", "free_spaces": 70, "occupied_spaces": 30, "max_spaces": 100 },
+                                                      { "name": "Karstadt", "free_spaces": 99, "occupied_spaces": 21, "max_spaces": 120 }]}
+            ]
+
+        _, parkhouse_data_file = tempfile.mkstemp(suffix=".json")
+        with open(parkhouse_data_file, "w") as f:
+            json.dump(parkhouse_data, f)
+
 
         # Isabel calls the funtion
         generate_parkleitsystem_data.get_single_parkhouse_data(parkhouse_name, parkhouse_data_file)
@@ -120,20 +131,76 @@ class FunctionalSummarzeParkhouseData(unittest.TestCase):
         # She notices the data format in the file
         # it is a valid json
         with open(expected_output_file) as file:
-            json_data = json_datajson.load(file)
+            json_data = json.load(file)
         self.assertTrue(json_data)
 
         # The json data is a list
         self.assertIsInstance(json_data, list)
         self.assertIsInstance(json_data[0], dict)
         self.assertIn("timestamp", json_data[0])
-        self.assertIn("parkhouses", json_data[0])
-        self.assertIsInstance(json_data[0]["parkhouses"], list)
+        self.assertIn("name", json_data[0])
+        self.assertIn("max_spaces", json_data[0])
+        self.assertIn("free_spaces", json_data[0])
+        self.assertIn("occupied_spaces", json_data[0])
+
 
         # !! Remove test file!
-        self.remove_file(expected_output_file)
+        def remove_file(file_path):
+            if os.path.exists(file_path) and os.path.isfile(file_path):
+                os.remove(file_path)
+            else:
+                print(f"Error deleting {file_path}")
+
+        remove_file(parkhouse_data_file)
+        remove_file(expected_output_file)
 
 
+
+    def test_transform_single_parkhouse_data_to_csv(self):
+
+        single_parkhouse_data = [
+            {
+                "timestamp": "01112023-0950",
+                "name": "Dern-Passage",
+                "free_spaces": 20,
+                "max_spaces": 100,
+                "occupied_spaces": 80,
+            },
+            {
+                "timestamp": "01112023-0955",
+                "name": "Dern-Passage",
+                "free_spaces": 30,
+                "max_spaces": 100,
+                "occupied_spaces": 70,
+            }
+        ]
+
+        _, parkhouse_file = tempfile.mkstemp(suffix=".json")
+        with open(parkhouse_file, "w") as f:
+            json.dump(single_parkhouse_data, f)
+
+        generate_parkleitsystem_data.export_single_parkhouse_data_to_csv(parkhouse_file)
+
+        # parkhouse_data = generate_parkleitsystem_data.read_json_file(parkhouse_file)
+        # generate_parkleitsystem_data.export_parkhouse_data_to_csv(parkhouse_data)
+        # generate_parkleitsystem_data.write_csv_to_file(parkhouse_data)
+        csv_file_path = "dern-passage_01112023.csv"
+        self.assertTrue(os.path.exists(csv_file_path))
+
+        # Read the contents of the created file
+        with open(csv_file_path, 'r') as file:
+            file_content = file.read()
+
+        self.assertIn("max_spaces", file_content)
+        self.assertIn("01112023-0955", file_content)
+
+
+
+        # Remove file csv_file
+        if os.path.exists(csv_file_path) and os.path.isfile(csv_file_path):
+            os.remove(csv_file_path)
+        else:
+            print(f"Error deleting {csv_file_path}")
 
 
 

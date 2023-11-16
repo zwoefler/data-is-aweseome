@@ -1,9 +1,18 @@
 import unittest
 import generate_parkleitsystem_data
 import json
+import csv
+import datetime
 import os
 
 class FileSystemTests(unittest.TestCase):
+    def remove_file(file_path):
+        if os.path.exists(file_path) and os.path.isfile(file_path):
+            os.remove(file_path)
+        else:
+            print(f"Error deleting {file_path}")
+
+
     def setUp(self):
         self.fake_json_path = "fake_json.json"
         self.fake_directory = "fake_directory"
@@ -72,6 +81,31 @@ class FileSystemTests(unittest.TestCase):
         self.assertTrue(os.path.exists(fake_json_path))
 
 
+    def test_write_csv_data_to_file(self):
+        csv_data = """timestamp, parkhouse
+                      11112023-0935, Dern-Passage
+                      11112023-1000, Example-Parkhouse
+                   """
+        csv_file_path = "csv_file.csv"
+        generate_parkleitsystem_data.export_csv_to_file(csv_file_path, csv_data)
+
+        # Check if the file has been created
+        self.assertTrue(os.path.isfile(csv_file_path))
+
+        # Read the contents of the created file
+        with open(csv_file_path, 'r') as file:
+            file_content = file.read()
+
+        # Assert that the content matches the input CSV data
+        self.assertEqual(file_content.strip(), csv_data.strip())
+
+        # Delete csv file
+        if os.path.exists(csv_file_path) and os.path.isfile(csv_file_path):
+            os.remove(csv_file_path)
+        else:
+            print(f"Error deleting {csv_file_path}")
+
+
     def test_list_of_files_from_directory(self):
         data_directory = self.fake_directory
         fake_files_list = self.fake_files_list
@@ -126,10 +160,59 @@ class ExtractSingleParkhouseSystem(unittest.TestCase):
         self.assertIn(parkhouse_name, single_parkhouse_data["name"])
 
 
-    # def test_valid_parkhouse_info_list_returns_list_with_single_parkhouse_info(self):
+    def test_create_single_parkhouse_export_file_name(self):
 
-    #     generate_parkleitsystem_data.extract_parkhouse_info
+        today = datetime.datetime.now().strftime("%d%m%Y")
+        parkhouse_name = "Dern-Passage"
+        expected_file_name = f"dern-passage_data_{today}.json"
+        file_name = generate_parkleitsystem_data.create_export_filename(parkhouse_name)
 
+        self.assertIsInstance(file_name, str)
+        self.assertEqual(file_name, expected_file_name)
+
+
+    def test_convert_json_to_csv(self):
+        json_data = [
+            {
+            "timestamp": "11112023-2035",
+            "name": "Dern-Passage"
+        },
+        {
+            "timestamp": "11112023-2040",
+            "name": "Dern-Passage"
+        }
+            ]
+
+        csv_data = generate_parkleitsystem_data.convert_json_to_csv(json_data)
+
+        csv_reader = csv.reader(csv_data.splitlines())
+
+        header = next(csv_reader)
+
+        # Check if "timestamp" and "name" are in the header
+        self.assertIn("timestamp", header)
+        self.assertIn("name", header)
+
+
+    def test_correct_name_in_colun_for_json_to_csv(self):
+        json_data = [
+            {
+            "timestamp": "11112023-2035",
+            "name": "Dern-Passage"
+        },
+        {
+            "timestamp": "11112023-2040",
+            "name": "Dern-Passage"
+        }
+            ]
+
+        csv_data = generate_parkleitsystem_data.convert_json_to_csv(json_data)
+
+        csv_reader = csv.reader(csv_data.splitlines())
+        next(csv_reader)
+        first_row = next(csv_reader)
+
+        self.assertIn("11112023-2035", first_row[0])
 
 
 
@@ -176,6 +259,8 @@ class SummarizeParkleitsystemData(unittest.TestCase):
         self.assertEqual(parkleitsystem_data, final_data)
 
 
+class TestCSVFile(unittest.TestCase):
+    pass
 
 
 if __name__ == '__main__':
