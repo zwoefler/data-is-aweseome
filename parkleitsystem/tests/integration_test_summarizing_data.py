@@ -10,7 +10,7 @@ class FunctionalSummarzeParkhouseData(unittest.TestCase):
     def setUp(self):
         self.data_directory = "data/"
         today = datetime.now().strftime("%d%m%Y")
-        self.aggregated_parkhouse_data_file = f"parkhouse_data_{today}.json"
+        self.aggregated_parkhouse_data_file = f"aggregated_parkhouse_data_{today}.json"
 
         self.fake_json_path = "fake_json.json"
         self.fake_directory = "fake_directory"
@@ -168,9 +168,6 @@ class FunctionalSummarzeParkhouseData(unittest.TestCase):
 
         generate_parkleitsystem_data.export_single_parkhouse_data_to_csv(parkhouse_file)
 
-        # parkhouse_data = generate_parkleitsystem_data.read_json_file(parkhouse_file)
-        # generate_parkleitsystem_data.export_parkhouse_data_to_csv(parkhouse_data)
-        # generate_parkleitsystem_data.write_csv_to_file(parkhouse_data)
         csv_file_path = "dern-passage_01112023.csv"
         self.assertTrue(os.path.exists(csv_file_path))
 
@@ -193,7 +190,7 @@ class FunctionalSummarzeParkhouseData(unittest.TestCase):
 class SummarizeDataViaCLI(unittest.TestCase):
     def setUp(self):
         expected_date = datetime.now()
-        self.parkhouse_data_file = f"parkhouse_data_{expected_date.strftime('%d%m%Y')}.json"
+        self.parkhouse_data_file = f"aggregated_parkhouse_data_{expected_date.strftime('%d%m%Y')}.json"
 
         self.fake_json = [
             { "timestamp": "01112023-0935", "parkhouses": [{ "name": "Dern-Passage", "free_spaces": 69, "occupied_spaces": 31, "max_spaces": 100 }, { "name": "Johannesstraße", "free_spaces": 69, "occupied_spaces": 31, "max_spaces": 100 }]},

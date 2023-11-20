@@ -6,13 +6,6 @@ import datetime
 import os
 
 class FileSystemTests(unittest.TestCase):
-    def remove_file(file_path):
-        if os.path.exists(file_path) and os.path.isfile(file_path):
-            os.remove(file_path)
-        else:
-            print(f"Error deleting {file_path}")
-
-
     def setUp(self):
         self.fake_json_path = "fake_json.json"
         self.fake_directory = "fake_directory"
@@ -284,8 +277,6 @@ class SummarizeParkleitsystemData(unittest.TestCase):
         self.assertEqual(parkleitsystem_data, final_data)
 
 
-class TestCSVFile(unittest.TestCase):
-    pass
 
 
 if __name__ == '__main__':

@@ -24,10 +24,10 @@ def export_csv_to_file(filename, csv_data):
     return
 
 
-def create_export_filename(parkhouse_name):
+def create_export_filename(filename_base):
     today = datetime.datetime.now().strftime("%d%m%Y")
-    lower_parkhouse_name = parkhouse_name.lower()
-    file_name = f"{lower_parkhouse_name}_data_{today}.json"
+    lower_filename_base = filename_base.lower()
+    file_name = f"{lower_filename_base}_data_{today}.json"
     return file_name
 
 
@@ -119,7 +119,7 @@ def aggregate_parkhouse_data(folder):
     files_list = list_files_in_directory(folder)
     aggregated_data = aggregate_data(files_list, existing_data)
 
-    export_filename = create_export_filename("parkhouse")
+    export_filename = create_export_filename("aggregated_parkhouse")
     write_json_to_file(export_filename, aggregated_data)
 
     return
