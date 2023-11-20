@@ -74,6 +74,16 @@ def aggregate_data(data_files_list, existing_parkhouse_data):
     return parkhouse_data
 
 
+def extract_available_parkhouses(parkhouse_data):
+    parkhouses = []
+    for timestamped_data in parkhouse_data:
+        for parkhouse in timestamped_data["parkhouses"]:
+            if parkhouse["name"] not in parkhouses:
+                parkhouses.append(parkhouse["name"])
+
+    return parkhouses
+
+
 def extract_single_parkhouse_info(parkhouse, timestamped_parkhouse_data):
     timestamp = timestamped_parkhouse_data["timestamp"]
 
@@ -139,7 +149,7 @@ def main():
     parser.add_argument("--aggregate-json-data", metavar="folder", help="Aggregate JSON data from the specified folder")
     parser.add_argument("--extract-single-parkhouse", metavar=("parkhouse_name", "data_file"), nargs=2,
                         help="Extract data for a single parkhouse from a data file")
-    # parser.add_argument("--get-available-parkhouses", metavar="data_file", help="Get available parkhouses from a data file")
+    parser.add_argument("--parkhouses", metavar="data_file", help="Show available parkhouses")
 
     args = parser.parse_args()
 
@@ -150,8 +160,10 @@ def main():
         parkhouse_name, data_file = args.extract_single_parkhouse
         get_single_parkhouse_data(parkhouse_name, data_file)
 
-    # if args.get_available_parkhouses:
-    #     get_available_parkhouses(args.get_available_parkhouses)
+    if args.parkhouses:
+        parkhouse_data = read_json_file(args.parkhouses)
+        parkhouses = extract_available_parkhouses(parkhouse_data)
+        print(parkhouses)
 
 
 if __name__ == '__main__':

@@ -4,6 +4,8 @@ import json
 from datetime import datetime
 import os
 import tempfile
+from contextlib import redirect_stdout
+from io import StringIO
 import generate_parkleitsystem_data
 
 class FunctionalSummarzeParkhouseData(unittest.TestCase):
@@ -236,6 +238,25 @@ class SummarizeDataViaCLI(unittest.TestCase):
         subprocess.run(command, check=True)
 
         self.assertTrue(os.path.isfile(single_parkhouse_data_file))
+
+
+    def test_get_available_parkhouses(self):
+        parkhouse_data_file = self.parkhouse_data_file
+        fake_json = self.fake_json
+        expected_output = ["Dern-Passage", "Johannesstraße"]
+
+        with open(parkhouse_data_file, 'w', encoding='utf-8') as f:
+            json.dump(fake_json, f, ensure_ascii=False, indent=4)
+
+        command = ["python3", "generate_parkleitsystem_data.py", "--parkhouses", parkhouse_data_file]
+        result = subprocess.run(command, check=True, text=True, capture_output=True)
+
+
+        # Get the output from the function
+        actual_output =result.stdout.strip()
+
+
+        self.assertEqual(str(expected_output), actual_output)
 
 
 

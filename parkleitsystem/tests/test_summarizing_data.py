@@ -276,7 +276,18 @@ class SummarizeParkleitsystemData(unittest.TestCase):
         self.assertIsInstance(parkleitsystem_data, list)
         self.assertEqual(parkleitsystem_data, final_data)
 
+class ExtractAvailableParkhouses(unittest.TestCase):
+    def test_extract_parkhouses_from_parkhouse_data(self):
+        parkhouse_data = [
+            { "timestamp": "01112023-0925", "parkhouses": [ { "name": "Dern-Passage"}, { "name": "Neust\u00c3\u20acdter Tor" }]},
+            { "timestamp": "01112023-0930", "parkhouses": [ { "name": "Dern-Passage"}, { "name": "Neust\u00c3\u20acdter Tor" }, { "name": "Karstadt" }]},
+            { "timestamp": "01112023-0934", "parkhouses": [ { "name": "Dern-Passage"}, { "name": "Neust\u00c3\u20acdter Tor" }]},
+        ]
 
+        parkhouses = generate_parkleitsystem_data.extract_available_parkhouses(parkhouse_data)
+
+        self.assertIsInstance(parkhouses, list)
+        self.assertEqual(parkhouses, ["Dern-Passage", "Neust\u00c3\u20acdter Tor", "Karstadt"])
 
 
 if __name__ == '__main__':
