@@ -1,3 +1,4 @@
+import subprocess
 import unittest
 import json
 from datetime import datetime
@@ -8,7 +9,8 @@ import generate_parkleitsystem_data
 class FunctionalSummarzeParkhouseData(unittest.TestCase):
     def setUp(self):
         self.data_directory = "data/"
-        self.aggregated_parkhouse_data_file = "parkhouse_data_05112023.json"
+        today = datetime.now().strftime("%d%m%Y")
+        self.aggregated_parkhouse_data_file = f"parkhouse_data_{today}.json"
 
         self.fake_json_path = "fake_json.json"
         self.fake_directory = "fake_directory"
@@ -63,21 +65,14 @@ class FunctionalSummarzeParkhouseData(unittest.TestCase):
         remove_directory(fake_directory)
 
 
-    def test_aggregate_parkhouse_data(self):
-        # Isabel pulls the project for the first time and needs to aggregate the data
+    def test_aggregate_parkhouse_data_to_json_file(self):
+        aggregated_data_file = self.aggregated_parkhouse_data_file
+        data_directory = self.data_directory
 
-        # They notice the data dir which holds ALL the parkhouse data entries
-        # To aggregate the data they execute the aggregate_data function
-        # It returns a file 'parkhouse_data_<CURRENT_DATE>.json'
-        # And contains a list with dictionaries
-            # Each dict contains the keys: timestamp <str> "01112023_9000"
-            # and parkhouses <list of Objects>
-        existing_data = []
-        aggreagted_data_file = self.aggregated_parkhouse_data_file
+        generate_parkleitsystem_data.aggregate_parkhouse_data(data_directory)
 
-        data_files_list = generate_parkleitsystem_data.list_files_in_directory(self.data_directory)
-        aggregated_data = generate_parkleitsystem_data.aggregate_data(data_files_list, existing_data)
-        generate_parkleitsystem_data.write_json_to_file(aggreagted_data_file, aggregated_data)
+        with open(aggregated_data_file, 'r') as file:
+            aggregated_data = json.load(file)
 
         # aggregated_data is a list with dicts
         self.assertIsInstance(aggregated_data, list)
@@ -93,22 +88,14 @@ class FunctionalSummarzeParkhouseData(unittest.TestCase):
         files = os.listdir(self.data_directory)
         self.assertEqual(len(aggregated_data), len(files))
 
-        # the data into the parkhouse_data_ddmmyyyy.json file to run analysis
-        # JSON file with containing list with name parkhouse_data_ddmmyyyy.json exists
-        # list contains so many entries in how files exists in the data/ directory
-        file_path = 'parkhouse_data_05112023.json'
-        file_exists = os.path.exists(file_path)
+        file_exists = os.path.exists(aggregated_data_file)
         self.assertTrue(file_exists)
 
 
     def test_get_data_for_single_parkhouse(self):
-        # Isabel wants to get the data for a single parkhouse
-        # She provides the script with the path to the aggregated file
-        # And gets a file <parkhouse_name_ddmmyyyy.json> with all the data just
-        # for one parkhouse
-
         parkhouse_name = "Dern-Passage"
-        expected_output_file = "dern-passage_data_05112023.json"
+        today = datetime.now().strftime("%d%m%Y")
+        expected_output_file = f"dern-passage_data_{today}.json"
         parkhouse_data = [
             { "timestamp": "01112023-0950", "parkhouses": [{ "name": "Dern-Passage", "free_spaces": 69, "occupied_spaces": 31, "max_spaces": 100 },
                                                       { "name": "Karstadt", "free_spaces": 100, "occupied_spaces": 20, "max_spaces": 120 }]},
@@ -203,45 +190,55 @@ class FunctionalSummarzeParkhouseData(unittest.TestCase):
             print(f"Error deleting {csv_file_path}")
 
 
+class SummarizeDataViaCLI(unittest.TestCase):
+    def setUp(self):
+        expected_date = datetime.now()
+        self.parkhouse_data_file = f"parkhouse_data_{expected_date.strftime('%d%m%Y')}.json"
+
+        self.fake_json = [
+            { "timestamp": "01112023-0935", "parkhouses": [{ "name": "Dern-Passage", "free_spaces": 69, "occupied_spaces": 31, "max_spaces": 100 }, { "name": "Johannesstraße", "free_spaces": 69, "occupied_spaces": 31, "max_spaces": 100 }]},
+            { "timestamp": "01112023-0940", "parkhouses": [{ "name": "Dern-Passage", "free_spaces": 69, "occupied_spaces": 31, "max_spaces": 100 }, { "name": "Johannesstraße", "free_spaces": 69, "occupied_spaces": 31, "max_spaces": 100 }]}
+        ]
+
+        self.parkhouse_name = "Dern-Passage"
+
+        self.today = datetime.now().strftime("%d%m%Y")
+        self.single_parkhouse_data_file = f"dern-passage_data_{self.today}.json"
 
 
-        # He also want each parkhouses data to visualize easily
-        # with a CSV file
+    def tearDown(self):
+        def remove_file(file_name):
+            if os.path.exists(file_name):
+                os.remove(file_name)
 
-        # Bob provides the module with the data/ directory
-        # The module writes the aggregated data and each individual
-        # parkhouse into files
-
-
-        # He provides the folder as input into a function
-        # list of files
-        # open each file, write contents to list
-        # write list to JSON file
-        # The function aggregates all the data into one giant list
-        # and writes it to "data/aggregated_data.json"
+        remove_file(self.parkhouse_data_file)
+        remove_file(self.single_parkhouse_data_file)
 
 
-        # Bob runs a script that returns a big JSON files with all the parkhouse data in it!
-        # The aggregated data has the format a list with ALL items in there
+    def test_aggregate_json_data_command(self):
+        parkhouse_data_file = self.parkhouse_data_file
+        # Call the module with the command-line flag using subprocess
+        command = ["python3", "generate_parkleitsystem_data.py", "--aggregate-json-data", "data/"]
+        subprocess.run(command, check=True)
 
-        # from that "parkhouse_data_<CURRENT_DATE>.json"
-        # Bob extracts the data for each parkhouse as CSV files
-
-        # Format:
-        # parkhouse,timestamp,max_spaces,free_spaces,occupied_spaces
-        # Dern-Passage,31102023-2035,100,70,30
-        # Dern-Passage,31102023-2036,150,90,60
-        # Dern-Passage,31102023-2037,200,120,80
-        # Dern-Passage,31102023-2038,180,110,70
-        # Dern-Passage,31102023-2039,160,80,80
-
-        # For each parkhouse there are csv_files with their name in the
-        # data/parkhouses/ directory
+        # Check if the JSON file is created in the main directory with the expected name
+        self.assertTrue(os.path.isfile(parkhouse_data_file))
 
 
-    def test_add_new_data_without_duplicates(self):
-        pass
+    def test_extract_single_parkhouse_info(self):
+        parkhouse_data_file = self.parkhouse_data_file
+        fake_json = self.fake_json
+
+        with open(parkhouse_data_file, 'w', encoding='utf-8') as f:
+            json.dump(fake_json, f, ensure_ascii=False, indent=4)
+
+        parkhouse_name = self.parkhouse_name
+        single_parkhouse_data_file = self.single_parkhouse_data_file
+
+        command = ["python3", "generate_parkleitsystem_data.py", "--extract-single-parkhouse", parkhouse_name, parkhouse_data_file]
+        subprocess.run(command, check=True)
+
+        self.assertTrue(os.path.isfile(single_parkhouse_data_file))
 
 
-    def test_export_parkhouse_data_per_parkhouse(self):
-        pass
+

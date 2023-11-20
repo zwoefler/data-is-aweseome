@@ -3,6 +3,7 @@ import json
 import datetime
 import csv
 from io import StringIO
+import argparse
 
 def read_json_file(json_path):
     with open(json_path) as f:
@@ -85,6 +86,16 @@ def extract_single_parkhouse_info(parkhouse, timestamped_parkhouse_data):
                 "max_spaces": parkhouse_dict["max_spaces"],
                 "occupied_spaces": parkhouse_dict["occupied_spaces"],
             }
+            break
+        else:
+            single_parkhouse = {
+                "timestamp": timestamp,
+                "name": parkhouse,
+                "free_spaces": 0,
+                "max_spaces": 0,
+                "occupied_spaces": 0,
+            }
+
 
     return single_parkhouse
 
@@ -96,7 +107,20 @@ def get_single_parkhouse_data(parkhouse_name, parkhouse_data_file):
         parkhouse_info = extract_single_parkhouse_info(parkhouse_name, timestamped_parkhouse_data)
         single_parkhouse_info.append(parkhouse_info)
 
-    write_json_to_file("dern-passage_data_05112023.json", single_parkhouse_info)
+    export_filename = create_export_filename(parkhouse_name)
+    write_json_to_file(export_filename, single_parkhouse_info)
+
+    return
+
+
+
+def aggregate_parkhouse_data(folder):
+    existing_data = []
+    files_list = list_files_in_directory(folder)
+    aggregated_data = aggregate_data(files_list, existing_data)
+
+    export_filename = create_export_filename("parkhouse")
+    write_json_to_file(export_filename, aggregated_data)
 
     return
 
@@ -106,3 +130,29 @@ def export_single_parkhouse_data_to_csv(parkhouse_json_file):
     csv_data = convert_json_to_csv(json_parkhouse_data)
     export_csv_to_file("dern-passage_01112023.csv", csv_data)
     return
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Parkleitsystem Module")
+
+    # Add command-line options
+    parser.add_argument("--aggregate-json-data", metavar="folder", help="Aggregate JSON data from the specified folder")
+    parser.add_argument("--extract-single-parkhouse", metavar=("parkhouse_name", "data_file"), nargs=2,
+                        help="Extract data for a single parkhouse from a data file")
+    # parser.add_argument("--get-available-parkhouses", metavar="data_file", help="Get available parkhouses from a data file")
+
+    args = parser.parse_args()
+
+    if args.aggregate_json_data:
+        aggregate_parkhouse_data(args.aggregate_json_data)
+
+    if args.extract_single_parkhouse:
+        parkhouse_name, data_file = args.extract_single_parkhouse
+        get_single_parkhouse_data(parkhouse_name, data_file)
+
+    # if args.get_available_parkhouses:
+    #     get_available_parkhouses(args.get_available_parkhouses)
+
+
+if __name__ == '__main__':
+    main()

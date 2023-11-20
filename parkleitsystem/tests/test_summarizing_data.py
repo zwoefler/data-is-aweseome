@@ -160,6 +160,31 @@ class ExtractSingleParkhouseSystem(unittest.TestCase):
         self.assertIn(parkhouse_name, single_parkhouse_data["name"])
 
 
+    def test_zeroed_single_parkhouse_data_when_parkhouse_doesnt_exist(self):
+        example_parkhouse_data = {
+            "timestamp": "01112023-0900",
+            "parkhouses": [
+                { "name": "Karstadt", "free_spaces": 637, "occupied_spaces": 58, "max_spaces": 695 },
+                { "name": "Dern-Passage", "free_spaces": 120, "occupied_spaces": 79, "max_spaces": 199 }
+            ]
+        }
+        result_parkhouse_data = {
+            "name": "Johannesstraße",
+            "timestamp": "01112023-0900",
+            "free_spaces": 0,
+            "occupied_spaces": 0,
+            "max_spaces": 0
+        }
+
+        parkhouse_name = "Johannesstraße"
+        single_parkhouse_data = generate_parkleitsystem_data.extract_single_parkhouse_info(parkhouse_name, example_parkhouse_data)
+
+        self.assertIsInstance(single_parkhouse_data, dict)
+        self.assertEqual(single_parkhouse_data, result_parkhouse_data)
+        self.assertIn(parkhouse_name, single_parkhouse_data["name"])
+
+
+
     def test_create_single_parkhouse_export_file_name(self):
 
         today = datetime.datetime.now().strftime("%d%m%Y")
