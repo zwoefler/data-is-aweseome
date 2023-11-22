@@ -150,6 +150,7 @@ def main():
     parser.add_argument("--extract-single-parkhouse", metavar=("parkhouse_name", "data_file"), nargs=2,
                         help="Extract data for a single parkhouse from a data file")
     parser.add_argument("--parkhouses", metavar="data_file", help="Show available parkhouses")
+    parser.add_argument("--generate_csv", metavar="parkhouse_data_file", help="Create CSV file from JSON Parkhouse Data")
 
     args = parser.parse_args()
 
@@ -164,6 +165,12 @@ def main():
         parkhouse_data = read_json_file(args.parkhouses)
         parkhouses = extract_available_parkhouses(parkhouse_data)
         print(parkhouses)
+
+    if args.generate_csv:
+        json_data = read_json_file(args.generate_csv)
+        csv_data = convert_json_to_csv(json_data)
+        filename = f"{args.generate_csv.split('.')[0]}.csv"
+        export_csv_to_file(filename, csv_data)
 
 
 if __name__ == '__main__':

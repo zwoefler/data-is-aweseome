@@ -259,4 +259,18 @@ class SummarizeDataViaCLI(unittest.TestCase):
         self.assertEqual(str(expected_output), actual_output)
 
 
+    def test_convert_json_to_csv(self):
+        parkhouse_data_file = "am_bahnhof_data_20112023.json"
+        expected_output_file = "am_bahnhof_data_20112023.csv"
+        fake_json = self.fake_json
 
+        with open(parkhouse_data_file, 'w', encoding='utf-8') as f:
+            json.dump(fake_json, f, ensure_ascii=False, indent=4)
+
+        command = ["python3", "generate_parkleitsystem_data.py", "--generate_csv", parkhouse_data_file]
+        result = subprocess.run(command, check=True, text=True, capture_output=True)
+
+        self.assertTrue(os.path.isfile(expected_output_file))
+
+        if os.path.exists(expected_output_file):
+            os.remove(expected_output_file)
