@@ -35,17 +35,17 @@ ChartJS.register(
 
 const jsonData = parkleitsystem
 
-// var chartLabels = []
-// var chartData = []
+var chartLabels = ref([])
+var chartData = ref([])
 
 var chartDataSet = ref({
-    labels: [], // Time (x-axis)
+    labels: chartLabels.value, // Time (x-axis)
     datasets: [
         {
             label: 'Occupied Spaces',
             borderColor: 'rgba(75, 192, 192, 1)',
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            data: [], // Occupied Spaces (y-axis)
+            data: chartData.value, // Occupied Spaces (y-axis)
         },
     ],
 });
@@ -100,18 +100,33 @@ const cycleWeek = (delta) => {
 
 const updateChartData = () => {
     console.log("UPDATING DATA")
-    chartDataSet.value.labels = []
-    chartDataSet.value.datasets.data = []
+    chartLabels.value = []
+    chartData.value = []
 
     jsonData.forEach((item) => {
         const itemDate = parseTimestamp(item.timestamp)
 
         if (itemDate >= selectedWeek.value && itemDate < addWeeks(selectedWeek.value, 1)){
-            chartDataSet.value.labels.push(parseTimestamp(item.timestamp).toLocaleDateString("de-DE", options))
-            chartDataSet.value.datasets.data.push(item.occupied_spaces)
+            chartLabels.value.push(parseTimestamp(item.timestamp).toLocaleDateString("de-DE", options))
+            chartData.value.push(item.occupied_spaces)
         }
     })
 }
+
+watch([chartLabels, chartData], ([newChartLabel, newChartData]) => {
+    chartDataSet.value = {
+    labels: newChartLabel, // Time (x-axis)
+    datasets: [
+        {
+            label: 'Occupied Spaces',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            data: newChartData, // Occupied Spaces (y-axis)
+        },
+    ],
+    }
+})
+
 
 
 updateChartData()
