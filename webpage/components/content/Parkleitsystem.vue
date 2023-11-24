@@ -2,13 +2,15 @@
     <div class="w-full">
         <button @click="cycleWeek(-1)">vorherige Woche</button>
         <button @click="cycleWeek(1)">nächste Woche</button>
-        <Line :data="chartData" :options="chartOptions" />
+        <Line :data="chartDataSet" :options="chartOptions" />
     </div>
 </template>
 
 <script setup>
 import { Line } from 'vue-chartjs'
-import { addWeeks, subWeeks, startOfISOWeek } from 'date-fns';
+import { addWeeks, startOfISOWeek } from 'date-fns';
+import parkleitsystem from 'assets/parkhouses/am bahnhof_data_20112023.json'
+import { ref } from 'vue';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -31,14 +33,12 @@ ChartJS.register(
 )
 
 
-import parkleitsystem from 'assets/parkhouses/am bahnhof_data_20112023.json'
-import { ref } from 'vue';
-
-
-
 const jsonData = parkleitsystem
 
-var chartData = ref({
+// var chartLabels = []
+// var chartData = []
+
+var chartDataSet = ref({
     labels: [], // Time (x-axis)
     datasets: [
         {
@@ -74,6 +74,7 @@ var chartOptions = ref({
     },
 })
 
+
 const parseTimestamp = (timestamp) => {
     const day = parseInt(timestamp.substring(0, 2), 10);
     const month = parseInt(timestamp.substring(2, 4), 10) - 1; // Month is zero-based
@@ -81,41 +82,37 @@ const parseTimestamp = (timestamp) => {
     const hour = parseInt(timestamp.substring(9, 11), 10);
     const minute = parseInt(timestamp.substring(11), 10);
 
-
     return new Date(year, month, day, hour, minute);
 };
 
 
 let selectedWeek = ref(startOfISOWeek(new Date()));
+const options = { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' }
+
+jsonData.sort((a, b) => parseTimestamp(a.timestamp) - parseTimestamp(b.timestamp));
+
 
 const cycleWeek = (delta) => {
     selectedWeek.value = addWeeks(selectedWeek.value, delta);
+    console.log("LAST WEEK?!", selectedWeek.value)
     updateChartData();
 };
 
 const updateChartData = () => {
-    const options = { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' }
-
-    chartData.value.labels = []
-    chartData.value.datasets[0].data = []
-
-    jsonData.sort((a, b) => parseTimestamp(a.timestamp) - parseTimestamp(b.timestamp));
+    console.log("UPDATING DATA")
+    chartDataSet.value.labels = []
+    chartDataSet.value.datasets.data = []
 
     jsonData.forEach((item) => {
         const itemDate = parseTimestamp(item.timestamp)
 
-
         if (itemDate >= selectedWeek.value && itemDate < addWeeks(selectedWeek.value, 1)){
-            chartData.value.labels.push(parseTimestamp(item.timestamp).toLocaleDateString("de-DE", options))
-            chartData.value.datasets[0].data.push(item.occupied_spaces)
+            chartDataSet.value.labels.push(parseTimestamp(item.timestamp).toLocaleDateString("de-DE", options))
+            chartDataSet.value.datasets.data.push(item.occupied_spaces)
         }
     })
 }
 
-// jsonData.forEach((item) => {
-//     chartData.value.labels.push(parseTimestamp(item.timestamp));
-//     chartData.value.datasets[0].data.push(item.occupied_spaces);
-// });
 
 updateChartData()
 
