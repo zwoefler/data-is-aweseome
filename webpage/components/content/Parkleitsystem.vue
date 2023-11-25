@@ -87,8 +87,10 @@ const shortDate = (date) => {
 
 let selectedWeekStart = ref(startOfISOWeek(new Date()));
 let selectedWeekEnd = ref(endOfISOWeek(selectedWeekStart.value))
+let oldWeekStart = ref("")
 
 const cycleWeek = (delta) => {
+    oldWeekStart.value = selectedWeekStart.value
     selectedWeekStart.value = addWeeks(selectedWeekStart.value, delta);
     selectedWeekEnd.value = endOfISOWeek(selectedWeekStart.value)
     updateChart();
@@ -111,8 +113,13 @@ watch([chartLabels, chartData], ([newChartLabel, newChartData]) => {
 
 const updateChart = () => {
     var updatedChartData = updateChartData(jsonData, selectedWeekStart.value)
-    chartLabels.value = updatedChartData.labels
-    chartData.value = updatedChartData.data
+    if (updatedChartData.data.length === 0){
+        selectedWeekStart.value = oldWeekStart.value
+        selectedWeekEnd.value = endOfISOWeek(selectedWeekStart.value)
+    } else {
+        chartLabels.value = updatedChartData.labels
+        chartData.value = updatedChartData.data
+    }
 }
 
 updateChart()
