@@ -1,5 +1,6 @@
 <template>
     <div class="w-full">
+        <p class="font-bold text-2xl">{{ parkhouse }}</p>
         <button @click="cycleWeek(-1)">vorherige Woche</button>
         <button @click="cycleWeek(1)">nächste Woche</button>
         <Line :data="chartDataSet" :options="chartOptions" />
@@ -34,6 +35,8 @@ ChartJS.register(
 
 
 const jsonData = parkleitsystem
+
+const parkhouse = ref(jsonData[0].name)
 
 var chartLabels = ref([])
 var chartData = ref([])
