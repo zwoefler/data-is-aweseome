@@ -75,22 +75,10 @@ var chartOptions = ref({
 })
 
 
-const parseTimestamp = (timestamp) => {
-    const day = parseInt(timestamp.substring(0, 2), 10);
-    const month = parseInt(timestamp.substring(2, 4), 10) - 1; // Month is zero-based
-    const year = parseInt(timestamp.substring(4, 8), 10);
-    const hour = parseInt(timestamp.substring(9, 11), 10);
-    const minute = parseInt(timestamp.substring(11), 10);
-
-    return new Date(year, month, day, hour, minute);
-};
-
-
 let selectedWeek = ref(startOfISOWeek(new Date()));
 
 const cycleWeek = (delta) => {
     selectedWeek.value = addWeeks(selectedWeek.value, delta);
-    console.log("LAST WEEK?!", selectedWeek.value)
     updateChartData(jsonData, selectedWeek.value);
 };
 
@@ -112,10 +100,8 @@ watch([chartLabels, chartData], ([newChartLabel, newChartData]) => {
 
 
 var cData = updateChartData(jsonData, selectedWeek.value)
-console.log("CLABEL", cData)
 chartLabels.value = cData.labels
 chartData.value = cData.data
-console.log("LABELS", chartLabels.value, "DATA", chartData.value)
 
 
 
