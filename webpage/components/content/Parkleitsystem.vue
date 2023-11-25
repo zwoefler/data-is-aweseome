@@ -87,31 +87,13 @@ const parseTimestamp = (timestamp) => {
 
 
 let selectedWeek = ref(startOfISOWeek(new Date()));
-const options = { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' }
-
-jsonData.sort((a, b) => parseTimestamp(a.timestamp) - parseTimestamp(b.timestamp));
-
 
 const cycleWeek = (delta) => {
     selectedWeek.value = addWeeks(selectedWeek.value, delta);
     console.log("LAST WEEK?!", selectedWeek.value)
-    updateChartData();
+    updateChartData(jsonData, selectedWeek.value);
 };
 
-const updateChartData = () => {
-    console.log("UPDATING DATA")
-    chartLabels.value = []
-    chartData.value = []
-
-    jsonData.forEach((item) => {
-        const itemDate = parseTimestamp(item.timestamp)
-
-        if (itemDate >= selectedWeek.value && itemDate < addWeeks(selectedWeek.value, 1)){
-            chartLabels.value.push(parseTimestamp(item.timestamp).toLocaleDateString("de-DE", options))
-            chartData.value.push(item.occupied_spaces)
-        }
-    })
-}
 
 watch([chartLabels, chartData], ([newChartLabel, newChartData]) => {
     chartDataSet.value = {
@@ -129,7 +111,11 @@ watch([chartLabels, chartData], ([newChartLabel, newChartData]) => {
 
 
 
-updateChartData()
+var cData = updateChartData(jsonData, selectedWeek.value)
+console.log("CLABEL", cData)
+chartLabels.value = cData.labels
+chartData.value = cData.data
+console.log("LABELS", chartLabels.value, "DATA", chartData.value)
 
 
 
