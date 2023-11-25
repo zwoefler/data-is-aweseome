@@ -1,6 +1,7 @@
 <template>
     <div class="w-full">
         <p class="font-bold text-2xl">{{ parkhouse }}</p>
+        <p>{{ shortDate(selectedWeekStart) }} - {{ shortDate(selectedWeekEnd) }}</p>
         <button @click="cycleWeek(-1)">vorherige Woche</button>
         <button @click="cycleWeek(1)">nächste Woche</button>
         <Line :data="chartDataSet" :options="chartOptions" />
@@ -9,7 +10,7 @@
 
 <script setup>
 import { Line } from 'vue-chartjs'
-import { addWeeks, startOfISOWeek } from 'date-fns';
+import { addWeeks, startOfISOWeek, endOfISOWeek } from 'date-fns';
 import parkleitsystem from 'assets/parkhouses/am bahnhof_data_20112023.json'
 import { ref } from 'vue';
 import {
@@ -78,10 +79,18 @@ var chartOptions = ref({
 })
 
 
-let selectedWeek = ref(startOfISOWeek(new Date()));
+const shortDate = (date) => {
+    var options = { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric' }
+    return date.toLocaleDateString("de-DE", options)
+}
+
+
+let selectedWeekStart = ref(startOfISOWeek(new Date()));
+let selectedWeekEnd = ref(endOfISOWeek(selectedWeekStart.value))
 
 const cycleWeek = (delta) => {
-    selectedWeek.value = addWeeks(selectedWeek.value, delta);
+    selectedWeekStart.value = addWeeks(selectedWeekStart.value, delta);
+    selectedWeekEnd.value = endOfISOWeek(selectedWeekStart.value)
     updateChart();
 };
 
@@ -101,7 +110,7 @@ watch([chartLabels, chartData], ([newChartLabel, newChartData]) => {
 })
 
 const updateChart = () => {
-    var updatedChartData = updateChartData(jsonData, selectedWeek.value)
+    var updatedChartData = updateChartData(jsonData, selectedWeekStart.value)
     chartLabels.value = updatedChartData.labels
     chartData.value = updatedChartData.data
 }
