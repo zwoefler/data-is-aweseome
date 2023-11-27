@@ -3,6 +3,8 @@ export default defineNuxtConfig({
     devServer: {},
     modules: [
         '@nuxt/content',
-        '@nuxtjs/tailwindcss'
+        '@nuxtjs/tailwindcss',
+        '@nuxt/test-utils',
+        'vitest'
     ],
 })
