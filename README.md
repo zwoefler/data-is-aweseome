@@ -6,15 +6,22 @@ Whatever comes to mind.
 ## 📏 Rules
 
 - Datasources must be publicly available
-- No paywalls
+- No paywalls, or a way to climb ober it...
 - Script(s) lead from data download to final JSON-file (data)
-- Each datafolder stores the data in a data/ directory 
+- Datafolder stores data in a data/ directory 
 - Data sources have a README explaining the context
 
 The README must:
 - State the research question
 - Answer the questions from the next chapter (Data)
 
+## ToDos
+- [ ] Add CONTRIBUTING.md + rules
+- [ ] Refine Mission statement
+- [ ] External Data storage - not all in the Git repo
+- [ ] Docs - for (sub)project with Tutorial, How-To, requirements
+- [ ] Add Docker containers per project to run data visuals
+- [ ] Every project with it's own visualization?
 
 ##  Data
 All Data has a README answering the following questions:
@@ -42,27 +49,33 @@ Average CO2-Emissions for some energy-sources is usually lower than the median, 
 
 # ❓️ Questions
 ## Why opinionated?
-Most data gathered and analysed is a reaction to an argument. 
-Furthermore answering a simple question can result in consulting 5 diferent datasources and weighing their implications.
-Those implications must be explained and come from a firm conviction/opinion.
+I usually look at data to answer a question or settle an argument.
+That context lives throughout the analysis and visualization.
+Answering simple questions may result in consulting 5 different datasources.
 
-Nowadays there is so much data out there which in some cases is not correalted with other important data to give an answer to your question.
+Those sources have differing viewpoints and limitations which MUST be explained!
+Nowadays there is so much data, but even more that hasn't been correlated in a clera and concise matter.
 
-Why were there more car accidents on that Autobahn-segment?
-Some might answer: because of a lifted speedlimit which leads to more accidents.
-However, realizing the accidents occur at slow speeds and correlating them with the usage of the road one might conclude it is mainly a street running over capacity.
+EXAMPLE:
+Why were there more car accidents on a given Autobahn-segment?
+One possible answer might be the recently lifted speedlimit. (We have sections without speedlimits here)
+After all, higher speeds = more crashes?
+
+However, looking at the data you might realize most crashes occur at speeds far below the speedlimit.
+Correlating that observation with the usage (aka capacity) of that segemtn may lead to the far simpler "The street is simply overrun", explaining the lower speeds and the amount of accidents.
 
 
 ## Why JSON?
-- Easy to manage, 
-- don't know beforehand what data is available 
-- and don't want to use a database...
+- Easy to manage 
+- Don't know beforehand what data is available 
+- Don't want to use a database...
 
-JSON is good enough and well supported
+JSON is good enough
 
 ## External dependencies?
 Most data gathering and anaylsis is done using Python3 and some packages.
-Every folder has a requirements-file and should be used with a virtual env
+Every folder has a `requirements.txt` and should be used with a virtual environment.
 
-## Contributing?
+## Contributing
 - Create a Pull Request
+- 
