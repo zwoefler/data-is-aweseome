@@ -11,22 +11,16 @@ export const parseTimestamp = (timestamp) => {
     return new Date(year, month, day, hour, minute);
 };
 
-export const updateChartData = (parkhouseData, selectedWeekStart) => {
+export const updateChartData = (parkhouseData) => {
     var chartData = {
         labels: [],
         data: []
     }
-    const options = { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' }
-
     parkhouseData.sort((a, b) => parseTimestamp(a.timestamp) - parseTimestamp(b.timestamp));
 
     parkhouseData.forEach((item) => {
-        const itemDate = parseTimestamp(item.timestamp)
-
-        if (itemDate >= selectedWeekStart && itemDate < addWeeks(selectedWeekStart, 1)){
-            chartData.labels.push(parseTimestamp(item.timestamp).toLocaleDateString("de-DE", options))
-            chartData.data.push(item.occupied_spaces)
-        }
+        chartData.labels.push(parseTimestamp(item.timestamp)
+        chartData.data.push(item.occupied_spaces)
     })
 
     return chartData
