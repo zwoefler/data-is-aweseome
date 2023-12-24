@@ -12,6 +12,15 @@ class TestFunctionalAggregateParkhouseData(unittest.TestCase):
         # parkhouse_data/<parkhouse>.json
         data_dir = "data/"
         aggregate_parkhouse_data(data_dir)
+        # Iterate files in folder
+        # Load each file
+        # read it's content
+        # get names of parkhouses
+        # if scheme for parkhouse doesn#t exist, create one
+        # put data into scheme
+        # Get next file, read, add to parkhouse scheme
+        # once finished with files from folder, write schemes to
+        # parkhouse_data/<PARKHOUSE.JSON>
 
         parkhouse_data_dir = "parkhouse_data"
         self.assertTrue(os.path.exists(parkhouse_data_dir))
