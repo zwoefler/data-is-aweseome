@@ -1,11 +1,15 @@
 import unittest
 import os
 import tempfile
+import json
+from pathlib import Path
+
 
 from parkhouse_aggregator.parkhouse_aggregator import (
     create_parkhouse_data_folder,
     list_files_in_directory,
     convert_timestamp_to_epoch_seconds,
+    read_json_file,
 )
 
 
@@ -55,6 +59,34 @@ class FileSystemTests(unittest.TestCase):
 
         self.assertIsInstance(file_list, list)
         self.assertEqual(len(file_list), 3)
+        self.assertIn(
+            f"{data_dir}/file1.json",
+            file_list,
+        )
+
+    def test_load_json_from_file(self):
+        fake_json_data = [
+            {
+                "timestamp": "01112023",
+                "parkhouses": [
+                    {
+                        "name": "Dern-Passage",
+                        "free_spaces": 69,
+                        "occupied_spaces": 31,
+                        "max_spaces": 100,
+                    }
+                ],
+            }
+        ]
+        with tempfile.NamedTemporaryFile(mode="w", delete=False) as json_file:
+            json.dump(fake_json_data, json_file, ensure_ascii=False, indent=4)
+            json_path = Path(json_file.name)
+
+        json_data = read_json_file(json_path)
+
+        self.assertEqual(json_data, fake_json_data)
+
+        os.remove(json_path)
 
 
 class TestHelperFunctions(unittest.TestCase):
