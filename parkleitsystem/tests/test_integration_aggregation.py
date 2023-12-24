@@ -19,8 +19,10 @@ class TestFunctionalAggregateParkhouseData(unittest.TestCase):
             # Load each file
             # read it's content
             json_data = read_json_file(json_file)
-        # get names of parkhouses
-        # if scheme for parkhouse doesn#t exist, create one
+            # get names of parkhouses
+            list_of_parkhouses = parkhouse_list_from_data(json_data)
+            # if scheme for parkhouse doesn#t exist, create one
+
         # put data into scheme
         # Get next file, read, add to parkhouse scheme
         # once finished with files from folder, write schemes to

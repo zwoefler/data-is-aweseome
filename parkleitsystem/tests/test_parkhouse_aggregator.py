@@ -11,6 +11,7 @@ from parkhouse_aggregator.parkhouse_aggregator import (
     convert_timestamp_to_epoch_seconds,
     read_json_file,
     parkhouse_list_from_data,
+    generate_parkhouse_data,
 )
 
 
