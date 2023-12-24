@@ -45,6 +45,10 @@ def create_parkhouse_data_folder(data_dir="parkhouse_data"):
     return
 
 
+def parkhouse_list_from_data(json_data):
+    return [parkhouse["name"] for parkhouse in json_data["parkhouses"]]
+
+
 def main():
     return
 

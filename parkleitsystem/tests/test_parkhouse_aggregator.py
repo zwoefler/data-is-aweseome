@@ -10,6 +10,7 @@ from parkhouse_aggregator.parkhouse_aggregator import (
     list_files_in_directory,
     convert_timestamp_to_epoch_seconds,
     read_json_file,
+    parkhouse_list_from_data,
 )
 
 
@@ -87,6 +88,39 @@ class FileSystemTests(unittest.TestCase):
         self.assertEqual(json_data, fake_json_data)
 
         os.remove(json_path)
+
+
+class ParkhouseDataFunctions(unittest.TestCase):
+    def test_list_parkhouses_in_data(self):
+        parkhouse_data = {
+            "timestamp": "09112023-0905",
+            "parkhouses": [
+                {
+                    "name": "Dern-Passage",
+                    "free_spaces": 120,
+                    "occupied_spaces": 79,
+                    "max_spaces": 199,
+                },
+                {
+                    "name": "Karstadt",
+                    "free_spaces": 609,
+                    "occupied_spaces": 86,
+                    "max_spaces": 695,
+                },
+                {
+                    "name": "Liebig-Center",
+                    "free_spaces": 242,
+                    "occupied_spaces": 8,
+                    "max_spaces": 250,
+                },
+            ],
+        }
+        parkhouses = parkhouse_list_from_data(parkhouse_data)
+
+        self.assertIsInstance(parkhouses, list)
+        self.assertIn("Liebig-Center", parkhouses)
+        self.assertIn("Karstadt", parkhouses)
+        self.assertIn("Dern-Passage", parkhouses)
 
 
 class TestHelperFunctions(unittest.TestCase):
