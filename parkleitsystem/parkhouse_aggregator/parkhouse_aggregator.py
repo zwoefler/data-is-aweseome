@@ -7,7 +7,8 @@ def aggregate_parkhouse_data(data_dir):
 
 
 def list_files_in_directory(data_dir):
-    return []
+    data_dir_file_list = os.listdir(data_dir)
+    return data_dir_file_list
 
 
 def convert_timestamp_to_epoch_seconds(timestamp):
@@ -23,7 +24,7 @@ def create_parkhouse_data_folder(data_dir="parkhouse_data"):
 
     parkhouse_data_dir = os.path.join(module_dir, data_dir)
 
-    os.makedirs(parkhouse_data_dir, exist_ok=True)
+    os.makedirs(name=parkhouse_data_dir, exist_ok=True)
     return
 
 
