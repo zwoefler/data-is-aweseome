@@ -1,7 +1,9 @@
 import unittest
 import os
 
-from parkhouse_aggregator.parkhouse_aggregator import aggregate_parkhouse_data
+from pandas import read_json
+
+from parkhouse_aggregator.parkhouse_aggregator import *
 
 
 class TestFunctionalAggregateParkhouseData(unittest.TestCase):
@@ -11,10 +13,12 @@ class TestFunctionalAggregateParkhouseData(unittest.TestCase):
         # Rearranges the data and sorts them per parkhouse into files:
         # parkhouse_data/<parkhouse>.json
         data_dir = "data/"
-        aggregate_parkhouse_data(data_dir)
-        # Iterate files in folder
-        # Load each file
-        # read it's content
+        file_list = list_files_in_directory(data_dir)
+        for json_file in file_list:
+            # Iterate files in folder
+            # Load each file
+            # read it's content
+            json_data = read_json_file(json_file)
         # get names of parkhouses
         # if scheme for parkhouse doesn#t exist, create one
         # put data into scheme
