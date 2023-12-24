@@ -10,6 +10,31 @@ from parkhouse_aggregator.parkhouse_aggregator import (
 
 
 class FileSystemTests(unittest.TestCase):
+    def setUp(self):
+        self.temp_folder = self.create_temp_folder_with_json_files()
+
+    def tearDown(self):
+        for file in os.listdir(self.temp_folder):
+            file_path = os.path.join(self.temp_folder, file)
+            os.remove(file_path)
+        os.rmdir(self.temp_folder)
+
+    def create_temp_folder_with_json_files(self):
+        temp_dir = tempfile.mkdtemp()
+
+        json_file_contents = [
+            '{"name": "file1.json", "content": "data1"}',
+            '{"name": "file2.json", "content": "data2"}',
+            '{"name": "file3.json", "content": "data3"}',
+        ]
+
+        for i, content in enumerate(json_file_contents, 1):
+            file_path = os.path.join(temp_dir, f"file{i}.json")
+            with open(file_path, "w") as f:
+                f.write(content)
+
+        return temp_dir
+
     def test_create_parkhouse_data_folder(self):
         parent_directory = os.path.dirname(os.path.dirname(__file__))
         parkhouse_data_dir = "parkhouse_data"
@@ -25,10 +50,11 @@ class FileSystemTests(unittest.TestCase):
         os.rmdir(parkhouse_data_dir)
 
     def test_get_file_list_from_data_folder(self):
-        data_dir = "data/"
+        data_dir = self.temp_folder
         file_list = list_files_in_directory(data_dir)
 
         self.assertIsInstance(file_list, list)
+        self.assertEqual(len(file_list), 3)
 
 
 class TestHelperFunctions(unittest.TestCase):
