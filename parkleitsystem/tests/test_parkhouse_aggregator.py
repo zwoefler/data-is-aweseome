@@ -122,6 +122,110 @@ class ParkhouseDataFunctions(unittest.TestCase):
         self.assertIn("Karstadt", parkhouses)
         self.assertIn("Dern-Passage", parkhouses)
 
+    def test_make_correct_data_schema(self):
+        raw_data_list = [
+            {
+                "timestamp": "09112023-0905",
+                "parkhouses": [
+                    {
+                        "name": "Dern-Passage",
+                        "free_spaces": 120,
+                        "occupied_spaces": 79,
+                        "max_spaces": 199,
+                    },
+                    {
+                        "name": "Karstadt",
+                        "free_spaces": 609,
+                        "occupied_spaces": 86,
+                        "max_spaces": 695,
+                    },
+                ],
+            },
+            {
+                "timestamp": "09112023-0910",
+                "parkhouses": [
+                    {
+                        "name": "Dern-Passage",
+                        "free_spaces": 100,
+                        "occupied_spaces": 99,
+                        "max_spaces": 199,
+                    },
+                    {
+                        "name": "Karstadt",
+                        "free_spaces": 600,
+                        "occupied_spaces": 95,
+                        "max_spaces": 695,
+                    },
+                ],
+            },
+        ]
+
+        expected_parkhouse_data = {
+            "Karstadt": {
+                "name": "Karstadt",
+                "occupation_data": [
+                    {
+                        "timestmap": "09112023-0905",
+                        "free_spaces": 609,
+                        "occupied_spaces": 86,
+                        "max_spaces": 695,
+                    },
+                    {
+                        "timestamp": "09112023-0910",
+                        "free_spaces": 600,
+                        "occupied_spaces": 95,
+                        "max_spaces": 695,
+                    },
+                ],
+            },
+            "Dern-Passage": {
+                "name": "Dern-Passage",
+                "occupation_data": [
+                    {
+                        "timestmap": "09112023-0905",
+                        "free_spaces": 120,
+                        "occupied_spaces": 79,
+                        "max_spaces": 199,
+                    },
+                    {
+                        "timestamp": "09112023-0910",
+                        "free_spaces": 100,
+                        "occupied_spaces": 99,
+                        "max_spaces": 199,
+                    },
+                ],
+            },
+        }
+
+        parkhouse_data = generate_parkhouse_data(raw_data_list)
+
+        self.assertDictEqual(parkhouse_data, expected_parkhouse_data)
+
+    def test_write_parkhouse_data_in_correct_format(self):
+        parkhouse_schema = {
+            "name": "Karstadt",
+            "occupation_data": [
+                {
+                    "timestamp": "09112023-0905",
+                    "free_spaces": 120,
+                    "occupied_spaces": 79,
+                    "max_spaces": 199,
+                },
+                {
+                    "timestamp": "09112023-0910",
+                    "free_spaces": 125,
+                    "occupied_spaces": 74,
+                    "max_spaces": 199,
+                },
+                {
+                    "timestamp": "09112023-0915",
+                    "free_spaces": 126,
+                    "occupied_spaces": 73,
+                    "max_spaces": 199,
+                },
+            ],
+        }
+
 
 class TestHelperFunctions(unittest.TestCase):
     def test_convert_timestamp_from_custom_to_epoch_seconds(self):
