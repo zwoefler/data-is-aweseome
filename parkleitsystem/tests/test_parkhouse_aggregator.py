@@ -12,6 +12,7 @@ from parkhouse_aggregator.parkhouse_aggregator import (
     read_json_file,
     parkhouse_list_from_data,
     generate_parkhouse_data,
+    export_parkhouse_data,
 )
 
 
@@ -124,6 +125,7 @@ class ParkhouseDataFunctions(unittest.TestCase):
         self.assertIn("Dern-Passage", parkhouses)
 
     def test_make_correct_data_schema(self):
+        self.maxDiff = None
         raw_data_list = [
             {
                 "timestamp": "09112023-0905",
@@ -162,28 +164,11 @@ class ParkhouseDataFunctions(unittest.TestCase):
         ]
 
         expected_parkhouse_data = {
-            "Karstadt": {
-                "name": "Karstadt",
-                "occupation_data": [
-                    {
-                        "timestmap": "09112023-0905",
-                        "free_spaces": 609,
-                        "occupied_spaces": 86,
-                        "max_spaces": 695,
-                    },
-                    {
-                        "timestamp": "09112023-0910",
-                        "free_spaces": 600,
-                        "occupied_spaces": 95,
-                        "max_spaces": 695,
-                    },
-                ],
-            },
             "Dern-Passage": {
                 "name": "Dern-Passage",
                 "occupation_data": [
                     {
-                        "timestmap": "09112023-0905",
+                        "timestamp": "09112023-0905",
                         "free_spaces": 120,
                         "occupied_spaces": 79,
                         "max_spaces": 199,
@@ -196,36 +181,75 @@ class ParkhouseDataFunctions(unittest.TestCase):
                     },
                 ],
             },
+            "Karstadt": {
+                "name": "Karstadt",
+                "occupation_data": [
+                    {
+                        "timestamp": "09112023-0905",
+                        "free_spaces": 609,
+                        "occupied_spaces": 86,
+                        "max_spaces": 695,
+                    },
+                    {
+                        "timestamp": "09112023-0910",
+                        "free_spaces": 600,
+                        "occupied_spaces": 95,
+                        "max_spaces": 695,
+                    },
+                ],
+            },
         }
 
-        parkhouse_data = generate_parkhouse_data(raw_data_list)
+        parkhouses_data = generate_parkhouse_data(raw_data_list)
 
-        self.assertDictEqual(parkhouse_data, expected_parkhouse_data)
+        self.assertDictEqual(parkhouses_data, expected_parkhouse_data)
 
-    def test_write_parkhouse_data_in_correct_format(self):
-        parkhouse_schema = {
-            "name": "Karstadt",
-            "occupation_data": [
-                {
-                    "timestamp": "09112023-0905",
-                    "free_spaces": 120,
-                    "occupied_spaces": 79,
-                    "max_spaces": 199,
-                },
-                {
-                    "timestamp": "09112023-0910",
-                    "free_spaces": 125,
-                    "occupied_spaces": 74,
-                    "max_spaces": 199,
-                },
-                {
-                    "timestamp": "09112023-0915",
-                    "free_spaces": 126,
-                    "occupied_spaces": 73,
-                    "max_spaces": 199,
-                },
-            ],
+    def test_export_parkhouses_data_to_individual_files(self):
+        parkhouses_data = {
+            "Dern-Passage": {
+                "name": "Dern-Passage",
+                "occupation_data": [
+                    {
+                        "timestamp": "09112023-0905",
+                        "free_spaces": 120,
+                        "occupied_spaces": 79,
+                        "max_spaces": 199,
+                    },
+                    {
+                        "timestamp": "09112023-0910",
+                        "free_spaces": 100,
+                        "occupied_spaces": 99,
+                        "max_spaces": 199,
+                    },
+                ],
+            },
+            "Karstadt": {
+                "name": "Karstadt",
+                "occupation_data": [
+                    {
+                        "timestamp": "09112023-0905",
+                        "free_spaces": 609,
+                        "occupied_spaces": 86,
+                        "max_spaces": 695,
+                    },
+                    {
+                        "timestamp": "09112023-0910",
+                        "free_spaces": 600,
+                        "occupied_spaces": 95,
+                        "max_spaces": 695,
+                    },
+                ],
+            },
         }
+
+        with tempfile.TemporaryDirectory() as destination_data_dir:
+            export_parkhouse_data(destination_data_dir, parkhouses_data)
+
+            karstadt_json = os.path.join(destination_data_dir, "karstadt.json")
+            dern_json = os.path.join(destination_data_dir, "dern-passage.json")
+            self.assertTrue(os.path.exists(karstadt_json))
+            self.assertTrue(os.path.exists(dern_json))
+
 
 
 class TestHelperFunctions(unittest.TestCase):

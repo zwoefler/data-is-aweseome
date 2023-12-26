@@ -49,10 +49,10 @@ def parkhouse_list_from_data(json_data):
     return [parkhouse["name"] for parkhouse in json_data["parkhouses"]]
 
 
-def generate_parkhouse_data(raw_data_list):
+def generate_parkhouse_data(aggregated_data_list):
     parkhouses_data = {}
 
-    for raw_data in raw_data_list:
+    for raw_data in aggregated_data_list:
         timestamp = raw_data.get("timestamp", "")
 
         for parkhouse_info in raw_data.get("parkhouses", []):
@@ -73,6 +73,15 @@ def generate_parkhouse_data(raw_data_list):
                 }
             )
 
+    return parkhouses_data
+
+
+def export_parkhouse_data(data_directory, parkhouses_data):
+    for parkhouse in parkhouses_data.keys():
+        export_filename = f"{parkhouse.lower()}.json"
+        export_path = os.path.join(data_directory, export_filename)
+        with open(export_path, mode="w") as export_file:
+            json.dump(parkhouses_data[parkhouse], export_file)
     return
 
 
