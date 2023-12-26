@@ -49,10 +49,6 @@ def create_parkhouse_data_folder(data_dir="parkhouse_data"):
     return
 
 
-def parkhouse_list_from_data(json_data):
-    return [parkhouse["name"] for parkhouse in json_data["parkhouses"]]
-
-
 def generate_parkhouse_data(aggregated_data_list):
     parkhouses_data = {}
 
@@ -60,7 +56,7 @@ def generate_parkhouse_data(aggregated_data_list):
         timestamp = raw_data.get("timestamp", "")
 
         for parkhouse_info in raw_data.get("parkhouses", []):
-            parkhouse_name = parkhouse_info.get("name")
+            parkhouse_name = parkhouse_info.get("name").strip()
 
             if parkhouse_name not in parkhouses_data:
                 parkhouses_data[parkhouse_name] = {
@@ -77,6 +73,11 @@ def generate_parkhouse_data(aggregated_data_list):
                 }
             )
 
+    for parkhouse in parkhouses_data.keys():
+        parkhouses_data[parkhouse]["occupation_data"] = sorted(
+            parkhouses_data[parkhouse]["occupation_data"], key=lambda x: x["timestamp"]
+        )
+
     return parkhouses_data
 
 
@@ -91,6 +92,17 @@ def export_parkhouse_data(data_directory, parkhouses_data):
 
 def main():
     logging.basicConfig(level=logging.INFO)
+
+    module_dir = os.path.dirname(os.path.dirname(__file__))
+    data_directory = os.path.join(module_dir, "data/")
+
+    create_parkhouse_data_folder("parkhouse_data")
+
+    data_files = list_files_in_directory(data_directory)
+    aggregated_data_list = [read_json_file(data_file) for data_file in data_files]
+    parkhouses_data = generate_parkhouse_data(aggregated_data_list)
+
+    export_parkhouse_data("parkhouse_data", parkhouses_data)
     return
 
 
