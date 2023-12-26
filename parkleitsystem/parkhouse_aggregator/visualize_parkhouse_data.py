@@ -4,6 +4,7 @@ import pandas as pd
 import json
 import os
 import argparse
+from datetime import datetime
 
 
 def load_json_from_file(file_path):
@@ -21,25 +22,26 @@ def load_json_from_file(file_path):
     return data
 
 
-def plot_data(file_path):
-    # parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    # file_path = os.path.join(parent_directory, "parkhouse_data", "am bahnhof.json")
+def epoch_to_human(timestamp):
+    return datetime.fromtimestamp(timestamp).strftime("%a. %d.%m - %H:%M")
+
+
+def flatten_data(file_path):
     data = load_json_from_file(file_path)
 
-    # Convert timestamp to datetime
-    data["occupation_data"] = [
-        {"timestamp": pd.to_datetime(entry["timestamp"], unit="s"), **entry}
-        for entry in data["occupation_data"]
-    ]
-
-    # Flatten the data
     flat_data = [
-        {"timestamp": entry["timestamp"], "value": entry["occupied_spaces"]}
+        {
+            "timestamp": epoch_to_human(entry["timestamp"]),
+            "value": entry["occupied_spaces"],
+        }
         for entry in data["occupation_data"]
     ]
 
     df = pd.DataFrame(flat_data)
+    return df
 
+
+def plot_data(df, name):
     sns.set(style="whitegrid")
 
     plt.figure(figsize=(10, 6))
@@ -47,7 +49,7 @@ def plot_data(file_path):
 
     plt.xlabel("Timestamp")
     plt.ylabel("Occupied Spaces")
-    plt.title(f"Occupation over Time - {data['name']}")
+    plt.title(f"Occupation over Time - {name}")
 
     plt.show()
 
@@ -113,7 +115,8 @@ def main():
             print("No datasets found.")
     elif args.plot:
         parkhouse_to_plot = datasets[args.plot.lower()]["path"]
-        plot_data(parkhouse_to_plot)
+        df = flatten_data(parkhouse_to_plot)
+        plot_data(df, datasets[args.plot.lower()]["name"])
 
 
 if __name__ == "__main__":
