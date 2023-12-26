@@ -139,13 +139,13 @@ class ParkhouseDataFunctions(unittest.TestCase):
                 "name": "Dern-Passage",
                 "occupation_data": [
                     {
-                        "timestamp": "09112023-0905",
+                        "timestamp": 1699520700,
                         "free_spaces": 120,
                         "occupied_spaces": 79,
                         "max_spaces": 199,
                     },
                     {
-                        "timestamp": "09112023-0910",
+                        "timestamp": 1699521000,
                         "free_spaces": 100,
                         "occupied_spaces": 99,
                         "max_spaces": 199,
@@ -156,13 +156,13 @@ class ParkhouseDataFunctions(unittest.TestCase):
                 "name": "Karstadt",
                 "occupation_data": [
                     {
-                        "timestamp": "09112023-0905",
+                        "timestamp": 1699520700,
                         "free_spaces": 609,
                         "occupied_spaces": 86,
                         "max_spaces": 695,
                     },
                     {
-                        "timestamp": "09112023-0910",
+                        "timestamp": 1699521000,
                         "free_spaces": 600,
                         "occupied_spaces": 95,
                         "max_spaces": 695,

@@ -66,7 +66,7 @@ def generate_parkhouse_data(aggregated_data_list):
 
             parkhouses_data[parkhouse_name]["occupation_data"].append(
                 {
-                    "timestamp": timestamp,
+                    "timestamp": convert_timestamp_to_epoch_seconds(timestamp),
                     "free_spaces": parkhouse_info.get("free_spaces"),
                     "occupied_spaces": parkhouse_info.get("occupied_spaces"),
                     "max_spaces": parkhouse_info.get("max_spaces"),
