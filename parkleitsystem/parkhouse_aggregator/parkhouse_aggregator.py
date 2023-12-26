@@ -1,6 +1,7 @@
 import os
 from datetime import datetime, timezone
 import json
+import logging
 
 
 def aggregate_parkhouse_data(data_dir):
@@ -38,8 +39,11 @@ def read_json_file(json_path):
 
 def create_parkhouse_data_folder(data_dir="parkhouse_data"):
     module_dir = os.path.dirname(os.path.dirname(__file__))
-
     parkhouse_data_dir = os.path.join(module_dir, data_dir)
+
+    if os.path.exists(path=parkhouse_data_dir) and os.path.isdir(data_dir):
+        logging.info(f"{data_dir} already exists")
+        return
 
     os.makedirs(name=parkhouse_data_dir, exist_ok=True)
     return
@@ -86,6 +90,7 @@ def export_parkhouse_data(data_directory, parkhouses_data):
 
 
 def main():
+    logging.basicConfig(level=logging.INFO)
     return
 
 

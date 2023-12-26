@@ -44,17 +44,21 @@ class FileSystemTests(unittest.TestCase):
 
     def test_create_parkhouse_data_folder(self):
         parent_directory = os.path.dirname(os.path.dirname(__file__))
-        parkhouse_data_dir = "parkhouse_data"
-        create_parkhouse_data_folder()
+        parkhouse_data_dir = "fake_parkhouse_data"
+        fake_parkhouse_data_folder = os.path.join(parent_directory, parkhouse_data_dir)
 
-        self.assertTrue(
-            os.path.exists(os.path.join(parent_directory, parkhouse_data_dir))
-        )
-        self.assertTrue(
-            os.path.isdir(os.path.join(parent_directory, parkhouse_data_dir))
-        )
+        create_parkhouse_data_folder(fake_parkhouse_data_folder)
 
-        os.rmdir(parkhouse_data_dir)
+        self.assertTrue(os.path.exists(fake_parkhouse_data_folder))
+        self.assertTrue(os.path.isdir(fake_parkhouse_data_folder))
+
+        os.rmdir(fake_parkhouse_data_folder)
+
+    def test_when_parkhouse_data_dir_exists_skip(self):
+        with self.assertLogs(level="INFO") as log:
+            create_parkhouse_data_folder(self.temp_folder)
+
+        self.assertIn(f"{self.temp_folder} already exists", log.output[0])
 
     def test_get_file_list_from_data_folder(self):
         data_dir = self.temp_folder
@@ -249,7 +253,6 @@ class ParkhouseDataFunctions(unittest.TestCase):
             dern_json = os.path.join(destination_data_dir, "dern-passage.json")
             self.assertTrue(os.path.exists(karstadt_json))
             self.assertTrue(os.path.exists(dern_json))
-
 
 
 class TestHelperFunctions(unittest.TestCase):
