@@ -1,5 +1,17 @@
 # Average Abitur Grades in Germany since 2006
-https://www.kmk.org/dokumentation-statistik/statistik/schulstatistik/abiturnoten.html
+There is no easily available dataset with Abitur Grades in Germany across all states and in aggregate over a long period of time.
+
+🛑 STATE: BROKEN
+
+## How to run
+```BASH
+# Activate Python env
+python3 -m venv Env
+source Env/bin/activate
+pip install -r requirements.txt
+
+python3 gather_grade_data.py
+```
 
 Visualizing the data for the Average Abitur grades in Germany.
 Stuff we want to see:
@@ -7,7 +19,7 @@ Stuff we want to see:
 - Histograms over years of grades (total, state)
 
 
-## Design
+## 💡 Design
 Have a JSON-file with all years since earliest on KMK.org available.
 The data should have:
 - Grades (1.0 - 4.0) for every state
@@ -16,12 +28,12 @@ The data should have:
 
 
 
-## Requirements
-- Each selection "BW" - must hvae corresponding name "Baden Würtemberg"
+## 🛠️ Requirements
+- Each selection "BW" - must have corresponding name "Baden Würtemberg"
 - Each state has it's own datarow [2.25, 2.20, 2.19, etc.]
 
 
-## ToDo
+## 🏗️ ToDo
 Change dataset:
 Filter for Average Grades:
 ```
@@ -33,3 +45,9 @@ average_grade: {
 ```
 
 - Data order in the JSON is weird! Years should probably always be together with the data for easier visualization
+
+
+
+## 📚️ Resources
+Abiturnoten im Ländervergleich
+- 🔗 URL: https://www.kmk.org/dokumentation-statistik/statistik/schulstatistik/abiturnoten.html

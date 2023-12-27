@@ -4,5 +4,3 @@ requests
 python-dotenv
 pytest
 bs4
-openpyxl
-xlrd
