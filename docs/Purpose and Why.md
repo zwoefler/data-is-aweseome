@@ -1,5 +1,5 @@
 # ❓️ Why
-Many people drown in unnecessary data or have unanswered questions.
+People drown in unnecessary data or have unanswered questions!
 
 > There is a shortage of intutive and easy to understand knowledge about our everyday lives!
 
@@ -8,6 +8,12 @@ People are overwhelmed with unnecessary information trying to understand an ever
 The world is flodded bullshit content, including data that tells you nothing!
 
 Therefore we need more understanding for complex subjects that suround us daily!
+
+Each data project here has one of the following:
+- Clear research question (Gaining insights)
+- Learning a new feature/skill. New data provider
+- Creating a baseline dataset for later use!
+
 
 ## Knowledge is fluent, but most of our education isn't
 The rules of math will stay the same as long as I breath.
