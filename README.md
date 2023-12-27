@@ -1,23 +1,26 @@
 # Data is Awesome
-Opinionated visualized data and answered questions with data!
+Answering questions with opinionated data stories and visuals in small self contained projects.
 
-Whatever comes to mind.
+Focus on making (at least you) your audience understand the subject and make connections obvious.
+
+Read more about the [❓️Why](docs/Why.md)?
+⚠️Lots of text!
+
 
 ## 📏 Rules
-
 - Datasources must be publicly available
-- No paywalls, or a way to climb ober it...
+- No paywalls, or you got a higher ladder ;)
 - Script(s) lead from data download to final JSON-file (data)
-- Datafolder stores data in a data/ directory 
+- Datafolder stores data in a data/ directory
 - Data sources have a README explaining the context
-
-The README must:
-- State the research question
-- Answer the questions from the next chapter (Data)
 
 ## ToDos
 - [ ] Add CONTRIBUTING.md + rules
+- [ ] Add LICENSE
 - [ ] Refine Mission statement
+- [ ] Script to get started with new project easily!
+- [ ] Pipeline to check if everything is there (docs, scripts, etc.)
+- [ ] Include WHY section in docs/README
 - [ ] External Data storage - not all in the Git repo
 - [ ] Docs - for (sub)project with Tutorial, How-To, requirements
 - [ ] Add Docker containers per project to run data visuals
@@ -31,51 +34,36 @@ All Data has a README answering the following questions:
 - HOW was the data gathered? (Survey (participants), counting hand vs. technical)
 - WHAT is the public source? A link or links with an explanation should the data be aggreageted.
 
-### Data Explanations
-#### Absolute vs. Percentage? 
-A company like Meta might grow slowly at just under 3% new User Account growth.
-But those 3% are about 100 million accounts created yearly. The scale is massive!
+## Technicals
+Each separate project is it's own closed environment using `Python3.8` or higher to generate or scrape data.
+The `requirements.txt` holds all necessary requirements.
+Use a `python3-venv` to separate your system Python3 from the packages you need!
 
-#### Average or Median?
-Income data can be heavily skewed. 
-An increase in average salary of 10% can mean nothing to most people in that population.
-Looking at the median, the value in the middle, might reveal massiv income increases went only to a hand full of people.
-
-This effect also works in the oposite direction.
-Average CO2-Emissions for some energy-sources is usually lower than the median, indicating there are a few heavy outliers!
-
-
----
-
-# ❓️ Questions
-## Why opinionated?
-I usually look at data to answer a question or settle an argument.
-That context lives throughout the analysis and visualization.
-Answering simple questions may result in consulting 5 different datasources.
-
-Those sources have differing viewpoints and limitations which MUST be explained!
-Nowadays there is so much data, but even more that hasn't been correlated in a clera and concise matter.
-
-EXAMPLE:
-Why were there more car accidents on a given Autobahn-segment?
-One possible answer might be the recently lifted speedlimit. (We have sections without speedlimits here)
-After all, higher speeds = more crashes?
-
-However, looking at the data you might realize most crashes occur at speeds far below the speedlimit.
-Correlating that observation with the usage (aka capacity) of that segemtn may lead to the far simpler "The street is simply overrun", explaining the lower speeds and the amount of accidents.
+The data format is JSON!
 
 
 ## Why JSON?
-- Easy to manage 
-- Don't know beforehand what data is available 
-- Don't want to use a database...
+- Easy to manage
+- Don't know beforehand what data is available
+- Don't want to use a database... yet
 
-JSON is good enough
 
-## External dependencies?
-Most data gathering and anaylsis is done using Python3 and some packages.
-Every folder has a `requirements.txt` and should be used with a virtual environment.
+## 📝 Contributing?
+Always welcome...
+I mean, look at the state of this project.
 
-## Contributing
-- Create a Pull Request
-- 
+The quickfacts are:
+- The working language is `English`
+- Git is the only source of truth
+- Use publicly available tools/resources
+- Code in `Python3.8` or higher
+- Documentation and textbased stuff in `Markdown`
+- The project stays detangled from GitHub!
+- Use Emojis and don't take yourself to seriously 😉
+
+For details, read [CONTRIBUTING.md](CONTRIBUTING.md)
+
+
+## 👥 People
+- **Author:**
+Martin Fabian Zwölfer ([@zwoefler](https://github.com/zwoefler))
