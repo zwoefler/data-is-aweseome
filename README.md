@@ -1,6 +1,8 @@
 # 🚀 Data is Awesome
 Answering questions with opinionated data stories and visuals in small self contained projects.
 
+Learning Python3 skills, data aggregation and story telling on the way.
+
 Focus on making (at least you) your audience understand the subject and make connections obvious.
 
 Read more about the [❓️Why](docs/Purpose%20and%20Why.md)?
