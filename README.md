@@ -3,7 +3,7 @@ Answering questions with opinionated data stories and visuals in small self cont
 
 Focus on making (at least you) your audience understand the subject and make connections obvious.
 
-Read more about the [❓️Why](docs/Why.md)?
+Read more about the [❓️Why](docs/Purpose%20and%20Why.md)?
 ⚠️Lots of text!
 
 
