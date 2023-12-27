@@ -27,7 +27,10 @@ Therefore most text-based info MUST be included as Markdown files INSIDE this pr
 Add a file to `docs/backlog` or create a new folder and start developing.
 
 Your Feature README.md must include:
-
+- Research questions / Point of interest!
+- How to run
+- What it does / explanation
+- Sources / Links
 
 ## Languages:
 #8orHigher
