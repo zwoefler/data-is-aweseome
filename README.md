@@ -1,4 +1,4 @@
-# Data is Awesome
+# 🚀 Data is Awesome
 Answering questions with opinionated data stories and visuals in small self contained projects.
 
 Focus on making (at least you) your audience understand the subject and make connections obvious.
@@ -14,7 +14,7 @@ Read more about the [❓️Why](docs/Why.md)?
 - Datafolder stores data in a data/ directory
 - Data sources have a README explaining the context
 
-## ToDos
+## 📋 ToDos
 - [ ] Add CONTRIBUTING.md + rules
 - [ ] Add LICENSE
 - [ ] Refine Mission statement
@@ -26,7 +26,7 @@ Read more about the [❓️Why](docs/Why.md)?
 - [ ] Add Docker containers per project to run data visuals
 - [ ] Every project with it's own visualization?
 
-##  Data
+## 📊 Data
 All Data has a README answering the following questions:
 - WHERE is the data valid? (City, Country, Continent, Celestial Body)
 - WHEN is the data valid? (Far gone time period, valid today + estimates in the future?
@@ -34,7 +34,7 @@ All Data has a README answering the following questions:
 - HOW was the data gathered? (Survey (participants), counting hand vs. technical)
 - WHAT is the public source? A link or links with an explanation should the data be aggreageted.
 
-## Technicals
+## ⚙️ Technicals
 Each separate project is it's own closed environment using `Python3.8` or higher to generate or scrape data.
 The `requirements.txt` holds all necessary requirements.
 Use a `python3-venv` to separate your system Python3 from the packages you need!
@@ -42,7 +42,7 @@ Use a `python3-venv` to separate your system Python3 from the packages you need!
 The data format is JSON!
 
 
-## Why JSON?
+## ❓️ Why JSON?
 - Easy to manage
 - Don't know beforehand what data is available
 - Don't want to use a database... yet
