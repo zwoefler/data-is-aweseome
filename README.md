@@ -15,12 +15,12 @@ Read more about the [❓️Why](docs/Purpose%20and%20Why.md)?
 - Data sources have a README explaining the context
 
 ## 📋 ToDos
-- [ ] Add CONTRIBUTING.md + rules
-- [ ] Add LICENSE
+- [X] Add CONTRIBUTING.md + rules
+- [X] Add LICENSE
 - [ ] Refine Mission statement
 - [ ] Script to get started with new project easily!
 - [ ] Pipeline to check if everything is there (docs, scripts, etc.)
-- [ ] Include WHY section in docs/README
+- [X] Include WHY section in docs/README
 - [ ] External Data storage - not all in the Git repo
 - [ ] Docs - for (sub)project with Tutorial, How-To, requirements
 - [ ] Add Docker containers per project to run data visuals
