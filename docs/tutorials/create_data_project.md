@@ -1,4 +1,4 @@
-# Create a Data Project
+# 🚀 Create a Data Project
 
 So you have the idea to a new data story project?
 These are the technical steps you need to follow:
@@ -22,10 +22,10 @@ source Env/bin/activate
 pip install -r requirements.txt
 ```
 
-## Aspects of your project
+## 🧩 Aspects of your project
 All your steps must be reproducable!
 
-**Data Gathering**: A simple reproducable way to gather the data
-**Data Cleanup**: Cleaning duplicates, usable data schema
+**Data Collection**: A simple reproducable way to gather the data
+**Data Processing**: Cleaning duplicates, usable data schema
 **Visualization**: Script to load your cleaned data and visualize
 

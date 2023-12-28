@@ -14,6 +14,29 @@ Each data project here has one of the following:
 - Learning a new feature/skill. New data provider
 - Creating a baseline dataset for later use!
 
+## 💾 The technical Why
+Build reliable and reusable tools to:
+- Collection
+- Processing
+- Visualizing Data
+
+Analyzing data, collecting data, processing & cleaning up data, visualizing data...
+There a plenty of sources to get data from, chances are you will use similar ways to gather them in the future
+
+Ideally this becomes a suite of python tools to collect data from different source such as:
+- URLs
+- Webpages / HTML
+- PDFs
+- Pictures / Videos
+- Data Providers / Databases
+
+And Visualizing Data:
+- Plottype
+- Legend
+- Colorscheme
+- Footnotes with URLs
+
+
 
 ## Knowledge is fluent, but most of our education isn't
 The rules of math will stay the same as long as I breath.
@@ -66,12 +89,12 @@ Greenhouse gas emissions
 🔗 URL: https://www.shell.com/sustainability/transparency-and-sustainability-reporting/performance-data/greenhouse-gas-emissions.html
 
 
-## Data is only part of understanding!
+## 🧩 Data is only part of understanding!
 Asking questions is valuable, trying to answer them is the hard part.
 Writing Code is just a necessary evil to get there!
 
 
-## Most data viz is bullshit 💩
+## 💩 Most data viz is bullshit
 Looking through pages like (DataIsBeautiful)[https://www.reddit.com/r/dataisbeautiful/] you find lots of nice graphics.
 
 The Episode Scoreboard for `Breaking Bad` episodes and the average rating looks nice.
@@ -118,7 +141,7 @@ Robert Lawrence Personal Page:
 
 
 
-## Why opinionated?
+## 🤔 Why opinionated?
 I usually look at data to answer a question or settle an argument.
 That context lives throughout the analysis and visualization.
 Answering simple questions may result in consulting 5 different datasources.

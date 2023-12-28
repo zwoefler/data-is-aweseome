@@ -1,15 +1,16 @@
 # 📝 CONTRIBUTING to Data-is-Awesome
 
 ## 🚀 Quickfacts
-- The working language is `English`
-- Git is the only source of truth
-- Use publicly available tools/resources
-- Code in `Python3.8` or higher
-- Documentation and textbased stuff in `Markdown`
-- The project stays detangled from GitHub!
-- Use Emojis and don't take yourself to seriously 😉
+- 🇬🇧 The working language is `English`
+- ✨ Git is the only source of truth
+- 🌐 Use publicly available tools/resources
+- 🐍 Code in `Python3.8` or higher
+- 📊 The data format is JSON!
+- 📝 Documentation and textbased stuff in `Markdown`
+- 🔗 The project stays detangled from GitHub!
+- 😉 Use Emojis and don't take yourself to seriously
 
-Welcome to the Data-is-Awesome project!
+Welcome to the `Data-is-Awesome` project!
 Your contributions are highly valued and encourage you to get involved in various ways:
 
 - 📖 **Docs:** Contribute to documentation.
