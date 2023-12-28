@@ -24,7 +24,7 @@ A simple clone grants you access to all project resources, including `documentat
 
 Therefore most text-based info MUST be included as Markdown files INSIDE this project!
 
-## Idea for a new project?
+## 💡 Idea for a new project?
 Add a file to `docs/backlog` or create a new folder and start developing.
 
 Your Feature README.md must include:
@@ -33,7 +33,7 @@ Your Feature README.md must include:
 - What it does / explanation
 - Sources / Links
 
-## Languages:
+## 🌍️ Languages:
 #8orHigher
 Use `Python3.8` or higher and adhere to the `PEP 8` Python Styleguide.
 To adhere to the standards you can use `pylint` or `autopep8` in your editor and development process (see **Resources** below).
@@ -64,7 +64,7 @@ Will be bumped in the future!
 - [Autopep8](https://pypi.org/project/autopep8/)
 
 
-## New Features
+## 📦️ New Features
 A new feature must adhere to the folder strucutre at the end of this chapter.
 Your fueature must be documented, and be able to be executed repeatadly.
 Do not use hidden or not publicly accessable resources, or provide a higher ladder ;)
