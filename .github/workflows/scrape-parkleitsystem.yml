@@ -4,7 +4,7 @@ on:
     - cron: '*/5 * * * *'
 defaults:
   run:
-    working-directory: parkleitsystem/
+    working-directory: DATA_PROJECTS/parkleitsystem/
 jobs:
   scrape_and_save:
     runs-on: ubuntu-latest
@@ -13,7 +13,7 @@ jobs:
         with:
           sparse-checkout: |
             .github
-            parkleitsystem
+            DATA_PROJECTS/parkleitsystem/
       - uses: actions/setup-python@v4
         with:
           python-version: '3.9'
@@ -28,10 +28,11 @@ jobs:
           mkdir -p data
           touch data/$filename
           echo $parkhouse_data > "data/$filename"
-      - name: Push changes to MASTER
+      - name: Push changes to parkleitsystem-collection
         run: |
           git config user.name ${{ secrets.GIT_USERNAME }}
           git config user.email ${{ secrets.GIT_USEREMAIL }}
+          git checkout -b parkleitsystem-collection
           git add .
           git commit -m 'Adding new parkhouse data'
-          git push
+          git push origin parkleitsystem-collection
