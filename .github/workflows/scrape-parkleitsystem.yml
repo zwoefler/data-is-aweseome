@@ -8,19 +8,24 @@ defaults:
 jobs:
   scrape_and_save:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Git Repo
+        uses: actions/checkout@v4
         with:
           sparse-checkout: |
             .github
             DATA_PROJECTS/parkleitsystem/
-      - uses: actions/setup-python@v4
+
+      - name: Setup Python3 & Install depencies
+        uses: actions/setup-python@v4
         with:
           python-version: '3.9'
-          cache: 'pip' # caching pip dependencies
+          cache: 'pip'
       - run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
       - name: Run scraping script and save data
         run: |
           parkhouse_data=$(python3 scraping_parkleitsystem.py)
@@ -28,11 +33,32 @@ jobs:
           mkdir -p data
           touch data/$filename
           echo $parkhouse_data > "data/$filename"
-      - name: Push changes to parkleitsystem-collection
+
+      - name: Configure git
         run: |
           git config user.name ${{ secrets.GIT_USERNAME }}
           git config user.email ${{ secrets.GIT_USEREMAIL }}
-          git checkout -b parkleitsystem-collection
+
+      - name: Check if the branch exists
+        id: branch_check
+        run: |
+          git fetch origin
+          if git show-ref --quiet refs/remotes/origin/parkleitsystem-collection; then
+            echo "Branch exists"
+            echo "::set-output name=branch_exists::true"
+          else
+            echo "Branch does not exist"
+            echo "::set-output name=branch_exists::false"
+          fi
+
+      - name: Create or checkout branch
+        if: steps.branch_check.outputs.branch_exists == 'false'
+        run: git checkout -b parkleitsystem-collection
+        else
+        run: git checkout parkleitsystem-collection
+
+      - name: Push changes to parkleitsystem-collection
+        run: |
           git add .
           git commit -m 'Adding new parkhouse data'
           git push origin parkleitsystem-collection
