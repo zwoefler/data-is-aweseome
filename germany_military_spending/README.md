@@ -1,6 +1,6 @@
 # Military Spending in Germany by different measures
 
-
+🚧 STATE: WHO KNOWS
 
 ## Sources
 Military Spending Germany by GDP

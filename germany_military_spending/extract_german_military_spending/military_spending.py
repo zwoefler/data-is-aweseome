@@ -9,5 +9,5 @@ import pandas as pd
 df = pd.read_html("gdp_germany_table.html")[0]
 
 # percentage military spending df
-percentage_df = pd.read_csv("military_spending_percentage_gdp.csv")
+percentage_df = pd.read_csv("data/military_spending_percentage_gdp.csv")
 print(percentage_df)
