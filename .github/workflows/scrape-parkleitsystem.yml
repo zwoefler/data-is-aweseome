@@ -56,7 +56,7 @@ jobs:
         run: git checkout -b parkleitsystem-collection
 
       - if: steps.branch_check.outputs.branch_exists == 'true'
-        run: git chec kout parkleitsystem-collection
+        run: git checkout parkleitsystem-collection
 
       - name: Push changes to parkleitsystem-collection
         run: |
