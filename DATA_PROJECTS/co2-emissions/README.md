@@ -6,6 +6,9 @@
 
 ## 🎯 Goals / Learnings
 - Reading data from PDFs with Python3
+- Create a visualization of Lifecycle-Emissions with Min/Median/Max
+- Get the whole table as JSON to visualize
+
 
 ## 🏗️ Usage
 Start your Python Environment:
@@ -42,3 +45,5 @@ From the IPCC 2014 AR-5 report on page 1353
 ## ToDo
 - Add Download PDF for IPCC report as Python script
 - Add Title "Electricity CO2-Emissions - IPCC 2014 AR-5 report"
+
+
