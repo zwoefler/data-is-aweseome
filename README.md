@@ -71,6 +71,13 @@ All Data-Projects have a README answering the following questions:
 - Project is to big, contains lots of raw data files - find a better way!
 
 
+## Project setup
+- DATA_PROJECTS: Holds the Data Projects
+- DOCS: Docs for the entire project, discusisons, reference, design descisison, etc.
+- TEMPLATES: Scripts and explanations that can be used throughout the repository
+- WEBPAGE: Publicizes the `data-is-awesome` data as articles on the web and firebase
+
+
 ## 👥 People
 - **Author:**
 Martin Fabian Zwölfer ([@zwoefler](https://github.com/zwoefler))
