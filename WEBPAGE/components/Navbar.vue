@@ -1,6 +1,6 @@
 <template>
-  <div class="h-12 border-b-2 text-white text-4xl">
-    <router-link class="text-black" to="/">
+  <div class="h-12 text-4xl">
+    <router-link to="/">
       Daten sind GEIL!
     </router-link>
   </div>
