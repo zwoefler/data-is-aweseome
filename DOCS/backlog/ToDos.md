@@ -18,6 +18,14 @@ Many ToDos, not much time...
 - [ ] Create Logo
 
 
+## Webpage
+- [ ] Background: gray - `rgb(36, 39, 41)`
+- [ ] Text: WHITE
+- [ ] Accent: orange `rgb(255, 178, 0)`
+- [ ] Header/Footer: BLACK
+- [ ] Font: Roboto condensed, sans-serif
+
+
 
 ## 🗃️ToDo-Dump
 - [X] Add CONTRIBUTING.md + rules
