@@ -19,7 +19,7 @@ export const updateChartData = (parkhouseData) => {
     parkhouseData.sort((a, b) => parseTimestamp(a.timestamp) - parseTimestamp(b.timestamp));
 
     parkhouseData.forEach((item) => {
-        chartData.labels.push(parseTimestamp(item.timestamp)
+        chartData.labels.push(parseTimestamp(item.timestamp))
         chartData.data.push(item.occupied_spaces)
     })
 
