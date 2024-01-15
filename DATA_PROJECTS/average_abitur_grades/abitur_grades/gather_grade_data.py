@@ -9,9 +9,11 @@ import shutil
 
 urls = [
     "https://www.kmk.org/dokumentation-statistik/statistik/schulstatistik/abiturnoten.html",
-    "https://www.kmk.org/dokumentation-statistik/statistik/schulstatistik/abiturnoten/archiv-abiturnoten.html"]
+    "https://www.kmk.org/dokumentation-statistik/statistik/schulstatistik/abiturnoten/archiv-abiturnoten.html",
+]
 
 domain = "https://www.kmk.org"
+
 
 # 1. Download HTML
 def return_html_from_url(url):
@@ -24,19 +26,19 @@ def get_xlsx_links(html):
     links = []
     for link in soup.find_all("a"):
         href = link.get("href")
-        if href.endswith(".xlsx") or href.endswith('.xls'):
+        if href.endswith(".xlsx") or href.endswith(".xls"):
             download_link = domain + href
             links.append(download_link)
     return links
 
 
-def download_excel_files_from_zip_download(zip_link, extract_folder='extract_folder'):
+def download_excel_files_from_zip_download(zip_link, extract_folder="extract_folder"):
     response = requests.get(zip_link)
     zip_file = zipfile.ZipFile(io.BytesIO(response.content))
     zip_file.extractall(extract_folder)
     zip_file.close()
     for file in os.listdir(extract_folder):
-        if not file.endswith('.xls'):
+        if not file.endswith(".xls"):
             filepath = os.path.join(extract_folder, file)
             os.remove(filepath)
     extracted_excel_files = os.listdir(extract_folder)
@@ -44,40 +46,38 @@ def download_excel_files_from_zip_download(zip_link, extract_folder='extract_fol
 
 
 def get_excel_file_name(excel_link):
-    filename = excel_link.split('/')[-1]
+    filename = excel_link.split("/")[-1]
     return filename
 
 
 def download_excel_to_folder(excel_link, filename, folder="excel_files"):
     response = requests.get(excel_link)
     if response.status_code == 200:
-        with open(os.path.join(folder, filename), 'wb') as f:
+        with open(os.path.join(folder, filename), "wb") as f:
             f.write(response.content)
     else:
-        print('Error downloading file')
+        print("Error downloading file")
     return
-
-
-def get_year_of_grade_report(excel_file):
-    noten_sheet = pd.read_excel(excel_file, sheet_name="Noten")
-    title = noten_sheet.iloc[1,0]
-    year = int(title.split(' ')[-1])
-    return year
 
 
 def return_excel_as_JSON(excel_file):
     noten_sheet = pd.read_excel(excel_file, sheet_name="Noten")
+    title = noten_sheet.iloc[1, 0]
+    year = int(title.split(" ")[-1])
+
     noten_sheet = noten_sheet.dropna()
     noten_sheet.columns = noten_sheet.iloc[0]
     noten_sheet = noten_sheet.drop(3)
 
     index = noten_sheet["Land"].tolist()
-    states = noten_sheet.iloc[:,1:].to_dict(orient='list')
+    states = noten_sheet.iloc[:, 1:].to_dict(orient="list")
 
     country_grades = noten_sheet.iloc[5:, 1:17].sum(axis=1).tolist()
     index_country_grades = index[5:]
 
-    country_aggregated_grades_weights = [a*b for a,b in (zip(country_grades, index_country_grades))]
+    country_aggregated_grades_weights = [
+        a * b for a, b in (zip(country_grades, index_country_grades))
+    ]
 
     number_of_tests = noten_sheet.iloc[0, 1:].sum()
     passed = noten_sheet.iloc[1, 1:].sum()
@@ -85,21 +85,26 @@ def return_excel_as_JSON(excel_file):
     average_grade = sum(country_aggregated_grades_weights) / passed
     percentage_failed = (number_failed / number_of_tests) * 100
 
-    for k,v in states.items():
+    for k, v in states.items():
         states[k] = dict(zip(index, v))
 
     excel_json = {
-        "year" : get_year_of_grade_report(excel_file),
+        "year": year,
         "grades": dict(zip(index_country_grades, country_grades)),
         "states": states,
         "number_of_tests": number_of_tests,
         "passed": passed,
         "number_failed": number_failed,
         "average_grade": average_grade,
-        "percentage_failed": percentage_failed
+        "percentage_failed": percentage_failed,
     }
 
-    return excel_json
+    return excel_json, year
+
+
+def get_data_from_excel_file(excel_file):
+    return
+
 
 def abitur_grades_as_JSON(excel_files_list, folder="excel_files"):
     grades_json = {}
@@ -110,8 +115,7 @@ def abitur_grades_as_JSON(excel_files_list, folder="excel_files"):
 
     for file in excel_files_list:
         filename = os.path.join(folder, file)
-        year = get_year_of_grade_report(filename)
-        excel_json = return_excel_as_JSON(filename)
+        excel_json, year = return_excel_as_JSON(filename)
 
         grades_json[year] = excel_json
         grades_json["years"].append(year)
@@ -123,7 +127,9 @@ def abitur_grades_as_JSON(excel_files_list, folder="excel_files"):
             if isinstance(value, dict):
                 if state not in grades_json["average_grade"]:
                     grades_json["average_grade"][state] = []
-                grades_json["average_grade"][state].append(grades_json[year]["states"][state]["Notenmittel"])
+                grades_json["average_grade"][state].append(
+                    grades_json[year]["states"][state]["Notenmittel"]
+                )
 
         average_grade_for_year = grades_json[year]["average_grade"]
         grades_json["average_grade"]["Total"].append(average_grade_for_year)
@@ -132,20 +138,21 @@ def abitur_grades_as_JSON(excel_files_list, folder="excel_files"):
 
 
 def export_garde_JSON(grade_json, filename="abitur_grades.json"):
-    with open(filename, 'w') as f:
+    with open(filename, "w") as f:
         json.dump(grade_json, f)
     return
 
 
-zip_download_link = "https://kmk.org/fileadmin/Dateien/pdf/Statistik/Aus_Abiturnoten_2006_2013.zip"
-exctract_folder = "extract_folder"
+zip_download_link = (
+    "https://kmk.org/fileadmin/Dateien/pdf/Statistik/Aus_Abiturnoten_2006_2013.zip"
+)
+exctract_folder = "excel_files"
+
 
 def main():
-    zip_excel_files = download_excel_files_from_zip_download(zip_download_link, exctract_folder)
-    for filename in zip_excel_files:
-        from_path = os.path.join(exctract_folder, filename)
-        to_path = os.path.join('excel_files', filename)
-        shutil.move(from_path, to_path)
+    zip_excel_files = download_excel_files_from_zip_download(
+        zip_download_link, exctract_folder
+    )
 
     for link in urls:
         html = return_html_from_url(link)
@@ -155,14 +162,10 @@ def main():
             file_name = get_excel_file_name(link)
             download_excel_to_folder(link, file_name)
 
-    excel_files = os.listdir('excel_files/')
+    excel_files = os.listdir("excel_files/")
     grade_json = abitur_grades_as_JSON(excel_files)
     export_garde_JSON(grade_json)
 
 
-
-
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
