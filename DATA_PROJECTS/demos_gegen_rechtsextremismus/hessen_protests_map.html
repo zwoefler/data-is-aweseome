@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_04064cd61902ba56059dc953ef1cb60a {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_04064cd61902ba56059dc953ef1cb60a" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_04064cd61902ba56059dc953ef1cb60a = L.map(
+                "map_04064cd61902ba56059dc953ef1cb60a",
+                {
+                    center: [50.652778, 9.162778],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 8,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_ad2603dfdd2eeafab9dba49f43b89cfc = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detectRetina": false, "maxNativeZoom": 19, "maxZoom": 19, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+        
+    
+            tile_layer_ad2603dfdd2eeafab9dba49f43b89cfc.addTo(map_04064cd61902ba56059dc953ef1cb60a);
+        
+    
+            var marker_c380f25f9f2a723d7cf4d4c2559eb866 = L.marker(
+                [50.1106444, 8.6820917],
+                {}
+            ).addTo(map_04064cd61902ba56059dc953ef1cb60a);
+        
+    
+        var popup_1661d9ec33552d82fa52d2f0d5097a12 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_802797a3fe472b240b51862747ce4573 = $(`<div id="html_802797a3fe472b240b51862747ce4573" style="width: 100.0%; height: 100.0%;">Frankfurt am Main - 40000 participants</div>`)[0];
+                popup_1661d9ec33552d82fa52d2f0d5097a12.setContent(html_802797a3fe472b240b51862747ce4573);
+            
+        
+
+        marker_c380f25f9f2a723d7cf4d4c2559eb866.bindPopup(popup_1661d9ec33552d82fa52d2f0d5097a12)
+        ;
+
+        
+    
+    
+            var marker_0762cfaa38f06abbae2c6f3637617db9 = L.marker(
+                [51.3154546, 9.4924096],
+                {}
+            ).addTo(map_04064cd61902ba56059dc953ef1cb60a);
+        
+    
+        var popup_ab5539556bf26f4a77d36dfe97131281 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_f4c8c767b5bf9c53fdc436a798241d88 = $(`<div id="html_f4c8c767b5bf9c53fdc436a798241d88" style="width: 100.0%; height: 100.0%;">Kassel - 15000 participants</div>`)[0];
+                popup_ab5539556bf26f4a77d36dfe97131281.setContent(html_f4c8c767b5bf9c53fdc436a798241d88);
+            
+        
+
+        marker_0762cfaa38f06abbae2c6f3637617db9.bindPopup(popup_ab5539556bf26f4a77d36dfe97131281)
+        ;
+
+        
+    
+    
+            var marker_cd9d4ff75c421fa91745d0e6565552d3 = L.marker(
+                [50.5862066, 8.6742306],
+                {}
+            ).addTo(map_04064cd61902ba56059dc953ef1cb60a);
+        
+    
+        var popup_83609912789959eb3c1fb1db5f1e0154 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_84e268bcf6304b0fd1126670f96ba0e2 = $(`<div id="html_84e268bcf6304b0fd1126670f96ba0e2" style="width: 100.0%; height: 100.0%;">Gießen - 13000 participants</div>`)[0];
+                popup_83609912789959eb3c1fb1db5f1e0154.setContent(html_84e268bcf6304b0fd1126670f96ba0e2);
+            
+        
+
+        marker_cd9d4ff75c421fa91745d0e6565552d3.bindPopup(popup_83609912789959eb3c1fb1db5f1e0154)
+        ;
+
+        
+    
+    
+            var marker_fbfbba88da8b221ee9c2497f55950000 = L.marker(
+                [50.3876305, 8.0636197],
+                {}
+            ).addTo(map_04064cd61902ba56059dc953ef1cb60a);
+        
+    
+        var popup_765a1e82c34c129c7566b30b5482d384 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_2d2c370b7256b3c69c1e286c7e92a756 = $(`<div id="html_2d2c370b7256b3c69c1e286c7e92a756" style="width: 100.0%; height: 100.0%;">Limburg - 3000 participants</div>`)[0];
+                popup_765a1e82c34c129c7566b30b5482d384.setContent(html_2d2c370b7256b3c69c1e286c7e92a756);
+            
+        
+
+        marker_fbfbba88da8b221ee9c2497f55950000.bindPopup(popup_765a1e82c34c129c7566b30b5482d384)
+        ;
+
+        
+    
+    
+            var marker_a20e5cf5d7b1cefde51af88cca6226b8 = L.marker(
+                [50.1055002, 8.7610698],
+                {}
+            ).addTo(map_04064cd61902ba56059dc953ef1cb60a);
+        
+    
+        var popup_06f3f8cc598f5e520cced2e173144f6c = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_d0f60aad656a6b692f9ab294d27c29c1 = $(`<div id="html_d0f60aad656a6b692f9ab294d27c29c1" style="width: 100.0%; height: 100.0%;">Offenbach - 1000 participants</div>`)[0];
+                popup_06f3f8cc598f5e520cced2e173144f6c.setContent(html_d0f60aad656a6b692f9ab294d27c29c1);
+            
+        
+
+        marker_a20e5cf5d7b1cefde51af88cca6226b8.bindPopup(popup_06f3f8cc598f5e520cced2e173144f6c)
+        ;
+
+        
+    
+    
+            var marker_b9007ddd82bc3789d0fc3794f563eef2 = L.marker(
+                [49.872775, 8.651177],
+                {}
+            ).addTo(map_04064cd61902ba56059dc953ef1cb60a);
+        
+    
+        var popup_9f0750f296ba8c81f21f9f5abe4cca7f = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_a3c5ca81c6f6e958ef559472282e3459 = $(`<div id="html_a3c5ca81c6f6e958ef559472282e3459" style="width: 100.0%; height: 100.0%;">Darmstadt - - participants</div>`)[0];
+                popup_9f0750f296ba8c81f21f9f5abe4cca7f.setContent(html_a3c5ca81c6f6e958ef559472282e3459);
+            
+        
+
+        marker_b9007ddd82bc3789d0fc3794f563eef2.bindPopup(popup_9f0750f296ba8c81f21f9f5abe4cca7f)
+        ;
+
+        
+    
+    
+            var marker_95a5754bc76fab7ca2072958cd4daafe = L.marker(
+                [50.0820384, 8.2416556],
+                {}
+            ).addTo(map_04064cd61902ba56059dc953ef1cb60a);
+        
+    
+        var popup_87d8ceb9c78acf68e8e6d05334d993cd = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_78a9c82d0c8a31445e2cad98979e6d61 = $(`<div id="html_78a9c82d0c8a31445e2cad98979e6d61" style="width: 100.0%; height: 100.0%;">Wiesbaden - - participants</div>`)[0];
+                popup_87d8ceb9c78acf68e8e6d05334d993cd.setContent(html_78a9c82d0c8a31445e2cad98979e6d61);
+            
+        
+
+        marker_95a5754bc76fab7ca2072958cd4daafe.bindPopup(popup_87d8ceb9c78acf68e8e6d05334d993cd)
+        ;
+
+        
+    
+    
+            var marker_a251a66cd211858e5f5bde873ac7d892 = L.marker(
+                [50.09494, 8.42285],
+                {}
+            ).addTo(map_04064cd61902ba56059dc953ef1cb60a);
+        
+    
+        var popup_5363e5f01194504f94f036d4172b4932 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_b35e626d2531d860cfe7a362f6ff6d26 = $(`<div id="html_b35e626d2531d860cfe7a362f6ff6d26" style="width: 100.0%; height: 100.0%;">Hofheim - - participants</div>`)[0];
+                popup_5363e5f01194504f94f036d4172b4932.setContent(html_b35e626d2531d860cfe7a362f6ff6d26);
+            
+        
+
+        marker_a251a66cd211858e5f5bde873ac7d892.bindPopup(popup_5363e5f01194504f94f036d4172b4932)
+        ;
+
+        
+    
+    
+            var marker_054d5631c27ca5291aac0fd7f59d7ea0 = L.marker(
+                [50.2028622, 9.190486],
+                {}
+            ).addTo(map_04064cd61902ba56059dc953ef1cb60a);
+        
+    
+        var popup_1dfe0058c815ca0b029f0808f9c3f9bf = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_14fe7e689a2419b6634f8a5ecec1c3dd = $(`<div id="html_14fe7e689a2419b6634f8a5ecec1c3dd" style="width: 100.0%; height: 100.0%;">Gelnhausen - - participants</div>`)[0];
+                popup_1dfe0058c815ca0b029f0808f9c3f9bf.setContent(html_14fe7e689a2419b6634f8a5ecec1c3dd);
+            
+        
+
+        marker_054d5631c27ca5291aac0fd7f59d7ea0.bindPopup(popup_1dfe0058c815ca0b029f0808f9c3f9bf)
+        ;
+
+        
+    
+    
+            var marker_67cbc0a2da138dbfc3c5dd38e78ac2d0 = L.marker(
+                [51.5, 10.5],
+                {}
+            ).addTo(map_04064cd61902ba56059dc953ef1cb60a);
+        
+    
+        var popup_a3692cb0081dcb02164886faffed5bdd = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_755a7722f096845dfb97b8c608cdbf83 = $(`<div id="html_755a7722f096845dfb97b8c608cdbf83" style="width: 100.0%; height: 100.0%;">Michelstdt - - participants</div>`)[0];
+                popup_a3692cb0081dcb02164886faffed5bdd.setContent(html_755a7722f096845dfb97b8c608cdbf83);
+            
+        
+
+        marker_67cbc0a2da138dbfc3c5dd38e78ac2d0.bindPopup(popup_a3692cb0081dcb02164886faffed5bdd)
+        ;
+
+        
+    
+    
+            var marker_afab1e2f54bac931a9266f9175665339 = L.marker(
+                [50.5165524, 8.7345921],
+                {}
+            ).addTo(map_04064cd61902ba56059dc953ef1cb60a);
+        
+    
+        var popup_d793defae5588952939f3b1e08f76081 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_171cbb66c3c32a101f12f1d4823e5530 = $(`<div id="html_171cbb66c3c32a101f12f1d4823e5530" style="width: 100.0%; height: 100.0%;">Pohlheim - nan participants</div>`)[0];
+                popup_d793defae5588952939f3b1e08f76081.setContent(html_171cbb66c3c32a101f12f1d4823e5530);
+            
+        
+
+        marker_afab1e2f54bac931a9266f9175665339.bindPopup(popup_d793defae5588952939f3b1e08f76081)
+        ;
+
+        
+    
+    
+            var marker_35a1bed1192ec4087c54e627787e0c14 = L.marker(
+                [50.6372722, 8.648955],
+                {}
+            ).addTo(map_04064cd61902ba56059dc953ef1cb60a);
+        
+    
+        var popup_c80893c5f6767d4759df87fce8f9b6e1 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_c197c0a5587aea843839e30f6b6957ba = $(`<div id="html_c197c0a5587aea843839e30f6b6957ba" style="width: 100.0%; height: 100.0%;">Wettenberg - nan participants</div>`)[0];
+                popup_c80893c5f6767d4759df87fce8f9b6e1.setContent(html_c197c0a5587aea843839e30f6b6957ba);
+            
+        
+
+        marker_35a1bed1192ec4087c54e627787e0c14.bindPopup(popup_c80893c5f6767d4759df87fce8f9b6e1)
+        ;
+
+        
+    
+</script>
+</html>

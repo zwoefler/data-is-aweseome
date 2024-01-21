@@ -13,9 +13,10 @@ This project aims to visulaize them all, initially focussing on protests in Hess
 
 
 # 🚀 Vision / Outcome
-- Map of all protests that were organised after the release of Correctiv research
+- Map of all protests that were organised after the release of Correctiv research in Hessen
 - Show amount of participants per city
 - Show date
+- Show info/sources/comments
 - Animate on a timescale
 
 
@@ -34,6 +35,10 @@ pip install -r requirements.txt
 ```BASH
 python3 your_python_project/
 ```
+
+1. Create .env file and put "OPENCAGE_API_KEY" in there
+2. Get your key from https://opencagedata.com. Create an account and paste APi key to .env file
+3.
 
 ## 🔍️ Dataset exploration
 
@@ -55,7 +60,6 @@ Order by date
 1. Start with a map and basic pins on it
 
 
-
 ## ❓️ Questions
 - WHERE is the data valid?
 - WHEN is the data valid?
@@ -66,8 +70,12 @@ Order by date
 
 
 ## 🚧 Problems
+- How to select only cities in Hessen from the dataset?
+- What data (lat/long) does the visualization need?
 
 
+- ImportError: Missing optional dependency 'openpyxl'.  Use pip or conda to install openpyxl.
+> `pip install openpyxl`
 
 ## 📚️ Resources
 🔗 URL: https://www.hessenschau.de/gesellschaft/rund-70000-hessen-bei-demos-gegen-afd-und-rechtsextremismus-v14,demos-gegen-rechts-100.html
