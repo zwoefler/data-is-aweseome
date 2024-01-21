@@ -1,16 +1,24 @@
-
-|City|Date|Participants|Comments|Sources|Info|
-|---|---|---|---|---|---|
-|Frankfurt am Main|20.01|40000||https://www.hessenschau.de/gesellschaft/rund-70000-hessen-bei-demos-gegen-afd-und-rechtsextremismus-v15,demos-gegen-rechts-100.html||
-|Kassel|20.01|15000|||
-|Gießen|20.01|13000||
-|Limburg|20.01|3000||
-|Offenbach|21.01|-||
-|Hamburg|19.01|50000|Dissolved - Participant numbers uncertain|
-|Göttingen|21.01|||
-|Darmstadt|23.01|-||
-|Wiesbaden|25.01|-||
-|Hofheim|27.01|-||
-|Gelnhausen|27.01|-|Hand aufs Herz announced demo for 20.01 in response to previous protests|
-|Michelstdt|27.01|-||
-
+﻿State,City,Date,Participants,Comments,Sources,Info,Latitude,Longitude
+Hessen,Frankfurt am Main,01-20-24,40000,,"https://www.hessenschau.de/gesellschaft/rund-70000-hessen-bei-demos-gegen-afd-und-rechtsextremismus-v15,demos-gegen-rechts-100.html",,50.1106440,8.6820920
+Hessen,Kassel,01-20-24,15000,,"https://www.hessenschau.de/gesellschaft/rund-70000-hessen-bei-demos-gegen-afd-und-rechtsextremismus-v15,demos-gegen-rechts-100.html",,51.3154550,9.4924100
+Hessen,Gießen,01-20-24,13000,,"https://www.hessenschau.de/gesellschaft/rund-70000-hessen-bei-demos-gegen-afd-und-rechtsextremismus-v15,demos-gegen-rechts-100.html",,50.5862070,8.6742310
+Hessen,Limburg,01-20-24,3000,,"https://www.hessenschau.de/gesellschaft/rund-70000-hessen-bei-demos-gegen-afd-und-rechtsextremismus-v15,demos-gegen-rechts-100.html",,50.3876310,8.0636200
+Hessen,Offenbach,01-21-24,1000,,"https://www.hessenschau.de/gesellschaft/rund-70000-hessen-bei-demos-gegen-afd-und-rechtsextremismus-v15,demos-gegen-rechts-100.html",,50.1055000,8.7610700
+Hamburg,Hamburg,01-19-24,50000,Dissolved - Participant numbers uncertain,https://www.tagesschau.de/inland/regional/hamburg/hamburg-demonstration-rechtsextremismus-100.html,,53.550341,10.000654
+Niedersachsen,Göttingen,01-21-24,,,https://www.dgb.de/themen/++co++5bab75ee-b521-11ee-bea4-001a4a160123#uuid-e6200bd0-b527-11ee-a000-001a4a160123,,51.5328330,9.9351810
+Hessen,Darmstadt,01-23-24,-,,"https://www.hessenschau.de/gesellschaft/rund-70000-hessen-bei-demos-gegen-afd-und-rechtsextremismus-v15,demos-gegen-rechts-100.html",17:30 Uhr - https://www.efo-magazin.de/aktuelles/demonstration-gegen-rechts-auf-dem-r%C3%B6merberg/,49.872775,8.651177
+Hessen,Wiesbaden,01-25-24,-,,"https://www.hessenschau.de/gesellschaft/rund-70000-hessen-bei-demos-gegen-afd-und-rechtsextremismus-v15,demos-gegen-rechts-100.html",18:00 Uhr - Hauptbahnhof,50.0820380,8.2416560
+Hessen,Hofheim,01-27-24,-,,"https://www.hessenschau.de/gesellschaft/rund-70000-hessen-bei-demos-gegen-afd-und-rechtsextremismus-v15,demos-gegen-rechts-100.html",10:00 Uhr - Kellereiplatz,50.09494,8.42285
+Hessen,Gelnhausen,01-27-24,-,Hand aufs Herz announced demo for 20.01 in response to previous protests,https://www.gnz.de/lokales/main-kinzig-kreis/gelnhausen/gelnhausen-hand-aufs-herz-kuendigt-demo-gegen-rechts-an-3V4K3DMAWVGEZE2VUVTD2JXS2Y.html?outputType=valid_amp,14:00 Uhr,50.2028620,9.190486
+Hessen,Michelstdt,01-27-24,-,,https://www.dgb.de/themen/++co++5bab75ee-b521-11ee-bea4-001a4a160123#uuid-e6200bd0-b527-11ee-a000-001a4a160123,"11:30 Uhr, Rathausplatz Michelstadt,",51.5,10.5
+Hessen,Pohlheim,,,interne Info,,,50.5165520,8.7345920
+Hessen,Wettenberg,,,interne Info,,,50.6372720,8.648955
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,

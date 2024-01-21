@@ -34,46 +34,34 @@ def get_coordinates_for(city):
         return None, None
 
 
-# Load API for geoocation
-def data_cleanup_filtering():
-    load_dotenv()
-    api_key = os.getenv("OPENCAGE_API_KEY")
-    geocoder = OpenCageGeocode(api_key)
+load_dotenv()
+api_key = os.getenv("OPENCAGE_API_KEY")
+geocoder = OpenCageGeocode(api_key)
 
+
+def read_excel_file_as_df():
     # 1. Read Excel
     excel_path = "data/Demos gegen Rechtsextremismus.xlsx"
-    df = pd.read_excel(excel_path)
+    return pd.read_excel(excel_path)
 
-    # Make State row the header
+
+# Make State row the header
+def clean_df(df):
     state_index = df[df.apply(lambda row: "State" in row.values, axis=1)].index[0]
     df.columns = df.iloc[state_index]
     df = df.drop(state_index)
-
-    # 2. Get cities from Hessen
     dropped_nan_columns = df.dropna(axis=1, how="all")
     cleaned_df = dropped_nan_columns.dropna(axis=0, how="all")
-    hessen_df = cleaned_df[cleaned_df["State"] == "Hessen"]
 
-    hessen_df["Latitude"], hessen_df["Longitude"] = zip(
-        *hessen_df["City"].apply(get_coordinates_for)
-    )
-
-    write_df_to_csv(hessen_df, "hessen_df.csv")
+    return cleaned_df
 
 
-def create_hessen_map(df):
-    hessen_map = folium.Map(location=[50.652778, 9.162778], zoom_start=8)
-    # Add markers for each city
-    for index, row in df.iterrows():
-        folium.Marker(
-            [row["Latitude"], row["Longitude"]],
-            popup=f"{row['City']} - {row['Participants']} participants",
-        ).add_to(hessen_map)
-
-    return hessen_map
+def add_lat_long_to_dataframe(df):
+    df["Latitude"], df["Longitude"] = zip(*df["City"].apply(get_coordinates_for))
+    return df
 
 
-# 1. Read Dataframe
-hessen_df = pd.read_csv("data/hessen_df.csv")
-hessen_map = create_hessen_map(hessen_df)
-hessen_map.save("hessen_protests_map.html")
+df = read_excel_file_as_df()
+cleaned_df = clean_df(df)
+dataframe = add_lat_long_to_dataframe(cleaned_df)
+write_df_to_csv(dataframe, "demos.csv")
