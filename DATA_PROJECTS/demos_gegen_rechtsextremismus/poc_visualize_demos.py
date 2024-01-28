@@ -10,7 +10,7 @@ def get_marker_color(date):
     today = datetime.datetime.today().date()
     event_date = datetime.datetime.strptime(date, "%d.%m.%y").date()
 
-    if event_date > today:
+    if today > event_date:
         return "red"
 
     return "blue"
