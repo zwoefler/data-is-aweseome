@@ -56,6 +56,7 @@ cat README.md
 - [ ] Docs - for (sub)project with Tutorial, How-To, requirements
 - [ ] Add Docker containers per project to run data visuals
 - [ ] Every project with it's own visualization?
+- [ ] Create a new project with tempalte. DOCS!
 
 
 ## 📊 Data
