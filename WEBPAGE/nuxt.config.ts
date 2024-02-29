@@ -4,5 +4,6 @@ export default defineNuxtConfig({
     modules: [
         '@nuxt/content',
         '@nuxtjs/tailwindcss',
+        'nuxt3-leaflet'
     ],
 })
