@@ -19,6 +19,7 @@ def extract_json_from_html(html_content):
 
     stripped_html = html_content[begin:end].strip()
     json_data = json.loads(stripped_html.rstrip(";"))
+    json_data["DSServices"] = json.loads(json_data["DSServices"])
     return json_data
 
 
