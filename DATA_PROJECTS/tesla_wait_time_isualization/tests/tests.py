@@ -21,6 +21,20 @@ class ExtractJSONFromHTML(unittest.TestCase):
         json_data = extract_json_from_html(html_content)
         self.assertIsInstance(json_data, (dict, list))
 
+    def test_DSServices_is_key_in_JSON(self):
+        """
+        A JSON string is hidden inside the JSON that has the Key 'DSServices'
+        To make sure the JSON extractio nwas correct, check if the key
+        'DSServices' is inside the JSON
+        """
+        with open(
+            "tests/test_data/test_html_raw_de_DE_model3_20190327102025.html"
+        ) as f:
+            html_content = f.read()
+
+        json_data = extract_json_from_html(html_content)
+        self.assertIn("DSServices", json_data)
+
 
 class TestReadHTMLFile(unittest.TestCase):
     def test_read_html_file(self):
