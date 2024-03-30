@@ -1,7 +1,13 @@
 import unittest
 from bs4 import BeautifulSoup
-
-from tesla_price_visualizer import extract_json_from_html, read_html_file
+import json
+import sys
+from io import StringIO
+from tesla_price_visualizer import (
+    extract_json_from_html,
+    read_html_file,
+    print_json_to_console,
+)
 
 
 class ExtractJSONFromHTML(unittest.TestCase):
@@ -29,3 +35,26 @@ class TestReadHTMLFile(unittest.TestCase):
         html_content = read_html_file(html_file_path)
 
         self.assertTrue(BeautifulSoup(html_content, "html.parser"))
+
+
+class TestPrintJSONToConsole(unittest.TestCase):
+    def setUp(self):
+        self.saved_stdout = sys.stdout
+        self.output = StringIO()
+        sys.stdout = self.output
+
+    def tearDown(self):
+        sys.stdout = self.saved_stdout
+
+    def test_print_json_to_console(self):
+        test_dict = {"key1": "value1", "key2": "value2"}
+
+        print_json_to_console(test_dict)
+
+        printed_output = self.output.getvalue()
+
+        try:
+            parsed_json = json.loads(printed_output)
+            self.assertIsInstance(parsed_json, dict)
+        except json.JSONDecodeError:
+            self.fail("Output is not a valid JSON string")
