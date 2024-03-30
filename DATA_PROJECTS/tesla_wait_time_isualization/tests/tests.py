@@ -8,9 +8,9 @@ class ExtractJSONFromHTML(unittest.TestCase):
         html_content = """
             <hmtl>
                 <body>
-                    <div id="json_data">
-                        {"example_key": "example_value"}
-                    </div>
+                    <script type="text/javascript">
+                        window.tesla = {"App": "Something"}
+                    </script>
                 </body>
             </html>
         """
