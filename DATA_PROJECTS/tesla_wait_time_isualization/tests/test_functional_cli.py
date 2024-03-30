@@ -18,18 +18,19 @@ class TestTeslaPriceVisualizerCLI(unittest.TestCase):
 
 class TestFunctionality(unittest.TestCase):
     def test_can_extract_json_from_html(self):
+        # James heard about hte script and has a valid HTML file
         html_file_path = (
             "tests/test_data/test_html_raw_de_DE_model3_20190327102025.html"
         )
 
-        # Call the CLI command and capture its output
+        # James calls the script with the valid HTML
         output = subprocess.check_output(
             ["python3", "tesla_price_visualizer.py", "--extract_json", html_file_path],
             stderr=subprocess.STDOUT,
             universal_newlines=True,
         )
 
-        # Try parsing the output as JSON
+        # James notices the program tells him that the JSON was successfully extracted!
         try:
             json_data = json.loads(output)
         except json.JSONDecodeError:
