@@ -11,16 +11,14 @@ def read_html_file(html_file_path):
 
 
 def extract_json_from_html(html_content):
-    soup = BeautifulSoup(html_content, "html.parser")
+    beginningSearchString = "window.tesla = "
+    endSearchString = "if (typeof"
 
-    # Find script tag
-    script_tag = soup.find("script", type="text/javascript")
+    begin = html_content.find(beginningSearchString) + len(beginningSearchString)
+    end = html_content.find(endSearchString)
 
-    start_index = script_tag.text.find("window.tesla =") + len("window.tesla =")
-    end_index = script_tag.text.find(";", start_index)
-    json_text = script_tag.text[start_index:end_index].strip()
-
-    json_data = json.loads(json_text)
+    stripped_html = html_content[begin:end].strip()
+    json_data = json.loads(stripped_html.rstrip(";"))
     return json_data
 
 
