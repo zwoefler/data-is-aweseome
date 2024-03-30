@@ -14,25 +14,12 @@ class ExtractJSONFromHTML(unittest.TestCase):
                 </body>
             </html>
         """
+        self.expected_json = {"App": "Something"}
 
     def test_extract_JSON_from_HTML(self):
         json_data = extract_json_from_html(self.html_content)
-
-        expected_json = {"App": "Something"}
-        self.assertEqual(json_data, expected_json)
+        self.assertEqual(json_data, self.expected_json)
 
     def test_returns_valid_JSON(self):
-        html_content = """
-            <hmtl>
-                <body>
-                    <script type="text/javascript">
-                        window.tesla = {"App": "Something"};
-                    </script>
-                </body>
-            </html>
-        """
-
         json_data = extract_json_from_html(self.html_content)
-
-        expected_json = {"App": "Something"}
         self.assertIsInstance(json_data, (dict, list))
