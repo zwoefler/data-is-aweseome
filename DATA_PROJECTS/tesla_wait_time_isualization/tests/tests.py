@@ -23,3 +23,24 @@ class ExtractJSONFromHTML(unittest.TestCase):
     def test_returns_valid_JSON(self):
         json_data = extract_json_from_html(self.html_content)
         self.assertIsInstance(json_data, (dict, list))
+
+
+class TestReadHTMLFile(unittest.TestCase):
+    def test_read_html_file(self):
+        html_file_path = (
+            "tests/test_data/test_html_raw_de_DE_model3_20190327102025.html"
+        )
+
+        expected_html_output = """
+        <html>
+            <head>
+                <title>Test HTML File</title>
+            </head>
+            <body>
+                <h1>This is a test HTML file.</h1>
+            </body>
+        </html>
+        """
+
+        html_content = read_html_file(html_file_path)
+        self.assertEqual(html_content.strip(), expected_html_output.strip())
