@@ -4,10 +4,10 @@ import json
 
 
 def read_html_file(html_file_path):
-    # with open(html_file_path, "r") as f:
-    #     html_content = f.read()
+    with open(html_file_path, "r") as f:
+        html_content = f.read()
 
-    return
+    return html_content
 
 
 def extract_json_from_html(html_content):
