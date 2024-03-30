@@ -19,4 +19,19 @@ class ExtractJSONFromHTML(unittest.TestCase):
 
         expected_json = {"App": "Something"}
         self.assertEqual(json_data, expected_json)
-        # Add type check if json_data is valid json/dict!
+
+    def test_returns_valid_JSON(self):
+        html_content = """
+            <hmtl>
+                <body>
+                    <script type="text/javascript">
+                        window.tesla = {"App": "Something"};
+                    </script>
+                </body>
+            </html>
+        """
+
+        json_data = extract_json_from_html(html_content)
+
+        expected_json = {"App": "Something"}
+        self.assertIsInstance(json_data, (dict, list))
