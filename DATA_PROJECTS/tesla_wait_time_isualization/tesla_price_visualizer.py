@@ -1,8 +1,16 @@
 import argparse
+from bs4 import BeautifulSoup
+import json
 
 
 def extract_json_from_html(html_content):
-    return {"example_key": "example_value"}
+    soup = BeautifulSoup(html_content, "html.parser")
+
+    json_element = soup.find(id="json_data")
+    json_text = json_element.get_text()
+    json_data = json.loads(json_text)
+
+    return json_data
 
 
 def main():
