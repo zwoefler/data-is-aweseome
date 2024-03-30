@@ -9,7 +9,7 @@ class ExtractJSONFromHTML(unittest.TestCase):
             <hmtl>
                 <body>
                     <script type="text/javascript">
-                        window.tesla = {"App": "Something"}
+                        window.tesla = {"App": "Something"};
                     </script>
                 </body>
             </html>
@@ -17,5 +17,5 @@ class ExtractJSONFromHTML(unittest.TestCase):
 
         json_data = extract_json_from_html(html_content)
 
-        expected_json = {"example_key": "example_value"}
+        expected_json = {"App": "Something"}
         self.assertEqual(json_data, expected_json)

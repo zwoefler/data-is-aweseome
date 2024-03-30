@@ -6,9 +6,12 @@ import json
 def extract_json_from_html(html_content):
     soup = BeautifulSoup(html_content, "html.parser")
 
-    json_element = soup.find(id="json_data")
-    json_text = json_element.get_text()
-    json_data = json.loads(json_text)
+    # Find script tag
+    script_tag = soup.find("script", type="text/javascript")
+
+    start_index = script_tag.text.find("window.tesla =") + len("window.tesla =")
+    end_index = script_tag.text.find(";", start_index)
+    json_data = script_tag.text[start_index:end_index].strip()
 
     return json_data
 
