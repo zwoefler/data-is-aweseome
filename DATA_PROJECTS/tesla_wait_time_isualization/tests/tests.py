@@ -18,4 +18,4 @@ class ExtractJSONFromHTML(unittest.TestCase):
         json_data = extract_json_from_html(html_content)
 
         expected_json = {"example_key": "example_value"}
-        self.assertEqual(json_data, {})
+        self.assertEqual(json_data, expected_json)
