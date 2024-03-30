@@ -19,3 +19,4 @@ class ExtractJSONFromHTML(unittest.TestCase):
 
         expected_json = {"App": "Something"}
         self.assertEqual(json_data, expected_json)
+        # Add type check if json_data is valid json/dict!

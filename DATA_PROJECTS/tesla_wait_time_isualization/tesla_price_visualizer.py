@@ -11,8 +11,9 @@ def extract_json_from_html(html_content):
 
     start_index = script_tag.text.find("window.tesla =") + len("window.tesla =")
     end_index = script_tag.text.find(";", start_index)
-    json_data = script_tag.text[start_index:end_index].strip()
+    json_text = script_tag.text[start_index:end_index].strip()
 
+    json_data = json.loads(json_text)
     return json_data
 
 
