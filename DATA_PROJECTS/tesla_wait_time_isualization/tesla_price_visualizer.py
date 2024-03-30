@@ -3,7 +3,10 @@ from bs4 import BeautifulSoup
 import json
 
 
-def read_html_file():
+def read_html_file(html_file_path):
+    # with open(html_file_path, "r") as f:
+    #     html_content = f.read()
+
     return
 
 
