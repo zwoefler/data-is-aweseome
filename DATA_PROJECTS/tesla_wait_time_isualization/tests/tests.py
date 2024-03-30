@@ -1,4 +1,5 @@
 import unittest
+from bs4 import BeautifulSoup
 
 from tesla_price_visualizer import extract_json_from_html, read_html_file
 
@@ -31,3 +32,19 @@ class TestReadHTMLFile(unittest.TestCase):
 
         html_content = read_html_file(html_file_path)
         self.assertIsInstance(html_content, str)
+
+    def test_import_is_valid_HTML(self):
+        html_file_path = "tests/test_data/test_html.html"
+
+        html_content = read_html_file(html_file_path)
+
+        self.assertTrue(BeautifulSoup(html_content, "html.parser"))
+
+    def test_throw_invalid_HTML(self):
+        invalid_html_file_path = "tests/test_data/test_invalid_html.html"
+
+        with self.assertRaises(Exception) as context:
+            read_html_file(invalid_html_file_path)
+
+        expected_error_message = "Invalid HTML content in the provided file"
+        self.assertIn(expected_error_message, str(context.exception))
