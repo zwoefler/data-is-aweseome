@@ -11,14 +11,15 @@ from tesla_price_visualizer import (
 
 
 class ExtractJSONFromHTML(unittest.TestCase):
-    def test_extract_json_from_model3_2019(self):
-        # Load MOdel3 2019 HTML
+    @classmethod
+    def setUpClass(cls) -> None:
         with open(
             "tests/test_data/test_html_raw_de_DE_model3_20190327102025.html"
         ) as f:
-            html_content = f.read()
+            cls.html_content = f.read()
 
-        json_data = extract_json_from_html(html_content)
+    def test_extract_json_from_model3_2019(self):
+        json_data = extract_json_from_html(self.html_content)
         self.assertIsInstance(json_data, (dict, list))
 
     def test_DSServices_is_key_in_JSON(self):
@@ -27,12 +28,7 @@ class ExtractJSONFromHTML(unittest.TestCase):
         To make sure the JSON extractio nwas correct, check if the key
         'DSServices' is inside the JSON
         """
-        with open(
-            "tests/test_data/test_html_raw_de_DE_model3_20190327102025.html"
-        ) as f:
-            html_content = f.read()
-
-        json_data = extract_json_from_html(html_content)
+        json_data = extract_json_from_html(self.html_content)
         self.assertIn("DSServices", json_data)
 
     def test_i18n_is_key_in_JSON(self):
@@ -40,12 +36,7 @@ class ExtractJSONFromHTML(unittest.TestCase):
         The key i18n needs to be available as key in the JSON.
         It is hidden as an escaped JSON string inside the JSON
         """
-        with open(
-            "tests/test_data/test_html_raw_de_DE_model3_20190327102025.html"
-        ) as f:
-            html_content = f.read()
-
-        json_data = extract_json_from_html(html_content)
+        json_data = extract_json_from_html(self.html_content)
         self.assertIn("i18n", json_data)
 
 
