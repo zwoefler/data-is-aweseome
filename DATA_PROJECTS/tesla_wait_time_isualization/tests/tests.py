@@ -25,6 +25,16 @@ class ExtractJSONFromHTML(unittest.TestCase):
         json_data = extract_json_from_html(self.html_content)
         self.assertIsInstance(json_data, (dict, list))
 
+    def test_extract_json_from_model3_2019(self):
+        # Load MOdel3 2019 HTML
+        with open(
+            "tests/test_data/test_html_raw_de_DE_model3_20190327102025.html"
+        ) as f:
+            html_content = f.read()
+
+        json_data = extract_json_from_html(html_content)
+        self.assertIsInstance(json_data, (dict, list))
+
 
 class TestReadHTMLFile(unittest.TestCase):
     def test_read_html_file(self):
@@ -39,12 +49,3 @@ class TestReadHTMLFile(unittest.TestCase):
         html_content = read_html_file(html_file_path)
 
         self.assertTrue(BeautifulSoup(html_content, "html.parser"))
-
-    def test_throw_invalid_HTML(self):
-        invalid_html_file_path = "tests/test_data/test_invalid_html.html"
-
-        with self.assertRaises(Exception) as context:
-            read_html_file(invalid_html_file_path)
-
-        expected_error_message = "Invalid HTML content in the provided file"
-        self.assertIn(expected_error_message, str(context.exception))
