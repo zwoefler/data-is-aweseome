@@ -1,6 +1,6 @@
 import unittest
 
-from tesla_price_visualizer import extract_json_from_html
+from tesla_price_visualizer import extract_json_from_html, read_html_file
 
 
 class ExtractJSONFromHTML(unittest.TestCase):

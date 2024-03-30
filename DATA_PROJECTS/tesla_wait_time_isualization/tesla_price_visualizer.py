@@ -3,6 +3,10 @@ from bs4 import BeautifulSoup
 import json
 
 
+def read_html_file():
+    return
+
+
 def extract_json_from_html(html_content):
     soup = BeautifulSoup(html_content, "html.parser")
 
