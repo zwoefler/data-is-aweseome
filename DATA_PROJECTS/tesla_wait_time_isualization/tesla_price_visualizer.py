@@ -1,8 +1,8 @@
 import argparse
 
 
-def extract_json_from_html():
-    return
+def extract_json_from_html(html_content):
+    return {}
 
 
 def main():
