@@ -22,6 +22,19 @@ def extract_json_from_html(html_content):
     return json_data
 
 
+def print_json_to_console(dictionary):
+    print(json.dumps(dictionary, indent=4))
+    return
+
+
+def extract_json(html_path):
+    html = read_html_file(html_path)
+    model_json = extract_json_from_html(html)
+    print_json_to_console(model_json)
+
+    return
+
+
 def main():
     parser = argparse.ArgumentParser(description="Tesla Price Visualizer")
     parser.add_argument(
@@ -29,6 +42,8 @@ def main():
     )
 
     args = parser.parse_args()
+    if args.extract_json:
+        extract_json(args.extract_json)
 
 
 if __name__ == "__main__":
