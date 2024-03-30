@@ -116,6 +116,7 @@ def main():
     elif args.plot:
         parkhouse_to_plot = datasets[args.plot.lower()]["path"]
         df = flatten_data(parkhouse_to_plot)
+        print(df)
         plot_data(df, datasets[args.plot.lower()]["name"])
 
 
