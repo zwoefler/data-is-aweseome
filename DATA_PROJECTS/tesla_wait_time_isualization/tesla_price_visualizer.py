@@ -2,7 +2,7 @@ import argparse
 
 
 def extract_json_from_html(html_content):
-    return {}
+    return {"example_key": "example_value"}
 
 
 def main():
