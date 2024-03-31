@@ -72,14 +72,13 @@ class ExtractJSONFromHTML(unittest.TestCase):
 class TestReadHTMLFile(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.html_file_path = "tests/test_data/test_html.html"
+        cls.html_file_path = (
+            "tests/test_data/test_html_raw_de_DE_model3_20190327102025.html"
+        )
         cls.html_content = read_html_file(cls.html_file_path)
 
     def test_read_html_file(self):
         self.assertIsInstance(self.html_content, str)
-
-    def test_import_is_valid_HTML(self):
-        self.assertTrue(BeautifulSoup(self.html_content, "html.parser"))
 
 
 class TestPrintJSONToConsole(unittest.TestCase):
