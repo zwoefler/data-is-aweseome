@@ -24,11 +24,9 @@ class ExtractJSONFromHTML(unittest.TestCase):
 
     def test_DSServices_is_key_in_JSON(self):
         """
-        A JSON string is hidden inside the JSON that has the Key 'DSServices'
-        To make sure the JSON extractio nwas correct, check if the key
-        'DSServices' is inside the JSON
+        The 'DSServices' key is hidden as an escaped JSON string.
+        Make it a valid JSON key-value-pair
         """
-
         self.assertIn("DSServices", self.json_data)
 
 
