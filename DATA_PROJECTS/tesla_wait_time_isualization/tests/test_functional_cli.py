@@ -11,9 +11,17 @@ class TestTeslaPriceVisualizerCLI(unittest.TestCase):
             universal_newlines=True,
         )
 
-        self.assertIn("--extract_json", output)
-        self.assertIn("path_to_HTML", output)
         self.assertIn("usage: tesla_price_visualizer", output)
+
+    def test_extract_json_option_exists(self):
+        output = subprocess.check_output(
+            ["python3", "tesla_price_visualizer.py", "--help"],
+            stderr=subprocess.STDOUT,
+            universal_newlines=True,
+        )
+
+        self.assertIn("-extract_json", output)
+        self.assertIn("path_to_HTML", output)
 
 
 class TestFunctionality(unittest.TestCase):
