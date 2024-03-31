@@ -29,6 +29,45 @@ class ExtractJSONFromHTML(unittest.TestCase):
         """
         self.assertIn("DSServices", self.json_data)
 
+    def test_valid_keys_are_in_extracted_JSON(self):
+        valid_keys_unsorted = [
+            "App",
+            "CreditCardDetail",
+            "DSServices",
+            "DeliveryDate",
+            "Order",
+            "Survey",
+            "ap_enabled",
+            "ap_merchant_id",
+            "env",
+            "i18n",
+            "inventory_match_enabled",
+            "omsParams",
+            "payments",
+            "rn",
+            "savedConfiguration",
+            "sibling",
+            "time",
+            "userType",
+            "user",
+            "referral",
+            "base_url",
+            "sibling_base_url",
+            "configurator_url",
+            "energy_upgrade_features",
+            "save_design_feature_enabled",
+            "save_design_heavy_feature_enabled",
+            "show_tax_credit_banner",
+            "exclude_local_storage_options",
+            "payx_ui_enabled",
+            "analytics_variant_map",
+            "version",
+            "csrf_key",
+            "csrf_token",
+        ]
+        for valid_key in valid_keys_unsorted:
+            self.assertIn(valid_key, self.json_data)
+
 
 class TestReadHTMLFile(unittest.TestCase):
     @classmethod
