@@ -33,3 +33,9 @@ Start with single press release:
 Get links from Investor relations webpage:
 - Get all press release links from ir webpage
 - itearte them with the function above
+
+
+## Dev Work
+- `python3 -m venv Env`
+- Activate Env: `source Env/bin/activate`
+- `pip install -r requirements.txt`
