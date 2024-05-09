@@ -15,7 +15,7 @@ Write dataset to file:
 ## Goal
 - File with all the deliveries data that people can import into excel and generate graphs
 - Dataset should include "ALL" information from the press release
- 
+- `python3 tesla_deliveries.py <URL>` should return the deliveries and production numbers for the given URL 
 
 
 ## Development
@@ -38,4 +38,8 @@ Get links from Investor relations webpage:
 ## Dev Work
 - `python3 -m venv Env`
 - Activate Env: `source Env/bin/activate`
+
+
+RUN ALL TESTS
+    `python3 -m unittest discover tests`
 - `pip install -r requirements.txt`

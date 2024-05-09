@@ -1,3 +1,4 @@
+import argparse
 import re
 import requests
 import pandas as pd
@@ -39,3 +40,31 @@ def get_numbers_from_press_release(url):
     html_table = extract_table(press_release_html)
     totals = extract_totals_from_table(html_table)
     return totals
+
+
+def extract_publishing_date(html):
+    soup = BeautifulSoup(html, 'html.parser')
+    time_tag = soup.find("time")
+    datetime_value = time_tag["datetime"]
+    return datetime_value 
+
+
+def get_press_release_links(url):
+    return []
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Script to rerieve Tesla deliveries and production data from the press releases")
+    parser.add_argument("URL", help="URL of the Tesla press release")
+    
+    args = parser.parse_args()
+
+    if not args.url:
+        parser.print_help()
+        return
+
+    print(f"Processing data from URL: {args.url}")
+
+
+if __name__ == '__main__':
+    main()

@@ -1,6 +1,7 @@
 import unittest
+import subprocess
 from bs4 import BeautifulSoup
-from tesla_deliveries import extract_totals_from_table, extract_table, retrieve_webpage
+from tesla_deliveries import extract_totals_from_table, extract_table, retrieve_webpage, extract_publishing_date
 
 
 class TestURLFunctions(unittest.TestCase):
@@ -13,6 +14,7 @@ class TestURLFunctions(unittest.TestCase):
 
         self.assertIsInstance(html, str)
         self.assertIn("<html", html)
+
 
 class TestExtractDataFromPressRelease(unittest.TestCase):
     def test_extract_deliveries_number(self):
@@ -129,6 +131,49 @@ class TestExtractDataFromPressRelease(unittest.TestCase):
 
         self.assertEqual(str(bs4_extracted_table), str(bs4_expected_table))
         self.assertIsInstance(extracted_table, str)
+
+
+    def test_extract_date_from_pressrelease(self):
+        """
+        Extract the publishing date from the press relesae 
+        """
+
+        html = """
+        <html>
+        <time datetime="2022-04-02T12:00:00Z">Apr 2,      2022</time>
+        </html>
+        """
+       
+        publishing_date = extract_publishing_date(html)
+
+        self.assertEqual(publishing_date, "2022-04-02T12:00:00Z")
+
+
+class TestExtractPressReleaseLinks(unittest.TestCase):
+    def test_gets_press_release_links_from_html(self):
+        html = """
+        <html>
+            <div>
+                <a href=/press-release/>Press Release</a>
+            </div>
+        </html>
+        """
+
+class TestCLIOptions(unittest.TestCase):
+    def test_help_message(self):
+        process = subprocess.Popen(['python3', 'tesla_deliveries.py', '-h'], stdout=subprocess.PIPE)
+        output, _ = process.communicate()
+        output = output.decode("utf-8").strip()
+
+        self.assertIn("usage: tesla_deliveries.py [-h] URL", output)
+
+
+    def test_no_url_provided(self):
+        process = subprocess.Popen(['python3', 'tesla_deliveries.py'], stdout=subprocess.PIPE)
+        output, _ = process.communicate()
+        output = output.decode("utf-8").strip()
+
+        self.assertIn("usage: tesla_deliveries.py [-h] URL", output)
 
 
 if __name__ == '__main__':
