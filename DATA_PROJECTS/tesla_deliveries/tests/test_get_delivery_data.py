@@ -1,16 +1,16 @@
 import unittest
 import subprocess
 from bs4 import BeautifulSoup
-from tesla_deliveries import extract_totals_from_table, extract_table, retrieve_webpage, extract_publishing_date
+from tesla_deliveries import extract_totals_from_table, extract_table, fetch_html, extract_publishing_date
 
 
 class TestURLFunctions(unittest.TestCase):
     # When schem isn't https://, add it to URL in front of www.
     # When internet is not available
-    def test_can_retrieve_html_from_URL(self):
+    def test_fetch_html(self):
         url = "https://www.google.com"
 
-        html = retrieve_webpage(url)
+        html = fetch_html(url)
 
         self.assertIsInstance(html, str)
         self.assertIn("<html", html)

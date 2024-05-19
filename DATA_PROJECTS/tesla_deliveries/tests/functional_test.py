@@ -34,17 +34,6 @@ class TestTeslaDeliveryIntegration(unittest.TestCase):
         Production: 305407
         Deliveries: 310048"""
         self.assertEqual(output, expected_output)
-#        totals = get_numbers_from_press_release(url)
-#
-#        self.assertIsInstance(totals, dict)
-#
-#        self.assertIn("production", totals)
-#        self.assertIn("deliveries", totals)
-#        self.assertIsInstance(totals["production"], int)
-#        self.assertIsInstance(totals["deliveries"], int)
-#        self.assertEqual(totals["production"], 305407)
-#        self.assertEqual(totals["deliveries"], 310048)
-
 
     def test_get_press_release_links_from_ir_webpage(self):
         url = "https://ir.tesla.com/#quarterly-disclosure"
