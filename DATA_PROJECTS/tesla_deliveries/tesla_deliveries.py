@@ -37,15 +37,16 @@ def extract_publishing_date(html):
     return datetime_value
 
 
-def extract_totals(html):
+def get_numbers_from_press_release(url):
+    """Get production, delivery and publishing date from a Tesla press release URL"""
+    html = fetch_html(url=url)
     html_table = extract_table(html)
     totals = extract_totals_from_table(html_table)
     return totals
 
 
-def get_numbers_from_press_release(url):
-    press_release_html = fetch_html(url)
-    html_table = extract_table(press_release_html)
+def extract_totals(html):
+    html_table = extract_table(html)
     totals = extract_totals_from_table(html_table)
     return totals
 
