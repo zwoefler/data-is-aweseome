@@ -28,6 +28,15 @@ def extract_totals_from_table(html_table):
     return totals
 
 
+def extract_publishing_date(html):
+    """Extract publishing date from the HTML content"""
+    soup = BeautifulSoup(html, "html.parser")
+    time_tag = soup.find("time")
+    datetime_value = time_tag["datetime"]
+
+    return datetime_value
+
+
 def extract_totals(html):
     html_table = extract_table(html)
     totals = extract_totals_from_table(html_table)
@@ -39,13 +48,6 @@ def get_numbers_from_press_release(url):
     html_table = extract_table(press_release_html)
     totals = extract_totals_from_table(html_table)
     return totals
-
-
-def extract_publishing_date(html):
-    soup = BeautifulSoup(html, "html.parser")
-    time_tag = soup.find("time")
-    datetime_value = time_tag["datetime"]
-    return datetime_value
 
 
 def get_press_release_links(url):
