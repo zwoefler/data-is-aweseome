@@ -45,22 +45,15 @@ def get_numbers_from_press_release(url):
     return totals
 
 
-def extract_totals(html):
-    html_table = extract_table(html)
-    totals = extract_totals_from_table(html_table)
-    return totals
-
-
 def get_press_release_links(url):
     return []
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Script to rerieve Tesla deliveries and production data from the press releases"
+        description="Script to rerieve Tesla deliveries and production data from a press releases"
     )
     parser.add_argument("URL", help="URL of the Tesla press release")
-
     args = parser.parse_args()
 
     if not args.URL:
@@ -68,9 +61,10 @@ def main():
         return
 
     url = args.URL
-    press_release_html = fetch_html(url)
-    totals = extract_totals(press_release_html)
-    publishing_date = extract_publishing_date(press_release_html)
+    html = fetch_html(url)
+    html_table = extract_table(html)
+    totals = extract_totals_from_table(html_table)
+    publishing_date = extract_publishing_date(html)
     print("Date:", publishing_date)
     print("Production:", totals["production"])
     print("Deliveries:", totals["deliveries"])

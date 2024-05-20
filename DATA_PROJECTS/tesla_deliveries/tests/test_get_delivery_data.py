@@ -6,7 +6,6 @@ from tesla_deliveries import (
     extract_table,
     fetch_html,
     extract_publishing_date,
-    extract_totals,
 )
 
 
@@ -151,23 +150,6 @@ class TestExtractDataFromPressRelease(unittest.TestCase):
         publishing_date = extract_publishing_date(html)
 
         self.assertEqual(publishing_date, "2022-04-02T12:00:00Z")
-
-    def test_extract_totals_from_html(self):
-        with open("tests/data/press_release.html", "r") as f:
-            html = f.read()
-
-        totals = extract_totals(html)
-
-        self.assertIsInstance(totals, dict)
-
-        self.assertIn("production", totals)
-        self.assertIn("deliveries", totals)
-
-        self.assertIsInstance(totals["production"], int)
-        self.assertIsInstance(totals["deliveries"], int)
-
-        self.assertEqual(totals["production"], 305407)
-        self.assertEqual(totals["deliveries"], 310048)
 
 
 class TestExtractPressReleaseLinks(unittest.TestCase):

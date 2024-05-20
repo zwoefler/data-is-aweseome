@@ -1,8 +1,5 @@
 import unittest
 import subprocess
-from tesla_deliveries import (
-    extract_totals,
-)
 
 
 class TestTeslaDeliveryIntegration(unittest.TestCase):
