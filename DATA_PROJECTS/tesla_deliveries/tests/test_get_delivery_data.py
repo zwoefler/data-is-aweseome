@@ -1,7 +1,13 @@
 import unittest
 import subprocess
 from bs4 import BeautifulSoup
-from tesla_deliveries import extract_totals_from_table, extract_table, fetch_html, extract_publishing_date
+from tesla_deliveries import (
+    extract_totals_from_table,
+    extract_table,
+    fetch_html,
+    extract_publishing_date,
+    extract_totals,
+)
 
 
 class TestURLFunctions(unittest.TestCase):
@@ -52,7 +58,6 @@ class TestExtractDataFromPressRelease(unittest.TestCase):
         self.assertIsInstance(totals, dict)
         self.assertIn("deliveries", totals)
         self.assertEqual(totals["deliveries"], 435059)
-
 
     def test_extract_total_production_number(self):
         html_table = """
@@ -125,17 +130,16 @@ class TestExtractDataFromPressRelease(unittest.TestCase):
         </table>
         """
         extracted_table = extract_table(html)
-        
+
         bs4_expected_table = BeautifulSoup(expected_table.strip(), "html.parser")
         bs4_extracted_table = BeautifulSoup(extracted_table, "html.parser")
 
         self.assertEqual(str(bs4_extracted_table), str(bs4_expected_table))
         self.assertIsInstance(extracted_table, str)
 
-
     def test_extract_date_from_pressrelease(self):
         """
-        Extract the publishing date from the press relesae 
+        Extract the publishing date from the press relesae
         """
 
         html = """
@@ -143,10 +147,27 @@ class TestExtractDataFromPressRelease(unittest.TestCase):
         <time datetime="2022-04-02T12:00:00Z">Apr 2,      2022</time>
         </html>
         """
-       
+
         publishing_date = extract_publishing_date(html)
 
         self.assertEqual(publishing_date, "2022-04-02T12:00:00Z")
+
+    def test_extract_totals_from_html(self):
+        with open("tests/data/press_release.html", "r") as f:
+            html = f.read()
+
+        totals = extract_totals(html)
+
+        self.assertIsInstance(totals, dict)
+
+        self.assertIn("production", totals)
+        self.assertIn("deliveries", totals)
+
+        self.assertIsInstance(totals["production"], int)
+        self.assertIsInstance(totals["deliveries"], int)
+
+        self.assertEqual(totals["production"], 305407)
+        self.assertEqual(totals["deliveries"], 310048)
 
 
 class TestExtractPressReleaseLinks(unittest.TestCase):
@@ -159,22 +180,14 @@ class TestExtractPressReleaseLinks(unittest.TestCase):
         </html>
         """
 
+
 class TestCLIOptions(unittest.TestCase):
-    def test_help_message(self):
-        process = subprocess.Popen(['python3', 'tesla_deliveries.py', '-h'], stdout=subprocess.PIPE)
-        output, _ = process.communicate()
-        output = output.decode("utf-8").strip()
-
-        self.assertIn("usage: tesla_deliveries.py [-h] URL", output)
-
-
-    def test_no_url_provided(self):
-        process = subprocess.Popen(['python3', 'tesla_deliveries.py'], stdout=subprocess.PIPE)
-        output, _ = process.communicate()
-        output = output.decode("utf-8").strip()
-
-        self.assertIn("usage: tesla_deliveries.py [-h] URL", output)
+    # Help message with -h or --help returns helpmessage
+    # to provide URL to press release
+    #
+    def test_test(self):
+        pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

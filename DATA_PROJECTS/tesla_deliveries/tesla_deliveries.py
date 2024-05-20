@@ -60,11 +60,17 @@ def main():
 
     args = parser.parse_args()
 
-    if not args.url:
+    if not args.URL:
         parser.print_help()
         return
 
-    print(f"Processing data from URL: {args.url}")
+    url = args.URL
+    press_release_html = fetch_html(url)
+    totals = extract_totals(press_release_html)
+    publishing_date = extract_publishing_date(press_release_html)
+    print("Date:", publishing_date)
+    print("Production:", totals["production"])
+    print("Deliveries:", totals["deliveries"])
 
 
 if __name__ == "__main__":
