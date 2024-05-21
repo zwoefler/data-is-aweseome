@@ -1,21 +1,21 @@
 # Auslesen Parkleitsystem Gießen
-Gather data form the parkhouse data system in Gießen
+Gather data form the parkhouse data system in Gießen.
 
 ## How?
-Every 5 minutes. However the side isn't updated every day at 2100.
+Every 5 minutes. However the site isn't updated every day at 2100.
 1. Download Page from: https://www.giessen.de/Umwelt_und_Verkehr/Parken/
 
 ## What and Where?
-- `data/`: HOlds the JSON dumps form the parkhouse data every 5 minutes
-- `tests/`: tests for the scripts in this project
-- `parkhouse_aggregator/`: Holds the python scripts to:
+- `data/`: JSON dumps form the parkhouse data every 5 minutes
+- `tests/`: Tests
+- `parkhouse_aggregator/`: Python3 scripts
     1. Download the parkhouse data from Gießen Parkhouse Webapp
     2. Aggregate Parkhouse Data into parkhouses
 - `parkhouse_data/`: JSON files with parkhouse occupation data for parkhouses
 
 
 ## What it should do?
-A script that gathers all available json files from the `data/` directory.
+A script `scraping_parkleitsystem.py` gathers all available json files from the `data/` directory.
 The output format per parkhouse should be:
 ```JSON
 // Dern-Passage.json
@@ -41,18 +41,6 @@ The output format per parkhouse should be:
 The `parkhouse_occupation` key is ordered by the `timestamp` in ascending order!
 If the parkhouse data already exists:
 - append the data to `parkhouse_occupation`
-
-
-
-
-
-# How to?
-- Run every five minutes to build a dataset
-- Have the resulting file as a JSON in the data/ directory!
-
-- Build GitHub Action every five minutes
-- Run scrape_parkleitsystem.py --> data to <timestamp.json>, if timestamp.json already exists, skip
-
 
 
 # 🚧 Work in Progress
@@ -88,9 +76,6 @@ Cleanup for each parkhouse:
 
 }
 ```
-Requirements or the above data:
-- sorted by time!
-
 
 Important questions:
 - What type of timestapm does the visulaization need to work properly?
