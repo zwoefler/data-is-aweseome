@@ -59,3 +59,8 @@ python3 scraping_parkleitsystem.py
 - The webpage from which the data is sources usually updates only between 9 in the morning and evening. So nightly changes are not included
 - Some large parkhouses in Gießen are not present in the dataset
 - Parkhouses that are closed will sometimes not be updated on the webpage (Parkhaus "Am Kino")
+
+
+## How to include dataset on webpage?
+1. Aggregate parkhouse data: Run `python3 parkhouse_aggregator/parkhouse_aggregator.py`
+2. Copy `parkhouse_data/` to assets in WEBPAGE folder: `cp parkhouse_data/* ../../WEBPAGE/assets/parkhouses/`
