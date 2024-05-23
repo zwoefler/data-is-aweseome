@@ -2,9 +2,9 @@
   <div class="w-full">
     <p class="font-bold text-2xl">{{ parkhouse }}</p>
     <p>{{ shortDate(selectedWeekStart) }} - {{ shortDate(selectedWeekEnd) }}</p>
-    <div class="my-4">
-      <button @click="previousWeek" class="bg-blue-500 text-white px-4 py-2 rounded">Previous Week</button>
-      <button @click="nextWeek" class="bg-blue-500 text-white px-4 py-2 rounded ml-2">Next Week</button>
+    <div class="space-x-2">
+      <button @click="previousWeek" class="bg-blue-500 text-xs text-white p-2 py-2 rounded">Letzte Woche</button>
+      <button @click="nextWeek" class="bg-blue-500 text-xs text-white p-2 rounded">Nächste Woche</button>
     </div>
     <div class="h-80 w-full">
       <Line class="h-full" :data="chartDataSet" />
