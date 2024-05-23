@@ -122,7 +122,7 @@ const extractChartData = (data, weekStart, weekEnd) => {
   data.forEach(entry => {
     const entryDate = new Date(entry.timestamp * 1000)
     if (entryDate >= weekStart && entryDate <= weekEnd) {
-      labels.push(entryDate)
+      labels.push(shortDate(entryDate))
       occupiedSpaces.push(entry.occupied_spaces)
     }
   })
