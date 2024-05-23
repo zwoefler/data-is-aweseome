@@ -3,14 +3,15 @@ draft: true
 ---
 # Parkleitsystem Gießen
 
-Das Parkleitsystem in Gießen visualisiert.
+Hier findest du die Auslastung der Parkhäuser in Gießen welche an das Parkleitsystem der Stadt angebunden sind.
 
 :parkleitsystem
 
 
 ## ❓️ Fragen
 #### Warum ist nicht der gesamte Tag dargestellt?
-Die daten fangen meistens erst ab 9 Uhr an und hören um 9 Uhr auf aktualisiert zu werden.
+Die Daten werden nur zwischen 9 Uhr morgens und um 21 Uhr auf der Webseite der Stadt aktualisiert.
+
 
 #### Woher kommen diese Daten?
 🔗 URL: https://www.giessen.de/Umwelt_und_Verkehr/Parken/
