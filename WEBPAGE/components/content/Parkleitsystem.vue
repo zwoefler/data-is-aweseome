@@ -87,7 +87,7 @@ const shortDate = (date) => {
 const labelDate = (date) => {
   var options = {
     weekday: 'short',
-    year: 'numeric',
+    year: '2-digit',
     month: 'numeric',
     day: 'numeric',
     hour: '2-digit',
