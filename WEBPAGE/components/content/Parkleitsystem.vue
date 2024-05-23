@@ -84,6 +84,20 @@ const shortDate = (date) => {
   return date.toLocaleDateString("de-DE", options)
 }
 
+const labelDate = (date) => {
+  var options = {
+    weekday: 'short',
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+    timeZone: 'GMT'
+  };
+  return date.toLocaleString("de-DE", options).replace(',', '');
+}
+
 
 let selectedWeekStart = ref(startOfISOWeek(new Date()));
 let selectedWeekEnd = ref(endOfISOWeek(selectedWeekStart.value))
@@ -122,7 +136,7 @@ const extractChartData = (data, weekStart, weekEnd) => {
   data.forEach(entry => {
     const entryDate = new Date(entry.timestamp * 1000)
     if (entryDate >= weekStart && entryDate <= weekEnd) {
-      labels.push(shortDate(entryDate))
+      labels.push(labelDate(entryDate))
       occupiedSpaces.push(entry.occupied_spaces)
     }
   })
