@@ -1,6 +1,3 @@
----
-draft: true
----
 # Parkleitsystem Gießen
 
 Hier findest du die Auslastung der Parkhäuser in Gießen welche an das Parkleitsystem der Stadt angebunden sind.
