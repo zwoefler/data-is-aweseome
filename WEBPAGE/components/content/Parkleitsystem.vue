@@ -7,7 +7,7 @@
       <button @click="nextWeek" class="bg-blue-500 text-white px-4 py-2 rounded ml-2">Next Week</button>
     </div>
     <div class="h-80 w-full">
-      <Line class="h-full" :data="chartDataSet" :options="chartOptions" />
+      <Line class="h-full" :data="chartDataSet" />
     </div>
   </div>
 </template>
@@ -38,9 +38,6 @@ ChartJS.register(
   Legend
 )
 
-var chartOptions = ref({
-})
-
 
 const jsonData = parkleitsystem
 const parkhouse = ref(jsonData.name)
@@ -52,6 +49,10 @@ var chartDataSet = ref({
       label: 'Occupied Spaces',
       borderColor: 'rgba(75, 192, 192, 1)',
       backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      data: [], // Occupied Spaces (y-axis)
+    },
+    {
+      label: 'Max Available Spaces',
       data: [], // Occupied Spaces (y-axis)
     },
   ],
@@ -100,10 +101,14 @@ const updateChart = () => {
     labels: updatedChartData.labels, // Time (x-axis)
     datasets: [
       {
-        label: 'Occupied Spaces',
+        label: 'Besetze Parkplätze',
         borderColor: 'rgba(75, 192, 192, 1)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         data: updatedChartData.occupiedSpaces, // Occupied Spaces (y-axis)
+      },
+      {
+        label: 'Verfügbare Plätze',
+        data: updatedChartData.maxSpaces, // Occupied Spaces (y-axis)
       },
     ],
   }
@@ -112,18 +117,21 @@ const updateChart = () => {
 const extractChartData = (data, weekStart, weekEnd) => {
   const labels = []
   const occupiedSpaces = []
+  const maxSpaces = []
 
   data.forEach(entry => {
     const entryDate = new Date(entry.timestamp * 1000)
     if (entryDate >= weekStart && entryDate <= weekEnd) {
       labels.push(labelDate(entryDate))
       occupiedSpaces.push(entry.occupied_spaces)
+      maxSpaces.push(entry.max_spaces)
     }
   })
 
   return {
     labels,
     occupiedSpaces,
+    maxSpaces,
   }
 }
 
