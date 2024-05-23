@@ -3,6 +3,10 @@
 
 Read more about the [❓️Why](docs/Purpose%20and%20Why.md)?
 
+### ❗️ Project Disclaimer
+The creators and contributors of this project do not claim ownership of the original data and make no representations or warranties regarding the accuracy or completeness of the data.
+Users are responsible for complying with the terms of use associated with any data sources used in this project.
+
 ## 📏 Rules
 - 🔓 `Public` datasources
 - 🪜 `No paywall`, or provide a ladder to climb over ;)
