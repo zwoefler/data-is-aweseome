@@ -1,26 +1,23 @@
 # 🚀 Data is Awesome
-Answering questions with opinionated `DATA STORIES` and `VISUALS` in `self contained projects`.
-
-**🎯 Goals**: Extend Python3, data aggregation and story telling skills.
-
-Focus on making your audience understand the subject at hand.
+> Answer questions with opinionated `DATA STORIES` and `VISUALS` in `self contained projects`
 
 Read more about the [❓️Why](docs/Purpose%20and%20Why.md)?
-⚠️Lots of text!
-
 
 ## 📏 Rules
-- 🔓 Datasources must be `publicly` available
-- 🇬🇧 The working language is `English`
-- 🪜 `No paywalls`, or provide a ladder to climb over ;)
-- 🔄 `Script`(s) for data gathering, processing and visualization
-- 📝 Provide README.md to `explain thoughts` and technical steps
-- 😉 Use Emojis and don't take yourself to seriously
+- 🔓 `Public` datasources
+- 🪜 `No paywall`, or provide a ladder to climb over ;)
+- 🇬🇧 `English` is the working language
+- 🔄 `Scripts` must include the full pipeline:
+    - `Data gathering`
+    - `Processing`
+    - `Visualization`
+- 📝 `Provide READMEs` on how to use, explaining thoughts and technical steps
+- 😉 `Emojis` help the understanding
 
 
-## 📝 Contributing?
-Always welcome...
-I mean, look at the state of this project.
+## 📝 Want to contribute?
+Have you seen the state of this project?
+Sure...
 
 For details, read [CONTRIBUTING.md](CONTRIBUTING.md)
 
@@ -34,49 +31,36 @@ For details, read [CONTRIBUTING.md](CONTRIBUTING.md)
 
 
 ```BASH
-# Checkout this repo
 git clone git@github.com:zwoefler/Data-is-aweseome.git
 cd data-is-awesome/
 
 cd <PROJECT_OF_INTEREST>
-# READ THE README
 cat README.md
 ```
 
-
 ## 🏗️ ToDos
-- [X] Add CONTRIBUTING.md + rules
-- [X] Add LICENSE
-- [X] Refine Mission statement
-- [X] Script to get started with new project easily!
-- [ ] Section for `Developers` and `non technical` people
-- [ ] Pipeline to check if everything is there (docs, scripts, etc.)
-- [X] Include `WHY` section in docs/README
-- [ ] `External Data storage` - not all in the Git repo
-- [ ] Docs - for (sub)project with Tutorial, How-To, requirements
 - [ ] Add Docker containers per project to run data visuals
-- [ ] Every project with it's own visualization?
-- [ ] Create a new project with tempalte. DOCS!
 
 
 ## 📊 Data
-All Data-Projects have a README answering the following questions:
-- WHERE is the data valid? (City, Country, Continent, Celestial Body)
-- WHEN is the data valid? (Far gone time period, valid today + estimates in the future?
-- WHO ordered/comissioned/gathered the data?
-- HOW was the data gathered? (Survey (participants), counting hand vs. technical)
-- WHAT is the public source? A link or links with an explanation should the data be aggreageted.
+All Data-Projects have a `README` answering the following questions:
+- `WHERE` is the data valid? (City, Country, Continent, Celestial Body)
+- `WHEN` is the data valid? (Far gone time period, valid today + estimates in the future?
+- `WHO` ordered/comissioned/gathered the data?
+- `HOW` was the data gathered? (Survey (participants), counting hand vs. technical)
+- `WHAT` is the public source? A link or links with an explanation should the data be aggreageted.
 
 
 ## 🚧 Problems
-- Project is to big, contains lots of raw data files - find a better way!
+- [ ] Project is to big. Over 9GB!
+    - contains raw data files - find a better way!
 
 
 ## Project setup
-- DATA_PROJECTS: Holds the Data Projects
-- DOCS: Docs for the entire project, discusisons, reference, design descisison, etc.
-- TEMPLATES: Scripts and explanations that can be used throughout the repository
-- WEBPAGE: Publicizes the `data-is-awesome` data as articles on the web and firebase
+- `DATA_PROJECTS`: Holds the Data Projects
+- `DOCS`: Docs for the entire project, discussisons, reference, design descisison, etc.
+- `TEMPLATES`: Templates 🤷🏽
+- `WEBPAGE`: Present the `data-is-awesome` data as articles on the web
 
 
 ## 👥 People
