@@ -6,7 +6,9 @@
       <button @click="previousWeek" class="bg-blue-500 text-white px-4 py-2 rounded">Previous Week</button>
       <button @click="nextWeek" class="bg-blue-500 text-white px-4 py-2 rounded ml-2">Next Week</button>
     </div>
-    <Line :data="chartDataSet" :options="chartOptions" />
+    <div class="h-80 w-full">
+      <Line class="h-full" :data="chartDataSet" :options="chartOptions" />
+    </div>
   </div>
 </template>
 
@@ -37,28 +39,6 @@ ChartJS.register(
 )
 
 var chartOptions = ref({
-  scales: {
-    xAxes: [
-      {
-        type: 'time',
-        time: {
-          unit: 'day',
-        },
-        scaleLabel: {
-          display: true,
-          labelString: 'Time',
-        },
-      },
-    ],
-    yAxes: [
-      {
-        scaleLabel: {
-          display: true,
-          labelString: 'Besetzte Parkplätze',
-        },
-      },
-    ],
-  },
 })
 
 
