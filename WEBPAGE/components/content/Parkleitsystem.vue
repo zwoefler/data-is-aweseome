@@ -36,26 +36,6 @@ ChartJS.register(
   Legend
 )
 
-
-const jsonData = parkleitsystem
-
-const parkhouse = ref(jsonData.name)
-
-var chartLabels = ref([])
-var chartData = ref([])
-
-var chartDataSet = ref({
-  labels: chartLabels.value, // Time (x-axis)
-  datasets: [
-    {
-      label: 'Occupied Spaces',
-      borderColor: 'rgba(75, 192, 192, 1)',
-      backgroundColor: 'rgba(75, 192, 192, 0.2)',
-      data: chartData.value, // Occupied Spaces (y-axis)
-    },
-  ],
-});
-
 var chartOptions = ref({
   scales: {
     xAxes: [
@@ -82,6 +62,23 @@ var chartOptions = ref({
 })
 
 
+const jsonData = parkleitsystem
+const parkhouse = ref(jsonData.name)
+
+var chartDataSet = ref({
+  labels: [], // Time (x-axis)
+  datasets: [
+    {
+      label: 'Occupied Spaces',
+      borderColor: 'rgba(75, 192, 192, 1)',
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      data: [], // Occupied Spaces (y-axis)
+    },
+  ],
+});
+
+
+
 const shortDate = (date) => {
   var options = { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric' }
   return date.toLocaleDateString("de-DE", options)
@@ -103,25 +100,19 @@ const nextWeek = () => {
   updateChart()
 }
 
-
-watch([chartLabels, chartData], ([newChartLabel, newChartData]) => {
+const updateChart = () => {
+  var updatedChartData = extractChartData(jsonData.occupation_data, selectedWeekStart.value, selectedWeekEnd.value)
   chartDataSet.value = {
-    labels: newChartLabel, // Time (x-axis)
+    labels: updatedChartData.labels, // Time (x-axis)
     datasets: [
       {
         label: 'Occupied Spaces',
         borderColor: 'rgba(75, 192, 192, 1)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        data: newChartData, // Occupied Spaces (y-axis)
+        data: updatedChartData.occupiedSpaces, // Occupied Spaces (y-axis)
       },
     ],
   }
-})
-
-const updateChart = () => {
-  var updatedChartData = extractChartData(jsonData.occupation_data, selectedWeekStart.value, selectedWeekEnd.value)
-  chartLabels.value = updatedChartData.labels
-  chartData.value = updatedChartData.occupiedSpaces
 }
 
 const extractChartData = (data, weekStart, weekEnd) => {
