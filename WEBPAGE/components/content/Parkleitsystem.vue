@@ -4,8 +4,12 @@
       <p class="font-bold text-2xl">{{ parkhouse }}</p>
       <p>{{ shortDate(selectedWeekStart) }} - {{ shortDate(selectedWeekEnd) }}</p>
       <div class="space-x-2">
-        <button @click="previousWeek" class="bg-blue-500 text-xs text-white p-2 py-2 rounded">Letzte Woche</button>
-        <button @click="nextWeek" class="bg-blue-500 text-xs text-white p-2 rounded">Nächste Woche</button>
+        <button @click="previousWeek" :disabled="isPreviousWeekDisabled"
+          class="disabled:bg-gray-700 disabled:text-gray-300 bg-blue-500 text-xs text-white p-2 py-2 rounded">Letzte
+          Woche</button>
+        <button @click="nextWeek" :disabled="isNextWeekDisabled"
+          class="disabled:bg-gray-700 disabled:text-gray-300 bg-blue-500 text-xs text-white p-2 rounded">Nächste
+          Woche</button>
       </div>
     </div>
     <div class="h-80 w-full">
@@ -16,7 +20,7 @@
 
 <script setup>
 import { Line } from 'vue-chartjs'
-import { startOfISOWeek, endOfISOWeek, subWeeks, addWeeks } from 'date-fns';
+import { startOfISOWeek, endOfISOWeek, subWeeks, addWeeks, isAfter, isBefore } from 'date-fns';
 import parkleitsystem from 'assets/parkhouses/am bahnhof.json'
 import { ref } from 'vue';
 import {
@@ -84,6 +88,22 @@ const labelDate = (date) => {
 
 let selectedWeekStart = ref(startOfISOWeek(new Date()));
 let selectedWeekEnd = ref(endOfISOWeek(selectedWeekStart.value))
+
+const isNextWeekDisabled = computed(() => {
+  const timestamps = jsonData.occupation_data.map(entry => entry.timestamp * 1000);
+  const lastAvailableDate = new Date(Math.max(...timestamps));
+
+  const nextWeekEnd = endOfISOWeek(addWeeks(selectedWeekStart.value, 1));
+  return isAfter(nextWeekEnd, lastAvailableDate);
+});
+
+const isPreviousWeekDisabled = computed(() => {
+  const timestamps = jsonData.occupation_data.map(entry => entry.timestamp * 1000);
+  const firstAvailableDate = new Date(Math.min(...timestamps));
+
+  const previousWeek = endOfISOWeek(subWeeks(selectedWeekStart.value, 1));
+  return isBefore(previousWeek, firstAvailableDate);
+});
 
 const previousWeek = () => {
   selectedWeekStart.value = subWeeks(selectedWeekStart.value, 1)
