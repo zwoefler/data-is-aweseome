@@ -1,7 +1,15 @@
 <template>
   <div class="w-full p-4 bg-gray-900">
+    <div class="mb-4">
+      <label for="parkhouse-select" class="text-white">Select Parkhouse:</label>
+      <select id="parkhouse-select" v-model="selectedParkhouse" @change="handleParkhouseChange"
+        class="ml-2 p-2 rounded bg-white">
+        <option v-for="parkhouse in parkhouses" :key="parkhouse.name" :value="parkhouse">{{ parkhouse.name }}
+        </option>
+      </select>
+    </div>
     <div>
-      <p class="font-bold text-2xl">{{ parkhouse }}</p>
+      <p class="font-bold text-2xl">{{ selectedParkhouse.name }}</p>
       <p>{{ shortDate(selectedWeekStart) }} - {{ shortDate(selectedWeekEnd) }}</p>
       <div class="space-x-2">
         <button @click="previousWeek" :disabled="isPreviousWeekDisabled"
@@ -21,7 +29,15 @@
 <script setup>
 import { Line } from 'vue-chartjs'
 import { startOfISOWeek, endOfISOWeek, subWeeks, addWeeks, isAfter, isBefore } from 'date-fns';
-import parkleitsystem from 'assets/parkhouses/am bahnhof.json'
+
+import ambahnhof from "assets/parkhouses/am bahnhof.json"
+import amkino from "assets/parkhouses/am kino.json"
+import dernpassage from "assets/parkhouses/dern-passage.json"
+import karstadt from "assets/parkhouses/karstadt.json"
+import liebigcenter from "assets/parkhouses/liebig-center.json"
+import rathaus from "assets/parkhouses/rathaus.json"
+import selterstor from "assets/parkhouses/selters tor.json"
+
 import { ref } from 'vue';
 import {
   Chart as ChartJS,
@@ -44,9 +60,23 @@ ChartJS.register(
   Legend
 )
 
+const parkhouses = [
+  ambahnhof,
+  amkino,
+  dernpassage,
+  karstadt,
+  liebigcenter,
+  rathaus,
+  selterstor,
+]
 
-const jsonData = parkleitsystem
-const parkhouse = ref(jsonData.name)
+const selectedParkhouse = ref(parkhouses[0])
+
+const handleParkhouseChange = () => {
+  console.log("Selected:", selectedParkhouse.value.name)
+  console.log(selectedParkhouse.value)
+  updateChart()
+}
 
 var chartDataSet = ref({
   labels: [], // Time (x-axis)
@@ -63,8 +93,6 @@ var chartDataSet = ref({
     },
   ],
 });
-
-
 
 const shortDate = (date) => {
   var options = { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric' }
@@ -90,7 +118,7 @@ let selectedWeekStart = ref(startOfISOWeek(new Date()));
 let selectedWeekEnd = ref(endOfISOWeek(selectedWeekStart.value))
 
 const isNextWeekDisabled = computed(() => {
-  const timestamps = jsonData.occupation_data.map(entry => entry.timestamp * 1000);
+  const timestamps = selectedParkhouse.value.occupation_data.map(entry => entry.timestamp * 1000);
   const lastAvailableDate = new Date(Math.max(...timestamps));
 
   const nextWeekEnd = endOfISOWeek(addWeeks(selectedWeekStart.value, 1));
@@ -98,7 +126,7 @@ const isNextWeekDisabled = computed(() => {
 });
 
 const isPreviousWeekDisabled = computed(() => {
-  const timestamps = jsonData.occupation_data.map(entry => entry.timestamp * 1000);
+  const timestamps = selectedParkhouse.value.occupation_data.map(entry => entry.timestamp * 1000);
   const firstAvailableDate = new Date(Math.min(...timestamps));
 
   const previousWeek = endOfISOWeek(subWeeks(selectedWeekStart.value, 1));
@@ -118,7 +146,7 @@ const nextWeek = () => {
 }
 
 const updateChart = () => {
-  var updatedChartData = extractChartData(jsonData.occupation_data, selectedWeekStart.value, selectedWeekEnd.value)
+  var updatedChartData = extractChartData(selectedParkhouse.value.occupation_data, selectedWeekStart.value, selectedWeekEnd.value)
   chartDataSet.value = {
     labels: updatedChartData.labels, // Time (x-axis)
     datasets: [
