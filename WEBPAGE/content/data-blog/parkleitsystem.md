@@ -1,7 +1,6 @@
 # Parkleitsystem Gießen
 
 Die Auslastung Gießener Parkhäuser - welche an das Parkleitsystem angebunden sind.
-
 :parkleitsystem
 
 
