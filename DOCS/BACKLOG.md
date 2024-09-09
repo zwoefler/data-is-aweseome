@@ -1,6 +1,12 @@
 # Backlog
 Ideas I want to pursue
 
+- [ ] "Base" Python3 Settings to run all projects (jupyter, shutil, pandas, etc.)
+
+---
+
+# 💡 DATA IDEAS
+
 # E-Fuels are Bullshit
 When you want to power the worlds cars...
 
