@@ -9,6 +9,3 @@ https://www.energy-charts.info/charts/power/chart.htm?l=de&c=DE
 -
 For the year 2023
 GET https://www.energy-charts.info/charts/power/data/de/year_2023.json
-
-
-
