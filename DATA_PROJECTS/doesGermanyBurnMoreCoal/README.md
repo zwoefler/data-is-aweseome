@@ -1,33 +1,52 @@
-
 # Does Germany burn more coal for electricity generation after shutting down nuclear?
 
-Germany decided to phase out Nuclear energy as a source for electricity.
+Germany phased out Nuclear energy as a source for electricity.
 
 Now that nuclear is missing in the electricity mix some people worry that:
-
 1. We will burn more Coal now
 2. Emit more CO2 emissions because a low carbon electricity source is missing
 3. There is not enough electricity
 4. Nuclear Powerplants should have continued to run
+All above statements are false.
+
+| Created     | Updated | Data Collection | Data Processing | Visualization |
+| ----------- | ------- | --------- | --------- | -------------- |
+| 📆 09.01.24 | 📆 09.09.24 | 🚧 Incomplete | ✅ WORKS | ✅ WORKS |
+
+> ℹ️ Datasource has missing data between mid November 2023 and January 2024
+
+- `coal_data.json` - Aggreagted coal production data over the years
+- `search_urls.json` - download links for json data
 
 
-THis project pulls data to answer these questions.
+## 🏗️ Usage
+- Clone repo: ```git@github.com:zwoefler/data-is-aweseome.git```
+- Change directory: ```cd data-is-awesome/DATA_PROJECTS/doesGermanyBurnMoreCoal/```
 
-## Get electricity production and consumption data in Germay over the past 10 years by source
+```BASH
+python3 -m venv Env
+source Env/bin/activate
+pip install -r requirements.txt
 
+python3 scripts/create_download_links.py
+python3 scripts/pull_energy_charts_data.py
+python3 scripts/generate_coal_data.py
 
-## Get CO2 Emissions for electricity in Germay and map with previous data
+# See longterm coal trend!
+python3 scripts/long_ter_coal_overlook.py
 
+# See 2023 coal production
+python3 scripts/yearly_coal_comparison_2023.py
+```
+
+---
 
 ## Deutschland = Strombettler?
 - Electricity production in Germany
 - Imports
 - Imports France & Poland
 
-
 ---
-
-
 
 This decision has been in the making since the early 2000s, was reaffirmed in the early 2010s, after the Nuclear Powerplant in Fukushima, Japan had an accident.
 
@@ -118,10 +137,7 @@ Furthermore the last security check for the remaining three power plants was ski
 The last security check was over 13 years ago.
 
 
-
-
-
-## Sources
+## 📚️ Sources
 
 Nulcear Phaseout in Germany on 15. April 2023
 🔗 URL: https://www.br.de/nachrichten/deutschland-welt/atomausstieg-was-sie-zur-akw-abschaltung-wissen-muessen,TbI9xYU
@@ -142,8 +158,3 @@ Criticism for nuclear phase out in Germay
 
 VW - Powerplant in Wolfsburg, under the point "Energy"
 🔗 URL :: https://www.volkswagen-newsroom.com/de/volkswagen-ag-werk-wolfsburg-6811
-
-
-
-
-
