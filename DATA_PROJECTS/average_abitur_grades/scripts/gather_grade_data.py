@@ -13,6 +13,7 @@ urls = [
 ]
 
 domain = "https://www.kmk.org"
+DATA_DIR = "data/"
 
 
 # 1. Download HTML
@@ -102,10 +103,6 @@ def return_excel_as_JSON(excel_file):
     return excel_json, year
 
 
-def get_data_from_excel_file(excel_file):
-    return
-
-
 def abitur_grades_as_JSON(excel_files_list, folder="excel_files"):
     grades_json = {}
     grades_json["average_grade"] = {
@@ -138,7 +135,8 @@ def abitur_grades_as_JSON(excel_files_list, folder="excel_files"):
 
 
 def export_garde_JSON(grade_json, filename="abitur_grades.json"):
-    with open(filename, "w") as f:
+    export_file = os.path.join(DATA_DIR, filename)
+    with open(export_file, "w") as f:
         json.dump(grade_json, f)
     return
 
@@ -162,9 +160,12 @@ def main():
             file_name = get_excel_file_name(link)
             download_excel_to_folder(link, file_name)
 
+    print("Saving Excel files to excel_files/ dir")
     excel_files = os.listdir("excel_files/")
     grade_json = abitur_grades_as_JSON(excel_files)
     export_garde_JSON(grade_json)
+    print("REMOVING excel_files/")
+    shutil.rmtree("excel_files/")
 
 
 if __name__ == "__main__":
