@@ -1,28 +1,19 @@
 # 📝 CONTRIBUTING to Data-is-Awesome
+Welcome to the `Data-is-Awesome` project!
 
 ## 🚀 Quickfacts
-- 🇬🇧 The working language is `English`
+- 🇬🇧 Speak `English`
 - ✨ Git is the only source of truth
 - 🌐 Use publicly available tools/resources
 - 🐍 Code in `Python3.8` or higher
 - 📊 The data format is JSON!
 - 📝 Documentation and textbased stuff in `Markdown`
 - 🔗 The project stays detangled from GitHub!
-- 😉 Use Emojis and don't take yourself to seriously
 
-Welcome to the `Data-is-Awesome` project!
-Your contributions are highly valued and encourage you to get involved in various ways:
-
-- 📖 **Docs:** Contribute to documentation.
-- 💻 **Code/Features:** Enhance existing features or introduce new ones.
-- 🐛 **Bug-Fixes:** Identify and fix bugs.
-- 👥 **Connections/Peers:** Provide contacts and collaborate with peers.
-- 💡 **Presenting Ideas/Wishes:** Share your thoughts and ideas.
+Your contributions are valued and encourage you to get involved in various ways:
 
 The project is designed to be easily accessible on GitHub.
 A simple clone grants you access to all project resources, including `documentation`, `contributions`, and `ideas`, available as Markdown files INSIDE the project.
-
-Therefore most text-based info MUST be included as Markdown files INSIDE this project!
 
 ## 💡 Idea for a new project?
 Add a file to `docs/backlog` or create a new folder and start developing.
@@ -34,13 +25,13 @@ Your Feature README.md must include:
 - Sources / Links
 
 ## 🌍️ Languages:
-#8orHigher
+#8orHigherBro
 Use `Python3.8` or higher and adhere to the `PEP 8` Python Styleguide.
-To adhere to the standards you can use `pylint` or `autopep8` in your editor and development process (see **Resources** below).
+To adhere to the standards use `pylint` or `autopep8` in your editor and development process (see **Resources** below).
 
 **What is PEP8?**
-A standard for Python Code that makes it readable and rule for how it should look.
-The tools like `pylint` and `autopep8` can help you with that.
+A standard for readable Python Code.
+Tools like `pylint` and `autopep8` help you make your code look nice.
 
 Generally these rules apply:
 - Linelength <80 characters. Docstrings 72
@@ -49,7 +40,6 @@ Generally these rules apply:
 
 
 **Why Python3**:
-Python3 is:
 - Supported on major platforms
 - Simple to read & write
 - Versatile: Data gathering, cleaning, visualizations, etc.
@@ -65,11 +55,12 @@ Will be bumped in the future!
 
 
 ## 📦️ New Features
-A new feature must adhere to the folder strucutre at the end of this chapter.
-Your fueature must be documented, and be able to be executed repeatadly.
-Do not use hidden or not publicly accessable resources, or provide a higher ladder ;)
+A new feature adheres to the folder structure at the end of this chapter.
+Your fueature is documented, and able to be executed repeatadly.
+Do not use hidden or not publicly accessable resources hidden behind a barrier.
+Or provide a ladder to get over the barrier ;)
 
-ALWAYS include a `README.md` for your Feature including the following segments, at least a brief explanation and how to run:
+ALWAYS include a `README.md` containing the following segments, at least a brief explanation and how to run:
 - Title of your project
 - Research Qeustion / Why
 - How it works / is implemented
@@ -83,15 +74,14 @@ short_lower_case_consice_folder_name/
     README.md
     data/
     tests/
-    docs/ (if necessary)
-    your_python_module/
+    docs/
+    scripts/
     requirements.txt
     poc_my_feature.py
 ```
 
-
 ## 🐞 Issues / Bug-Reports
-Your Bug-Report includes:
+Bug-Report include:
 - Summary and/or background
 - Expected behavior / What you expect to happen
 - Actual Behavior / What really happens
@@ -99,29 +89,23 @@ Your Bug-Report includes:
 - Include sample code
 - Notes & Further reading (Reasons you think it fails, stuff you tried, ideas)
 
-
 ## 🛠️ Pull requests
 🚧 WORK IN PROGRESS
 
-
-
 ## 📂 Docs Folder
-The `docs/` folder in the projects root is organized to document various aspects, including:
-- Project structure
-- Installation instructions
-- Data sources
-- Code guidelines
-- Discuss new ideas / backlog
-- and more!
-
+The `docs/` folder
 🚧 WORK IN PROGRESS
 
-
 ## ⚖️ License - Your Contribution is OPEN-SOURCE
-Your contributions will be licensed under its MIT license as mentioned in the [LICENSE](LICENSE) file.
+**All your contributions are belong** to the public
+Any contributions you make to this project (code, documentation, or any other form) become part of the project under the MIT LICENSE.
+See [LICENSE](LICENSE) file.
+
+By contributing to this project, you certify that:
+- Your contributions are licensed under the MIT License.
+- Your contributions are available publicly.
+- Your contributions can be used freely under the same terms as the rest of the project.
 
 
-## ❓ Support
-Contributions to improve and expand documentation are highly appreciated.
 
-Looking forward to your contribution! 🚀
+glhf 🚀
