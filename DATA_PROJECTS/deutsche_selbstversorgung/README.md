@@ -1,7 +1,7 @@
 # Deutsche Selbstversorgung
-With the agricultural sector fighting to keep all of their subsidies, some people asak why the "Selbstversorgungsgrad" aka how much stuff do we actually produce ourselves, is so low for vegetables and fruit.
+With the agricultural sector fighting to keep their subsidies, some people ask why the "Selbstversorgungsgrad" aka "how much stuff do we actually produce ourselves", is perceived low for vegetables and fruit.
 
-Although there is much political will involved, there are many more areas where a smiliar question could be asked, but it mostly of the times skipped.
+🛑 STATE: BROKEN (On so many levels)
 
 Show the "Selbstversorgungsgrad" for:
 - Agricultural products
@@ -23,9 +23,7 @@ Show the "Selbstversorgungsgrad" for:
 
 - Provide sources to explanations why the numbers are the way they are.
 
-# 📋️ Docs
 ## 🛠️ Setup
-Activate Python3 Environment
 ```BASH
 python3 -m venv Env
 source Env/bin/activate
@@ -36,36 +34,11 @@ pip install -r requirements.txt
 
 ## 🏗️ How to use / Development?
 ```BASH
-python3 deutsche_selbstversorgung/
 python3 poc_plot_selbstversorgung.py
-
-# the plot shows up
 ```
-
-## 🔍️ Dataset exploration
-
-## Data Collection
-See Links at the end of this Document
-
-## Data Processing
-Cleanup, Parsing, Cutting, Filtering
-
-## Data Visualization
-Visualizing the Data
-
-
-## ❓️ Questions
-- WHERE: Germany
-- WHEN is the data valid?
-- WHO ordered/comissioned/gathered the data?
-- HOW was the data gathered?
-- WHAT is the public source?
-
-
 
 ## 🚧 Problems
 - Freaking `tabula-py` requres Java...
-
 
 
 ## 📚️ Resources
@@ -77,7 +50,6 @@ Versorungsbilanzen DE
 
 Warum ist der Selbstversorgungsgrad bei Obst und Gemüse in Deutschland so niedrig.
 🔗 URL: https://www.heimischelandwirtschaft.de/aktuelles/warum-ist-der-selbstversorgungsgrad-bei-obst-und-gemuese-deutschland-so-niedrig-interview
-
 
 
 📊 DATA:
