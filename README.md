@@ -1,11 +1,10 @@
 # 🚀 Data is Awesome
 > Answer questions with opinionated `DATA STORIES` and `VISUALS` in `self contained projects`
 
-Read more about the [❓️Why](docs/Purpose%20and%20Why.md)?
-
 ### ❗️ Project Disclaimer
-The creators and contributors of this project do not claim ownership of the original data and make no representations or warranties regarding the accuracy or completeness of the data.
-Users are responsible for complying with the terms of use associated with any data sources used in this project.
+> Creators and contributors of this project do not claim ownership of the original data.
+> There is no warranty regarding the accuracy or completeness of the data.
+> Users are responsible for complying with the terms of use associated with any data sources used in this project.
 
 ## 📏 Rules
 - 🔓 `Public` datasources
@@ -47,7 +46,7 @@ cat README.md
 
 
 ## 📊 Data
-All Data-Projects have a `README` answering the following questions:
+Dataprojects answer the following questions:
 - `WHERE` is the data valid? (City, Country, Continent, Celestial Body)
 - `WHEN` is the data valid? (Far gone time period, valid today + estimates in the future?
 - `WHO` ordered/comissioned/gathered the data?
@@ -56,14 +55,14 @@ All Data-Projects have a `README` answering the following questions:
 
 
 ## 🚧 Problems
-- [ ] Project is to big. Over 9GB!
+- [ ] Project is to big. Over 4GB!
     - contains raw data files - find a better way!
 
 
 ## Project setup
 - `DATA_PROJECTS`: Holds the Data Projects
 - `DOCS`: Docs for the entire project, discussisons, reference, design descisison, etc.
-- `TEMPLATES`: Templates 🤷🏽
+- `TEMPLATES`: Templates
 - `WEBPAGE`: Present the `data-is-awesome` data as articles on the web
 
 
