@@ -54,11 +54,8 @@ def tableDFAndInfo(tableID):
     return resp_df, index
 
 
-## COuld be done with len(index) indstead of hardcoding the 2 in there.
-
-
-# Create a new list with first day of each quarter
 def reindexDfWithDates(df):
+    """Creates a list with first day of each quarter"""
     quarters = []
     for year, quarter in df[df.columns[:2]].values:
         if quarter == "Quarter 1":
@@ -70,7 +67,6 @@ def reindexDfWithDates(df):
         elif quarter == "Quarter 4":
             quarters.append(f"{year}-10-01")
 
-    # Create a PeriodIndex from the new list of dates
     period_index = pd.PeriodIndex(quarters, freq="Q").to_timestamp()
     return period_index
 
@@ -90,7 +86,5 @@ df = keepOnlyNumbers(df)
 
 df.to_csv(f"data/{df.columns[0]}.csv")
 
-df: DataFrame = pd.read_csv(
-    filepath_or_buffer="data/Terminations of pregnancy.csv", index_col=0
-)
+df = pd.read_csv(filepath_or_buffer="data/Terminations of pregnancy.csv", index_col=0)
 # plot_abortions(df)
