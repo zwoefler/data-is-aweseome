@@ -22,6 +22,7 @@
     </div>
     <div class="h-80 w-full">
       <p v-if="!chartDataSet" class="bg-orange-500 text-black font-xl">LOADING DATA</p>
+      <p v-if="noData">NO DATA AVAILABLE FOR SELECTED TIMEFRAME</p>
       <Line v-else class="h-full" :data="chartDataSet" />
     </div>
   </div>
@@ -71,15 +72,42 @@ const parkhouses = [
   selterstor,
 ]
 
-const selectedParkhouse = ref(parkhouses[0])
+const extractChartData = (data, weekStart, weekEnd) => {
+  const labels = []
+  const occupiedSpaces = []
+  const maxSpaces = []
+
+  data.forEach(entry => {
+    const entryDate = new Date(entry.timestamp * 1000)
+    if (entryDate >= weekStart && entryDate <= weekEnd) {
+      labels.push(labelDate(entryDate))
+      occupiedSpaces.push(entry.occupied_spaces)
+      maxSpaces.push(entry.max_spaces)
+    }
+  })
+
+  return {
+    labels,
+    occupiedSpaces,
+    maxSpaces,
+  }
+}
+
+//
+// VARIABLES
+//
+const selectedParkhouse = ref(parkhouses[0]);
+var chartDataSet = ref(null);
+let selectedWeekStart = ref(startOfISOWeek(new Date()));
+let selectedWeekEnd = ref(endOfISOWeek(selectedWeekStart.value))
+let updatedChartData = ref(null)
+let noData = ref(true)
 
 const handleParkhouseChange = () => {
   console.log("Selected:", selectedParkhouse.value.name)
   console.log(selectedParkhouse.value)
   updateChart()
 }
-
-var chartDataSet = ref(null);
 
 const shortDate = (date) => {
   var options = { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric' }
@@ -101,8 +129,6 @@ const labelDate = (date) => {
 }
 
 
-let selectedWeekStart = ref(startOfISOWeek(new Date()));
-let selectedWeekEnd = ref(endOfISOWeek(selectedWeekStart.value))
 
 const isNextWeekDisabled = computed(() => {
   const timestamps = selectedParkhouse.value.occupation_data.map(entry => entry.timestamp * 1000);
@@ -133,44 +159,28 @@ const nextWeek = () => {
 }
 
 const updateChart = () => {
-  var updatedChartData = extractChartData(selectedParkhouse.value.occupation_data, selectedWeekStart.value, selectedWeekEnd.value)
+  updatedChartData.value = extractChartData(selectedParkhouse.value.occupation_data, selectedWeekStart.value, selectedWeekEnd.value)
+  if (updatedChartData.value.occupiedSpaces.length < 1) {
+    noData.value = true
+  } else {
+    noData.value = false
+  }
   chartDataSet.value = {
-    labels: updatedChartData.labels, // Time (x-axis)
+    labels: updatedChartData.value.labels, // Time (x-axis)
     datasets: [
       {
         label: 'Besetze Parkplätze',
         borderColor: 'rgba(255, 122, 0, 1)',
         backgroundColor: 'rgba(255, 122, 0, 0.2)',
-        data: updatedChartData.occupiedSpaces, // Occupied Spaces (y-axis)
+        data: updatedChartData.value.occupiedSpaces, // Occupied Spaces (y-axis)
       },
       {
         label: 'Verfügbare Plätze',
         borderColor: 'rgba(75, 192, 192, 1)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        data: updatedChartData.maxSpaces, // Occupied Spaces (y-axis)
+        data: updatedChartData.value.maxSpaces, // Occupied Spaces (y-axis)
       },
     ],
-  }
-}
-
-const extractChartData = (data, weekStart, weekEnd) => {
-  const labels = []
-  const occupiedSpaces = []
-  const maxSpaces = []
-
-  data.forEach(entry => {
-    const entryDate = new Date(entry.timestamp * 1000)
-    if (entryDate >= weekStart && entryDate <= weekEnd) {
-      labels.push(labelDate(entryDate))
-      occupiedSpaces.push(entry.occupied_spaces)
-      maxSpaces.push(entry.max_spaces)
-    }
-  })
-
-  return {
-    labels,
-    occupiedSpaces,
-    maxSpaces,
   }
 }
 
