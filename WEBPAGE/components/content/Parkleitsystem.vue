@@ -188,13 +188,11 @@ const updateChart = () => {
       {
         label: 'Besetze Parkplätze',
         borderColor: 'rgba(255, 122, 0, 1)',
-        backgroundColor: 'rgba(255, 122, 0, 0.2)',
         data: updatedChartData.value.occupiedSpaces, // Occupied Spaces (y-axis)
       },
       {
         label: 'Verfügbare Plätze',
         borderColor: 'rgba(75, 192, 192, 1)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
         data: updatedChartData.value.maxSpaces, // Occupied Spaces (y-axis)
       },
     ],
