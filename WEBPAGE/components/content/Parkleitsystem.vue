@@ -96,14 +96,11 @@ const extractChartData = (data, weekStart, weekEnd) => {
   }
 }
 
-//
-// VARIABLES
-//
 const selectedParkhouse = ref(parkhouses[0]);
 var chartDataSet = ref(null);
 var chartOptions = ref(null)
-let selectedWeekStart = ref(startOfISOWeek(new Date()));
-let selectedWeekEnd = ref(endOfISOWeek(selectedWeekStart.value))
+let selectedWeekStart = ref(null);
+let selectedWeekEnd = ref(null)
 let updatedChartData = ref(null)
 let noData = ref(true)
 
@@ -160,6 +157,16 @@ const nextWeek = () => {
   selectedWeekStart.value = addWeeks(selectedWeekStart.value, 1)
   selectedWeekEnd.value = endOfISOWeek(selectedWeekStart.value)
   updateChart()
+}
+
+function initializeWeekWithLastData() {
+  const lastEntry = selectedParkhouse.value.occupation_data.at(-1)
+  const latestTimestamp = lastEntry.timestamp * 1000
+  console.log("LATEST: ", latestTimestamp)
+  const latestDate = new Date(latestTimestamp);
+
+  selectedWeekStart.value = startOfISOWeek(latestDate);
+  selectedWeekEnd.value = endOfISOWeek(selectedWeekStart.value);
 }
 
 const updateChart = () => {
@@ -233,6 +240,7 @@ const updateChart = () => {
   }
 }
 
+initializeWeekWithLastData()
 updateChart()
 
 </script>
