@@ -1,13 +1,13 @@
 <template>
-  <div class="w-full p-4 space-y-4">
-    <div class="space-y-1">
+  <div class="w-full space-y-4">
+    <div>
       <label for="parkhouse-select" class="text-white">Wähle ein Parkhaus:</label>
       <select id="parkhouse-select" v-model="selectedParkhouse" @change="updateChart"
         class="bg-blue-500 text-xs font-bold text-white p-2 rounded ml-2">
         <option v-for="parkhouse in parkhouses" :key="parkhouse.name" :value="parkhouse">{{ parkhouse.name }}
         </option>
       </select>
-      <div class="font-bold text-2xl">{{ selectedParkhouse.name }}</div>
+      <div class="font-bold text-3xl">{{ selectedParkhouse.name }}</div>
       <div>{{ shortDate(selectedWeekStart) }} - {{ shortDate(selectedWeekEnd) }}</div>
       <div class="space-x-2">
         <button @click="previousWeek" :disabled="isPreviousWeekDisabled"
