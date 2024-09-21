@@ -32,10 +32,12 @@ Bei Änderungen, liest das Script die Daten aus der Tabelle aus.
 
 #### Hat das Karstadtparkhaus nicht mehr Parkplätze?
 Laut der Seite des Parkleitsystems, ja.
+Die Stadt gibt auf der Webseite 860 Stellplätze an.
+An das Leitsystem angeschlossen sind aber nur 380 Stelplätze.
 
-In der Auflistung gibt die Webseite 860 Stellplätze für das Parkhaus an.
-An das Leitsystem scheinen aber nur noch 380 Stelplätze angeschlossen zu sein.
-Am Freitag 14.06.24 sank die Anzahl maximal verfügbarer Parkplätze von 475 auf 380 (95 Parkplätze) im Parkleitsystem.
+Karstadt reduzierte zwei mal die Anzahl verfügbarer Parkplätze.
+Am Freitag den 09.02.24 sank die Zahl von 695 auf 475 verfügbare Stellplätze.
+Vier Monate später, am Freitag den 14.06.24 dann von 475 auf sank 380 Stellplätze.
 
 
 #### Warum zeigt die Dern-Passage nur eine grade Linie an?
