@@ -202,43 +202,4 @@ const nextWeek = () => {
   selectedWeekStart.value = addWeeks(selectedWeekStart.value, 1)
 }
 
-function initializeWeekWithLastData() {
-
-}
-
-// const updateChart = () => {
-//   loadingChart.value = true
-//   console.log("Selected:", selectedParkhouse.value.name)
-//   console.log(selectedParkhouse.value)
-//   updatedChartData.value = extractChartData(selectedParkhouse.value.occupation_data, selectedWeekStart.value, selectedWeekEnd.value)
-//   if (updatedChartData.value.occupiedSpaces.length < 1) {
-//     noData.value = true
-//     chartDataSet.value = dummyChartData
-//     loadingChart.value = false
-//     return
-//   }
-
-//   noData.value = false
-//   chartDataSet.value = {
-//     labels: updatedChartData.value.shortLabels, // Time (x-axis)
-//     datasets: [
-//       {
-//         label: 'Besetze Parkplätze',
-//         borderColor: 'rgba(255, 122, 0, 1)',
-//         data: updatedChartData.value.occupiedSpaces, // Occupied Spaces (y-axis)
-//       },
-//       {
-//         label: 'Verfügbare Plätze',
-//         borderColor: 'rgba(75, 192, 192, 1)',
-//         data: updatedChartData.value.maxSpaces, // Occupied Spaces (y-axis)
-//       },
-//     ],
-//   }
-//   chartOptions.value =
-
-//     loadingChart.value = false
-// }
-
-initializeWeekWithLastData()
-
 </script>
