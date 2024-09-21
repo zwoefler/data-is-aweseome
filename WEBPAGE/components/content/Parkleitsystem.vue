@@ -2,7 +2,7 @@
   <div class="w-full p-4 bg-gray-900">
     <div class="mb-4">
       <label for="parkhouse-select" class="text-white">Select Parkhouse:</label>
-      <select id="parkhouse-select" v-model="selectedParkhouse" @change="handleParkhouseChange"
+      <select id="parkhouse-select" v-model="selectedParkhouse" @change="updateChart"
         class="ml-2 p-2 rounded bg-white">
         <option v-for="parkhouse in parkhouses" :key="parkhouse.name" :value="parkhouse">{{ parkhouse.name }}
         </option>
@@ -103,12 +103,6 @@ let selectedWeekEnd = ref(endOfISOWeek(selectedWeekStart.value))
 let updatedChartData = ref(null)
 let noData = ref(true)
 
-const handleParkhouseChange = () => {
-  console.log("Selected:", selectedParkhouse.value.name)
-  console.log(selectedParkhouse.value)
-  updateChart()
-}
-
 const shortDate = (date) => {
   var options = { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric' }
   return date.toLocaleDateString("de-DE", options)
@@ -127,8 +121,6 @@ const labelDate = (date) => {
   };
   return date.toLocaleString("de-DE", options).replace(',', '');
 }
-
-
 
 const isNextWeekDisabled = computed(() => {
   const timestamps = selectedParkhouse.value.occupation_data.map(entry => entry.timestamp * 1000);
@@ -159,6 +151,8 @@ const nextWeek = () => {
 }
 
 const updateChart = () => {
+  console.log("Selected:", selectedParkhouse.value.name)
+  console.log(selectedParkhouse.value)
   updatedChartData.value = extractChartData(selectedParkhouse.value.occupation_data, selectedWeekStart.value, selectedWeekEnd.value)
   if (updatedChartData.value.occupiedSpaces.length < 1) {
     noData.value = true
