@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full p-4 bg-gray-900 space-y-4">
+  <div class="w-full p-4 space-y-4">
     <div class="space-y-1">
       <label for="parkhouse-select" class="text-white">Wähle ein Parkhaus:</label>
       <select id="parkhouse-select" v-model="selectedParkhouse" @change="updateChart"
@@ -200,13 +200,27 @@ const updateChart = () => {
   chartOptions.value = {
     scales: {
       x: {
+        ticks: {
+          color: 'rgba(255, 255, 255, 1)'
+        },
         title: {
           display: true,
-          text: 'Weekdays'
+          text: 'Wochentage',
+          color: 'rgba(255, 255, 255, 1)',
+        },
+      },
+      y: {
+        ticks: {
+          color: 'rgba(255, 255, 255, 1)',
         }
       }
     },
     plugins: {
+      legend: {
+        labels: {
+          color: 'rgba(255, 255, 255, 1)'
+        }
+      },
       tooltip: {
         callbacks: {
           title: function (tooltipItems) {
