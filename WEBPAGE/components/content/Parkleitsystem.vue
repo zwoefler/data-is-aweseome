@@ -2,8 +2,7 @@
   <div class="w-full p-4 bg-gray-900">
     <div class="mb-4">
       <label for="parkhouse-select" class="text-white">Select Parkhouse:</label>
-      <select id="parkhouse-select" v-model="selectedParkhouse" @change="updateChart"
-        class="ml-2 p-2 rounded bg-white">
+      <select id="parkhouse-select" v-model="selectedParkhouse" @change="updateChart" class="ml-2 p-2 rounded bg-white">
         <option v-for="parkhouse in parkhouses" :key="parkhouse.name" :value="parkhouse">{{ parkhouse.name }}
         </option>
       </select>
@@ -23,7 +22,7 @@
     <div class="h-80 w-full">
       <p v-if="!chartDataSet" class="bg-orange-500 text-black font-xl">LOADING DATA</p>
       <p v-if="noData">NO DATA AVAILABLE FOR SELECTED TIMEFRAME</p>
-      <Line v-else class="h-full" :data="chartDataSet" />
+      <Line v-else class="h-full" :data="chartDataSet" :options="chartOptions" />
     </div>
   </div>
 </template>
@@ -73,21 +72,24 @@ const parkhouses = [
 ]
 
 const extractChartData = (data, weekStart, weekEnd) => {
-  const labels = []
+  const fullLabels = []
+  const shortLabels = []
   const occupiedSpaces = []
   const maxSpaces = []
 
   data.forEach(entry => {
     const entryDate = new Date(entry.timestamp * 1000)
     if (entryDate >= weekStart && entryDate <= weekEnd) {
-      labels.push(labelDate(entryDate))
+      fullLabels.push(labelDateFull(entryDate))
+      shortLabels.push(labelDateShort(entryDate))
       occupiedSpaces.push(entry.occupied_spaces)
       maxSpaces.push(entry.max_spaces)
     }
   })
 
   return {
-    labels,
+    fullLabels,
+    shortLabels,
     occupiedSpaces,
     maxSpaces,
   }
@@ -98,6 +100,7 @@ const extractChartData = (data, weekStart, weekEnd) => {
 //
 const selectedParkhouse = ref(parkhouses[0]);
 var chartDataSet = ref(null);
+var chartOptions = ref(null)
 let selectedWeekStart = ref(startOfISOWeek(new Date()));
 let selectedWeekEnd = ref(endOfISOWeek(selectedWeekStart.value))
 let updatedChartData = ref(null)
@@ -108,7 +111,7 @@ const shortDate = (date) => {
   return date.toLocaleDateString("de-DE", options)
 }
 
-const labelDate = (date) => {
+const labelDateFull = (date) => {
   var options = {
     weekday: 'short',
     year: '2-digit',
@@ -120,6 +123,14 @@ const labelDate = (date) => {
     timeZone: 'GMT'
   };
   return date.toLocaleString("de-DE", options).replace(',', '');
+}
+
+const labelDateShort = (date) => {
+  var options = {
+    weekday: 'short',
+    timeZone: 'GMT'
+  };
+  return date.toLocaleString("de-DE", options);
 }
 
 const isNextWeekDisabled = computed(() => {
@@ -160,7 +171,7 @@ const updateChart = () => {
     noData.value = false
   }
   chartDataSet.value = {
-    labels: updatedChartData.value.labels, // Time (x-axis)
+    labels: updatedChartData.value.shortLabels, // Time (x-axis)
     datasets: [
       {
         label: 'Besetze Parkplätze',
@@ -175,6 +186,26 @@ const updateChart = () => {
         data: updatedChartData.value.maxSpaces, // Occupied Spaces (y-axis)
       },
     ],
+  }
+  chartOptions.value = {
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Weekdays'
+        }
+      }
+    },
+    plugins: {
+      tooltip: {
+        callbacks: {
+          title: function (tooltipItems) {
+            const index = tooltipItems[0].dataIndex;
+            return updatedChartData.value.fullLabels[index];
+          }
+        }
+      }
+    }
   }
 }
 
