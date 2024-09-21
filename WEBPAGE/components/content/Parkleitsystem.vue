@@ -21,7 +21,8 @@
       </div>
     </div>
     <div class="h-80 w-full">
-      <Line class="h-full" :data="chartDataSet" />
+      <p v-if="!chartDataSet" class="bg-orange-500 text-black font-xl">LOADING DATA</p>
+      <Line v-else class="h-full" :data="chartDataSet" />
     </div>
   </div>
 </template>
@@ -78,23 +79,7 @@ const handleParkhouseChange = () => {
   updateChart()
 }
 
-var chartDataSet = ref({
-  labels: [], // Time (x-axis)
-  datasets: [
-    {
-      label: 'Occupied Spaces',
-      borderColor: 'rgba(75, 192, 192, 1)',
-      backgroundColor: 'rgba(75, 192, 192, 0.2)',
-      data: [], // Occupied Spaces (y-axis)
-    },
-    {
-      label: 'Max Available Spaces',
-      borderColor: 'rgba(255, 122, 0, 1)',
-      backgroundColor: 'rgba(255, 122, 0, 0.2)',
-      data: [] // Occupied Spaces (y-axis)
-    },
-  ],
-});
+var chartDataSet = ref(null);
 
 const shortDate = (date) => {
   var options = { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric' }
