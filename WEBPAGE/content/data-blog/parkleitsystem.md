@@ -7,8 +7,7 @@ Historische Auslastung Gießener Parkhäuser seit Oktober 2023.
 
 ### ❓️ Fragen
 #### Woher kommen die Daten?
-Webseite des Parkleitsystems der Universitätsstadt Gießen
-🔗 URL: https://www.giessen.de/Umwelt_und_Verkehr/Parken/
+Webseite des [Parkleitsystems der Universitätsstadt Gießen](https://www.giessen.de/Umwelt_und_Verkehr/Parken/)
 
 
 #### Wie verlässlich sind die Daten?
