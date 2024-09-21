@@ -19,17 +19,12 @@ Und das Ganze während 🔌 """Energiekrise""", 🇺🇦 Krieg, 💸 Inflation u
 
 ## 📚️ Quellen
 
-Alle Bilder und Daten von Energy Charts. Fraunhofer ISE. 2023
-🔗 URL: https://www.energy-charts.info
+Alle Bilder und Daten von [Energy Charts](https://www.energy-charts.info). Fraunhofer ISE. 2023
 
-Annual renewable share of total net electricity generation in Germany
-🔗 URL: https://www.energy-charts.info/charts/renewable_share/chart.htm?l=en&c=DE&interval=year&share=ren_share_total
+Annual [renewable share of total net electricity generation in Germany](https://www.energy-charts.info/charts/renewable_share/chart.htm?l=en&c=DE&interval=year&share=ren_share_total)
 
-Öffentliche Nettostromerzeugung in Deutschland in Quartal 2 2023
-🔗 URL: https://www.energy-charts.info/charts/energy_pie/chart.htm?l=en&c=DE&interval=quarter&quarter=2&legendItems=1111111111111111
+Öffentliche [Nettostromerzeugung in Deutschland in Quartal 2 2023](https://www.energy-charts.info/charts/energy_pie/chart.htm?l=en&c=DE&interval=quarter&quarter=2&legendItems=1111111111111111)
 
-Öffentliche Nettostromerzeugung in Deutschland in Quartal 3 2023
-🔗 URL: https://www.energy-charts.info/charts/energy_pie/chart.htm?l=en&c=DE&interval=quarter&quarter=3&legendItems=1111111111111111
+Öffentliche [Nettostromerzeugung in Deutschland in Quartal 3 2023](https://www.energy-charts.info/charts/energy_pie/chart.htm?l=en&c=DE&interval=quarter&quarter=3&legendItems=1111111111111111)
 
-Braun & Steinkohle-Daten ausgelesen aus:
-🔗 URL: https://www.energy-charts.info/charts/power/chart.htm?l=en&c=DE&interval=year
+[Braun & Steinkohle-Daten](https://www.energy-charts.info/charts/power/chart.htm?l=en&c=DE&interval=year)

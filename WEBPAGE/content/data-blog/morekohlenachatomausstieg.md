@@ -23,5 +23,4 @@ Auch der langfristige Trend seit 2015, früher sind keine Daten beim Fraunhofer 
 Daten von Energy-Charts, Fraunhofer ISE.
 Zuletzt abgerufen 11.10.2023
 
-Public net electricity generation in Germany. Energy-Charts (Fraunhofer ISE)
-🔗 URL: https://www.energy-charts.info/charts/power/chart.html
+Public net electricity generation in Germany. [Energy-Charts](https://www.energy-charts.info/charts/power/chart.html) (Fraunhofer ISE)
