@@ -2,8 +2,7 @@
   <div class="w-full p-4 bg-gray-900">
     <div class="mb-4">
       <label for="parkhouse-select" class="text-white">Select Parkhouse:</label>
-      <select id="parkhouse-select" v-model="selectedParkhouse" @change="handleParkhouseChange"
-        class="ml-2 p-2 rounded bg-white">
+      <select id="parkhouse-select" v-model="selectedParkhouse" @change="updateChart" class="ml-2 p-2 rounded bg-white">
         <option v-for="parkhouse in parkhouses" :key="parkhouse.name" :value="parkhouse">{{ parkhouse.name }}
         </option>
       </select>
@@ -21,7 +20,9 @@
       </div>
     </div>
     <div class="h-80 w-full">
-      <Line class="h-full" :data="chartDataSet" />
+      <p v-if="!chartDataSet" class="bg-orange-500 text-black font-xl">LOADING DATA</p>
+      <p v-if="noData">NO DATA AVAILABLE FOR SELECTED TIMEFRAME</p>
+      <Line v-else class="h-full" :data="chartDataSet" :options="chartOptions" />
     </div>
   </div>
 </template>
@@ -70,36 +71,47 @@ const parkhouses = [
   selterstor,
 ]
 
-const selectedParkhouse = ref(parkhouses[0])
+const extractChartData = (data, weekStart, weekEnd) => {
+  const fullLabels = []
+  const shortLabels = []
+  const occupiedSpaces = []
+  const maxSpaces = []
 
-const handleParkhouseChange = () => {
-  console.log("Selected:", selectedParkhouse.value.name)
-  console.log(selectedParkhouse.value)
-  updateChart()
+  data.forEach(entry => {
+    const entryDate = new Date(entry.timestamp * 1000)
+    if (entryDate >= weekStart && entryDate <= weekEnd) {
+      fullLabels.push(labelDateFull(entryDate))
+      shortLabels.push(labelDateShort(entryDate))
+      occupiedSpaces.push(entry.occupied_spaces)
+      maxSpaces.push(entry.max_spaces)
+    }
+  })
+
+  return {
+    fullLabels,
+    shortLabels,
+    occupiedSpaces,
+    maxSpaces,
+  }
 }
 
-var chartDataSet = ref({
-  labels: [], // Time (x-axis)
-  datasets: [
-    {
-      label: 'Occupied Spaces',
-      borderColor: 'rgba(75, 192, 192, 1)',
-      backgroundColor: 'rgba(75, 192, 192, 0.2)',
-      data: [], // Occupied Spaces (y-axis)
-    },
-    {
-      label: 'Max Available Spaces',
-      data: [], // Occupied Spaces (y-axis)
-    },
-  ],
-});
+//
+// VARIABLES
+//
+const selectedParkhouse = ref(parkhouses[0]);
+var chartDataSet = ref(null);
+var chartOptions = ref(null)
+let selectedWeekStart = ref(startOfISOWeek(new Date()));
+let selectedWeekEnd = ref(endOfISOWeek(selectedWeekStart.value))
+let updatedChartData = ref(null)
+let noData = ref(true)
 
 const shortDate = (date) => {
   var options = { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric' }
   return date.toLocaleDateString("de-DE", options)
 }
 
-const labelDate = (date) => {
+const labelDateFull = (date) => {
   var options = {
     weekday: 'short',
     year: '2-digit',
@@ -113,9 +125,13 @@ const labelDate = (date) => {
   return date.toLocaleString("de-DE", options).replace(',', '');
 }
 
-
-let selectedWeekStart = ref(startOfISOWeek(new Date()));
-let selectedWeekEnd = ref(endOfISOWeek(selectedWeekStart.value))
+const labelDateShort = (date) => {
+  var options = {
+    weekday: 'short',
+    timeZone: 'GMT'
+  };
+  return date.toLocaleString("de-DE", options);
+}
 
 const isNextWeekDisabled = computed(() => {
   const timestamps = selectedParkhouse.value.occupation_data.map(entry => entry.timestamp * 1000);
@@ -146,42 +162,50 @@ const nextWeek = () => {
 }
 
 const updateChart = () => {
-  var updatedChartData = extractChartData(selectedParkhouse.value.occupation_data, selectedWeekStart.value, selectedWeekEnd.value)
+  console.log("Selected:", selectedParkhouse.value.name)
+  console.log(selectedParkhouse.value)
+  updatedChartData.value = extractChartData(selectedParkhouse.value.occupation_data, selectedWeekStart.value, selectedWeekEnd.value)
+  if (updatedChartData.value.occupiedSpaces.length < 1) {
+    noData.value = true
+  } else {
+    noData.value = false
+  }
   chartDataSet.value = {
-    labels: updatedChartData.labels, // Time (x-axis)
+    labels: updatedChartData.value.shortLabels, // Time (x-axis)
     datasets: [
       {
         label: 'Besetze Parkplätze',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        data: updatedChartData.occupiedSpaces, // Occupied Spaces (y-axis)
+        borderColor: 'rgba(255, 122, 0, 1)',
+        backgroundColor: 'rgba(255, 122, 0, 0.2)',
+        data: updatedChartData.value.occupiedSpaces, // Occupied Spaces (y-axis)
       },
       {
         label: 'Verfügbare Plätze',
-        data: updatedChartData.maxSpaces, // Occupied Spaces (y-axis)
+        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        data: updatedChartData.value.maxSpaces, // Occupied Spaces (y-axis)
       },
     ],
   }
-}
-
-const extractChartData = (data, weekStart, weekEnd) => {
-  const labels = []
-  const occupiedSpaces = []
-  const maxSpaces = []
-
-  data.forEach(entry => {
-    const entryDate = new Date(entry.timestamp * 1000)
-    if (entryDate >= weekStart && entryDate <= weekEnd) {
-      labels.push(labelDate(entryDate))
-      occupiedSpaces.push(entry.occupied_spaces)
-      maxSpaces.push(entry.max_spaces)
+  chartOptions.value = {
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Weekdays'
+        }
+      }
+    },
+    plugins: {
+      tooltip: {
+        callbacks: {
+          title: function (tooltipItems) {
+            const index = tooltipItems[0].dataIndex;
+            return updatedChartData.value.fullLabels[index];
+          }
+        }
+      }
     }
-  })
-
-  return {
-    labels,
-    occupiedSpaces,
-    maxSpaces,
   }
 }
 
