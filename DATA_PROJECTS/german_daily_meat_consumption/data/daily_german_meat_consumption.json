@@ -1,0 +1,103 @@
+{
+    "years": [
+        "2015",
+        "2016",
+        "2017",
+        "2018",
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+    ],
+    "data": {
+        "Obst und Gemüse": [
+            76,
+            74,
+            72,
+            71,
+            70,
+            76,
+            72,
+            71,
+            71
+        ],
+        "Milchprodukte wie Joghurt oder Käse": [
+            null,
+            59,
+            65,
+            64,
+            64,
+            64,
+            61,
+            58,
+            62
+        ],
+        "Süßigkeiten oder herzhafte Knabbereien": [
+            null,
+            null,
+            null,
+            23,
+            24,
+            27,
+            29,
+            26,
+            24
+        ],
+        "Fleisch oder Wurst": [
+            34,
+            34,
+            30,
+            28,
+            26,
+            26,
+            25,
+            20,
+            23
+        ],
+        "vegetarische/vegane Alternativen zu tierischen Produkten": [
+            null,
+            null,
+            null,
+            null,
+            5,
+            8,
+            9,
+            10,
+            10
+        ],
+        "fertige Gerichte": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            1,
+            1,
+            1
+        ],
+        "Fisch und Meerestiere": [
+            2,
+            1,
+            1,
+            2,
+            1,
+            1,
+            1,
+            1,
+            1
+        ],
+        "Gerichte, die sie sich liefern lassen oder abholen": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            1,
+            0,
+            0
+        ]
+    }
+}
