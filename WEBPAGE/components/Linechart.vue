@@ -47,30 +47,34 @@ const props = defineProps({
 })
 
 var chartData = ref({
-    labels: props.labels,
-    datasets: [
-      {
-        label: 'Durchschnittliche Abiturnoten Deutschland 2006 - 2022',
-        backgroundColor: '#f87979',
-        data: props.data
-      },
-    ],
-  })
+  labels: props.labels,
+  datasets: [
+    {
+      label: 'Durchschnittliche Abiturnoten Deutschland 2006 - 2022',
+      backgroundColor: '#f87979',
+      data: props.data,
+      fill: false,
+      borderColor: 'rgba(105,105,105,0.5)'
+    },
+  ],
+})
 
-  watch(
+watch(
   () => props.data,
   () => {
     console.log(props.data)
     chartData.value = {
-    labels: props.labels,
-    datasets: [
-      {
-        label: 'Durchschnittliche Abiturnoten Deutschland 2006 - 2022',
-        backgroundColor: '#f87979',
-        data: props.data
-      },
-    ],
-  }
+      labels: props.labels,
+      datasets: [
+        {
+          label: 'Durchschnittliche Abiturnoten Deutschland 2006 - 2022',
+          backgroundColor: '#f87979',
+          data: props.data,
+          fill: false,
+          borderColor: '#f87979'
+        },
+      ],
+    }
   }
 )
 
