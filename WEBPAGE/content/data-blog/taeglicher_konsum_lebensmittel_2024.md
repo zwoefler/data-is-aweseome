@@ -1,6 +1,6 @@
 # Wie häufig nimmt man verschiedene Lebensmittel zu sich? - Zeitvergleich
 
-Wie viel Prozent der Befragten nehmen Kategorie mindestens einmal zu sich:
+Wie viel Prozent der Befragten nehmen folgende Lebensmittel mindestens 1x täglich zu sich:
 
 :lebensmittel_zeitvergleich
 

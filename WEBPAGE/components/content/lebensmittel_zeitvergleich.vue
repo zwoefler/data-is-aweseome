@@ -66,10 +66,11 @@ const chartOptions = ref({
         font: {
           size: 12
         },
-      }
+      },
     }
   }
 })
+
 
 interface Dataset {
   label: string
