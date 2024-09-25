@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full min-h-[300px]">
-    <Line class="w-full h-full min-h-[300px]" :data="chartDataSet" :options="chartOptions" />
+  <div class="w-full min-h-[350px]">
+    <Line class="w-full h-full min-h-[350px]" :data="chartDataSet" :options="chartOptions" />
   </div>
 </template>
 
