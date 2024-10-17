@@ -6,6 +6,10 @@ Ideas I want to pursue
 ---
 
 # 💡 DATA IDEAS
+- Insolvency monthly in GERMANY
+- Business registrations / degregistrations monthly
+- SAIDI-Index German "Stromnetz". Niederspannung, Mittelspannung, Gesamt.
+
 
 # E-Fuels are Bullshit
 When you want to power the worlds cars...
