@@ -6,9 +6,13 @@ However, it is a global phenomenon.
 ## 🚀 Vision
 Dataset for car manufactureres showing deliveries by quarter (or lowest resolution data).
 
-- [ ] VW
+- [X] VW
 - [ ] BMW
 - [ ] Mercedes
+
+
+## Data
+- VW - Deliveries monthly (quarterly) in `vw_deliveries_pdf_links.csv`
 
 
 ## Dev Setup
@@ -25,7 +29,7 @@ pip install -r requirements.txt
 
 
 ## Lessons learned
-VW made a mistake... Or I didn't find the corrct footnote.
+VW supposedly made a mistake... Or I didn't find the corrct footnote.
 Many aggregated numbers by region are missing 100 vehicles.
 
 Take a look at "July 2022"
