@@ -26,6 +26,8 @@ pip install -r requirements.txt
 1. Run `python3 scripts/vw_scrape_deliveries_page.py`
 2. Run `python3 scripts/vw_download_deliveries_pdfs.py vw_deliveries_pdf_links.csv`
 3. Run `python3 scripts/vw_extract_and_append_data.py`
+4. Run `python3 scripts/vw_only_monthly_data.py vw_deliveries.csv`
+5. Run `python3 scripts/convert_csv_to_json.py`
 
 
 ## Lessons learned
