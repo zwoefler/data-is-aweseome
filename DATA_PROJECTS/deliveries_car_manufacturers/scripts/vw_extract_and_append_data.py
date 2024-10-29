@@ -78,6 +78,19 @@ def sort_columns_by_date(all_data):
     return ordered_data
 
 
+def create_single_header(all_data):
+    months = all_data.iloc[0, 1:].str.lower()
+    years = all_data.iloc[1, 1:].astype(str)
+
+    new_header = [f"{month.capitalize()} {year}" for month, year in zip(months, years)]
+
+    all_data.columns = ["Region"] + new_header
+    all_data = all_data.dropna()
+    all_data = all_data.drop(index=[0, 1]).reset_index(drop=True)
+
+    return all_data
+
+
 def export_to_csv(df, output_csv="vw_deliveries.csv"):
     df.to_csv(path_or_buf=output_csv, index=False)
     print(f"Data saved to {output_csv}")
@@ -87,4 +100,5 @@ if __name__ == "__main__":
     pdf_dir = "data/vw"
     df: pd.DataFrame = build_dataset_from_pdfs(pdf_dir)
     sorted_data: pd.DataFrame = sort_columns_by_date(df)
-    export_to_csv(sorted_data)
+    finished_data_set = create_single_header(sorted_data)
+    export_to_csv(finished_data_set)
