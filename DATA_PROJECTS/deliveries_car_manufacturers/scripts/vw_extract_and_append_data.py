@@ -3,7 +3,7 @@ import pandas as pd
 from vw_extract_regions_deliveries_table import extract_first_table
 
 
-def build_dataset_from_pdfs(pdf_dir, output_csv="vw_deliveries.csv"):
+def build_dataset_from_pdfs(pdf_dir):
     """Builds a dataset by extracting region and latest month data from each PDF."""
     data_dict = {}
 
@@ -33,12 +33,58 @@ def build_dataset_from_pdfs(pdf_dir, output_csv="vw_deliveries.csv"):
                     }
 
     all_data = pd.DataFrame.from_dict(data_dict, orient="index").reset_index()
-    all_data.columns = ["Region"] + list(all_data.columns[1:])
+    all_data.columns = ["Region"] + list(all_data.iloc[0, 1:])
 
-    all_data.to_csv(output_csv, index=False)
+    return all_data
+
+
+def sort_columns_by_date(all_data):
+    month_map = {
+        "jan.": 1,
+        "feb.": 2,
+        "mar.": 3,
+        "apr.": 4,
+        "may": 5,
+        "jun.": 6,
+        "jul.": 7,
+        "aug.": 8,
+        "sep.": 9,
+        "oct.": 10,
+        "nov.": 11,
+        "dec.": 12,
+    }
+
+    months = all_data.iloc[0, 1:].str.lower()
+    years = all_data.iloc[1, 1:].astype(int)
+
+    sort_keys = []
+    divider_dash = "–"
+
+    for month, year in zip(months, years):
+        if divider_dash in month:
+            start_month_string = month.split(divider_dash)[0].strip()
+            start_month = month_map.get(start_month_string)
+            sort_keys.append((year, start_month))
+        else:
+            month_number = month_map.get(month)
+            sort_keys.append((year, month_number))
+
+    sorted_columns = sorted(range(len(sort_keys)), key=lambda x: sort_keys[x])
+
+    ordered_data = all_data.iloc[:, [0] + [i + 1 for i in sorted_columns]].reset_index(
+        drop=True
+    )
+
+    return ordered_data
+
+
+def export_to_csv(df, output_csv="vw_deliveries.csv"):
+    df.to_csv(path_or_buf=output_csv, index=False)
     print(f"Data saved to {output_csv}")
 
 
 if __name__ == "__main__":
     pdf_dir = "data/vw"
-    build_dataset_from_pdfs(pdf_dir)
+    df: pd.DataFrame = build_dataset_from_pdfs(pdf_dir)
+    sorted_data: pd.DataFrame = sort_columns_by_date(df)
+    export_to_csv(sorted_data)

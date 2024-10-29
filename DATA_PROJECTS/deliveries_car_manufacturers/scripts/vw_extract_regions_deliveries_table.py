@@ -14,7 +14,13 @@ def extract_first_table(pdf_path):
             print(f"No tables found in {pdf_path}")
             return None
 
-        df = pd.DataFrame(tables[0])
+        valid_table = None
+        for table in tables:
+            if len(table) > 2:
+                valid_table = table
+                break
+
+        df = pd.DataFrame(valid_table)
 
         if df.shape[1] < 2:
             print(f"Unexpected table structure in {pdf_path}")
