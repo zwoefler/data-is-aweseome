@@ -27,11 +27,32 @@
 import { Line } from 'vue-chartjs'
 import { downloadCSV, downloadJSON } from '~/utils/downloadUtils'
 import { defineProps, computed } from 'vue'
+import { ref } from 'vue'
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+} from 'chart.js'
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+)
 
 type ChartData = {
   labels: string[];
   data: {
-    [key: string]: number[];
+    [key: string]: (number | null)[];
   };
 };
 
@@ -101,14 +122,26 @@ const computedChartOptions = computed(() => ({
 }))
 
 const colors = [
-  'rgba(75, 192, 192, 1)',
-  'rgba(255, 99, 132, 1)',
-  'rgba(54, 162, 235, 1)',
-  'rgba(255, 206, 86, 1)',
-  'rgba(153, 102, 255, 1)',
-  'rgba(255, 159, 64, 1)',
-  'rgba(50, 205, 50, 1)',
-  'rgba(0, 100, 0, 1)'
+  'rgba(75, 192, 192, 1)',    // teal
+  'rgba(255, 99, 132, 1)',    // pink/red
+  'rgba(54, 162, 235, 1)',    // light blue
+  'rgba(255, 206, 86, 1)',    // yellow
+  'rgba(153, 102, 255, 1)',   // purple
+  'rgba(255, 159, 64, 1)',    // orange
+  'rgba(50, 205, 50, 1)',     // lime green
+  'rgba(0, 100, 0, 1)',       // dark green
+  'rgba(255, 99, 71, 1)',     // tomato red
+  'rgba(138, 43, 226, 1)',    // blue violet
+  'rgba(60, 179, 113, 1)',    // medium sea green
+  'rgba(220, 20, 60, 1)',     // crimson
+  'rgba(255, 140, 0, 1)',     // dark orange
+  'rgba(0, 191, 255, 1)',     // deep sky blue
+  'rgba(255, 20, 147, 1)',    // deep pink
+  'rgba(127, 255, 0, 1)',     // chartreuse
+  'rgba(127, 255, 212, 1)',  // Aquamarine
+  'rgba(34, 139, 34, 1)',    // Forest Green
+  'rgba(255, 215, 0, 1)',    // Gold
+  'rgba(218, 112, 214, 1)',  // Orchid
 ]
 
 Object.keys(props.chartData.data).forEach((category, index) => {
