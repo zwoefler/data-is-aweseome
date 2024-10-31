@@ -4,7 +4,8 @@
       <Line class="w-full h-full min-h-[350px]" :data="chartDataSet" :options="chartOptions" />
     </div>
     <div class="flex text-white space-x-2 ">
-      <button class="flex w-max bg-blue-500 text-xs font-bold text-white p-2 rounded space-x-2" @click="downloadJSON">
+      <button class="flex w-max bg-blue-500 text-xs font-bold text-white p-2 rounded space-x-2"
+        @click="downloadJSONFile">
         <svg class="w-4 h-4 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
           <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
         </svg>
@@ -12,7 +13,8 @@
           JSON Daten herunterladen
         </span>
       </button>
-      <button class="flex w-max bg-blue-500 text-xs font-bold text-white p-2 rounded space-x-2" @click="downloadCSV">
+      <button class="flex w-max bg-blue-500 text-xs font-bold text-white p-2 rounded space-x-2"
+        @click="downloadCSVFile">
         <svg class="w-4 h-4 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
           <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
         </svg>
@@ -28,6 +30,7 @@
 import { Line } from 'vue-chartjs'
 import dailyConsumption from "assets/daily_german_meat_consumption.json"
 import dailyConsumptionCSV from "assets/daily_german_meat_consumption.csv?url"
+import { downloadCSV, downloadJSON } from '~/utils/downloadUtils'
 import { ref } from 'vue'
 import {
   Chart as ChartJS,
@@ -131,24 +134,7 @@ Object.keys(dailyConsumption.data).forEach((category, index) => {
   })
 })
 
-const downloadJSON = () => {
-  const dataStr = JSON.stringify(dailyConsumption, null, 2)
-  const blob = new Blob([dataStr], { type: 'application/json' })
-  const url = URL.createObjectURL(blob)
-
-  const link = document.createElement('a')
-  link.href = url
-  link.download = 'daily_german_meat_consumption.json'
-  link.click()
-
-  URL.revokeObjectURL(url)
-}
-
-const downloadCSV = () => {
-  const link = document.createElement('a')
-  link.href = dailyConsumptionCSV
-  link.download = 'daily_german_meat_consumption.csv'
-  link.click()
-}
+const downloadJSONFile = () => downloadJSON(dailyConsumption, 'daily_german_meat_consumption.json')
+const downloadCSVFile = () => downloadCSV(dailyConsumptionCSV, 'daily_german_meat_consumption.csv')
 
 </script>
