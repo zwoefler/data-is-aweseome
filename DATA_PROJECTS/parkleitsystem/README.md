@@ -63,4 +63,4 @@ python3 scraping_parkleitsystem.py
 
 ## How to include dataset on webpage?
 1. Aggregate parkhouse data: Run `python3 parkhouse_aggregator/parkhouse_aggregator.py`
-2. Copy `parkhouse_data/` to assets in WEBPAGE folder: `cp parkhouse_data/* ../../WEBPAGE/assets/parkhouses/`
+2. Copy `parkhouse_data/` to assets in WEBPAGE folder: `cp parkhouse_data/*.json ../../WEBPAGE/assets/parkhouses/`
